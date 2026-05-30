@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none">
+  <!-- Center prong -->
+  <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Left prong -->
+  <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Right prong -->
+  <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Wave -->
+  <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+</svg>
