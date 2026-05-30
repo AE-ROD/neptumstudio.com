@@ -1,0 +1,154 @@
+---
+// src/components/Loader.astro
+---
+
+<div class="loading-container" id="loader">
+  <div class="loading-screen" id="loader-screen">
+
+    <div class="rounded-div-wrap top">
+      <div class="rounded-div"></div>
+    </div>
+
+    <div class="loading-words" id="loader-words">
+      <h2>Hello</h2>
+      <h2>Bonjour</h2>
+      <h2>स्वागत हे</h2>
+      <h2>Ciao</h2>
+      <h2>Olá</h2>
+      <h2>おい</h2>
+      <h2>Hallå</h2>
+      <h2>Guten tag</h2>
+      <h2>Hallo</h2>
+    </div>
+
+    <div class="rounded-div-wrap bottom" id="loader-bottom">
+      <div class="rounded-div"></div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .loading-container {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 800;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .loading-screen {
+    background-color: #141517;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rounded-div-wrap {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    height: 10vh;
+  }
+  .rounded-div-wrap.top {
+    top: 0;
+    transform: scaleY(-1);
+  }
+  .rounded-div-wrap.bottom {
+    bottom: 0;
+  }
+  .rounded-div {
+    width: 150%;
+    height: 750%;
+    background-color: #141517;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -86.666%);
+  }
+
+  .loading-words {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 0;
+  }
+  .loading-words h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 300;
+    color: #ffffff;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const container = document.getElementById('loader')!;
+  const screen    = document.getElementById('loader-screen')!;
+  const wordsEl   = document.getElementById('loader-words')!;
+  const words     = Array.from(wordsEl.querySelectorAll('h2')) as HTMLElement[];
+
+  document.body.style.overflow = 'hidden';
+  document.body.style.cursor   = 'wait';
+
+  const tl = gsap.timeline({
+    onComplete() {
+      container.style.display = 'none';
+      document.body.style.overflow = '';
+      document.body.style.cursor   = 'auto';
+    }
+  });
+
+  gsap.set(screen,   { top: 0 });
+  gsap.set(wordsEl,  { opacity: 0, y: -50 });
+  gsap.set(words,    { opacity: 0 });
+  gsap.set(words[0], { opacity: 1 });
+
+  tl.to(wordsEl, {
+    duration: 0.8,
+    opacity: 1,
+    y: 0,
+    ease: 'power4.out',
+    delay: 0.5
+  });
+
+  const wordsTl = gsap.timeline();
+  words.forEach((word, i) => {
+    wordsTl
+      .to(word, { duration: 0.01, opacity: 1 })
+      .to(words[i > 0 ? i - 1 : 0], { duration: 0.01, opacity: 0 }, i === 0 ? '+=0' : '<')
+      .to({}, { duration: 0.13 });
+  });
+  wordsTl.to({}, { duration: 0.35 });
+  tl.add(wordsTl);
+
+  tl.to(screen, {
+    duration: 0.8,
+    top: '-100%',
+    ease: 'power4.out',
+    onStart() {
+      gsap.to('[data-hero-reveal]', {
+        y: 0,
+        duration: 0.8,
+        ease: 'power4.out',
+        stagger: 0.08
+      });
+    }
+  });
+</script>
