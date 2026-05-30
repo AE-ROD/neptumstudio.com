@@ -24,9 +24,11 @@ const t = getT(locale);
 
   <div class="hero-visual" data-hero-reveal style="transform: translateY(50vh)">
     <div class="hero-visual-inner">
+      <div class="hero-glow"></div>
       <Fragment set:html={LogoMark} />
     </div>
   </div>
+
 
   <div class="hero-clients" data-hero-reveal style="transform: translateY(50vh)">
     <span class="clients-label">{t.hero.clients_label}</span>
@@ -129,20 +131,33 @@ const t = getT(locale);
     padding-right: max(1.5rem, (100vw - 1200px) / 2);
   }
   .hero-visual-inner {
-    width: min(320px, 40vw);
-    height: min(320px, 40vw);
-    background: radial-gradient(ellipse at center, var(--color-navy-mid) 0%, transparent 70%);
-    border-radius: 50%;
+    width: min(360px, 42vw);
+    height: min(360px, 42vw);
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .hero-visual-inner svg {
-    width: 55%;
-    height: 55%;
-    color: var(--color-silver);
-    opacity: 0.55;
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(27,43,69,0.9) 0%, transparent 70%);
+    animation: pulse-glow 4s ease-in-out infinite;
   }
+  @keyframes pulse-glow {
+    0%,100% { transform: scale(1); opacity: 0.8; }
+    50%      { transform: scale(1.08); opacity: 1; }
+  }
+  .hero-visual-inner svg {
+    width: 52%;
+    height: 52%;
+    color: var(--color-silver);
+    opacity: 0.5;
+    position: relative;
+    z-index: 1;
+  }
+
 
   .hero-clients {
     grid-area: clients;
@@ -186,3 +201,14 @@ const t = getT(locale);
     }
   }
 </style>
+
+<script>
+  // Parallax: hero visual drifts upward as user scrolls
+  const visual = document.querySelector('.hero-visual-inner') as HTMLElement | null;
+  if (visual) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY * 0.25;
+      visual.style.transform = `translateY(-${y}px)`;
+    }, { passive: true });
+  }
+</script>

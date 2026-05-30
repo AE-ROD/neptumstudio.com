@@ -1,6 +1,6 @@
 ---
 // src/layouts/Layout.astro
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import type { Locale } from '../i18n';
 
@@ -55,7 +55,7 @@ const { title, description, locale, canonicalUrl } = Astro.props;
       "sameAs": ["https://instagram.com/neptumstudio"]
     })} />
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     <slot />

@@ -118,7 +118,7 @@
   gsap.set(screen,   { top: 0 });
   gsap.set(wordsEl,  { opacity: 0, y: -50 });
   gsap.set(words,    { opacity: 0 });
-  gsap.set(words[0], { opacity: 1 });
+  if (words[0]) gsap.set(words[0], { opacity: 1 });
 
   tl.to(wordsEl, {
     duration: 0.8,
@@ -130,12 +130,13 @@
 
   const wordsTl = gsap.timeline();
   words.forEach((word, i) => {
+    const prev = words[i > 0 ? i - 1 : 0];
     wordsTl
       .to(word, { duration: 0.01, opacity: 1 })
-      .to(words[i > 0 ? i - 1 : 0], { duration: 0.01, opacity: 0 }, i === 0 ? '+=0' : '<')
-      .to({}, { duration: 0.13 });
+      .to(prev as gsap.TweenTarget, { duration: 0.01, opacity: i === 0 ? 1 : 0 }, '<')
+      .to(word as gsap.TweenTarget, { duration: 0.13 });
   });
-  wordsTl.to({}, { duration: 0.35 });
+  wordsTl.to(wordsEl as gsap.TweenTarget, { duration: 0.35 });
   tl.add(wordsTl);
 
   tl.to(screen, {
