@@ -1,0 +1,161 @@
+---
+// src/components/Services.astro
+import type { Locale } from '../i18n';
+import { getT } from '../i18n';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+
+const icons = [
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`,
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+];
+---
+
+<section id="services" class="services-section">
+  <div class="container">
+
+    <div class="services-header">
+      <div class="services-header-left">
+        <p class="eyebrow">{t.services.eyebrow}</p>
+        <h2 class="display-lg services-h2">{t.services.h2}</h2>
+      </div>
+      <div class="services-header-right">
+        <p class="services-desc">{t.services.description}</p>
+        <a href="#contact" class="services-cta">{t.services.cta} →</a>
+      </div>
+    </div>
+
+    <div class="services-grid">
+      {t.services.cards.map((card, i) => (
+        <article class="svc-card js-reveal">
+          <div class="svc-icon" set:html={icons[i]} />
+          <h3 class="svc-name">{card.name}</h3>
+          <p class="svc-desc">{card.description}</p>
+          <a href="#contact" class="svc-link">{card.link} →</a>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .services-section {
+    background: var(--color-cream);
+    padding: var(--section-pad) 0;
+  }
+
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: clamp(3rem, 5vw, 5rem);
+  }
+  .services-h2 { color: var(--color-navy-deep); margin-top: 0.75rem; }
+
+  .services-desc {
+    font-size: 0.9375rem;
+    color: var(--color-slate);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    max-width: 360px;
+  }
+  .services-cta {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-navy-deep);
+    border-bottom: 1px solid var(--color-navy-deep);
+    padding-bottom: 2px;
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+  .services-cta:hover { opacity: 0.6; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .svc-card {
+    border-top: 1px solid var(--color-cream-border);
+    padding-top: 1.5rem;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .svc-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .svc-icon {
+    width: 28px;
+    height: 28px;
+    color: var(--color-navy-deep);
+    margin-bottom: 1rem;
+  }
+  .svc-icon svg { width: 100%; height: 100%; }
+
+  .svc-name {
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-navy-deep);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .svc-desc {
+    font-size: 0.875rem;
+    color: var(--color-slate);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  .svc-link {
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+    border-bottom: 1px solid var(--color-cream-border);
+    padding-bottom: 2px;
+    display: inline-block;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .svc-link:hover {
+    color: var(--color-navy-deep);
+    border-color: var(--color-navy-deep);
+  }
+
+  @media (max-width: 900px) {
+    .services-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const cards = document.querySelectorAll('.svc-card.js-reveal');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 120);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+  cards.forEach(card => observer.observe(card));
+</script>
