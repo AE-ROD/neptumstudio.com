@@ -1,0 +1,128 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "projects": "Proyectos",
+    "about": "Nosotros",
+    "blog": "Blog",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "eyebrow": "Desarrollamos soluciones digitales",
+    "h1": "Creamos soluciones digitales que impulsan",
+    "h1_em": "tu negocio.",
+    "subtitle": "Desarrollo web, aplicaciones móviles y soluciones tecnológicas a la medida de tus objetivos.",
+    "cta_primary": "Nuestros servicios",
+    "cta_secondary": "Ver proyectos",
+    "clients_label": "+50 empresas confían en nosotros"
+  },
+  "services": {
+    "eyebrow": "Servicios",
+    "h2": "Soluciones digitales pensadas para crecer.",
+    "description": "Combinamos estrategia, diseño y tecnología para crear productos digitales que generan impacto real.",
+    "cta": "Ver todos los servicios",
+    "cards": [
+      {
+        "name": "Desarrollo Web",
+        "description": "Sitios modernos, rápidos y escalables que representan la esencia de tu marca.",
+        "link": "Saber más"
+      },
+      {
+        "name": "Desarrollo Móvil",
+        "description": "Aplicaciones nativas e híbridas para iOS y Android con enfoque en experiencia de usuario.",
+        "link": "Saber más"
+      },
+      {
+        "name": "Soluciones en la Nube",
+        "description": "Infraestructura, sistemas y herramientas para escalar tu negocio con seguridad.",
+        "link": "Saber más"
+      },
+      {
+        "name": "Soporte y Mantenimiento",
+        "description": "Soporte continuo, actualizaciones y optimización para que todo funcione siempre perfecto.",
+        "link": "Saber más"
+      }
+    ]
+  },
+  "how": {
+    "eyebrow": "Cómo trabajamos",
+    "steps": [
+      {
+        "num": "01",
+        "title": "Describe lo que necesitas.",
+        "description": "Cuéntanos tu proyecto y objetivos. Analizamos tu situación y diseñamos la solución tecnológica ideal para tu negocio."
+      },
+      {
+        "num": "02",
+        "title": "Diseñamos tu solución.",
+        "description": "Creamos prototipos, arquitectura y diseño visual. Cada decisión está respaldada por estrategia y experiencia real."
+      },
+      {
+        "num": "03",
+        "title": "Desarrollamos y entregamos.",
+        "description": "Construimos con las mejores tecnologías. Entregas incrementales, código limpio y pruebas en cada etapa."
+      },
+      {
+        "num": "04",
+        "title": "Crecemos contigo.",
+        "description": "Lanzado el producto, seguimos contigo. Soporte, métricas, mejoras continuas y escala cuando lo necesites."
+      }
+    ]
+  },
+  "projects": {
+    "eyebrow": "Proyectos destacados",
+    "h2": "Resultados que hablan por nosotros.",
+    "cta": "Ver todos los proyectos",
+    "cards": [
+      {
+        "category": "Desarrollo Web",
+        "name": "Kayzen",
+        "description": "Plataforma web corporativa con enfoque en experiencia, rendimiento y escalabilidad.",
+        "link": "Ver proyecto"
+      },
+      {
+        "category": "Desarrollo Móvil",
+        "name": "Novum",
+        "description": "Aplicación móvil para gestión financiera con UX intuitiva y diseño minimalista.",
+        "link": "Ver proyecto"
+      },
+      {
+        "category": "Solución Digital",
+        "name": "Delta Analytics",
+        "description": "Sistema interno para análisis de datos y visualización avanzada.",
+        "link": "Ver proyecto"
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Contáctanos",
+    "h2": "¿Tienes un proyecto en mente?",
+    "subtitle": "Trabajamos con empresas de toda Latinoamérica de forma 100% online. Cuéntanos tu idea y construyamos algo increíble juntos.",
+    "email_label": "Respuesta en 24h",
+    "whatsapp_label": "WhatsApp disponible",
+    "instagram_label": "Instagram",
+    "location_label": "Atención online toda LATAM",
+    "form": {
+      "name": "Nombre",
+      "name_placeholder": "Tu nombre completo",
+      "email": "Email",
+      "email_placeholder": "tu@email.com",
+      "company": "Empresa",
+      "company_placeholder": "Nombre de tu empresa",
+      "service": "Servicio de interés",
+      "service_placeholder": "Web, Móvil, Nube, Soporte...",
+      "message": "Mensaje",
+      "message_placeholder": "Cuéntanos tu proyecto...",
+      "submit": "Enviar mensaje"
+    }
+  },
+  "footer": {
+    "tagline": "Desarrollamos soluciones digitales",
+    "cols": {
+      "services": "Servicios",
+      "company": "Empresa",
+      "contact": "Contacto"
+    },
+    "copyright": "Todos los derechos reservados"
+  }
+}

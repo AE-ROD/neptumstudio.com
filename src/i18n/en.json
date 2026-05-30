@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "projects": "Projects",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "We build digital solutions",
+    "h1": "We create digital solutions that drive",
+    "h1_em": "your business.",
+    "subtitle": "Web development, mobile applications, and technology solutions tailored to your goals.",
+    "cta_primary": "Our services",
+    "cta_secondary": "View projects",
+    "clients_label": "+50 companies trust us"
+  },
+  "services": {
+    "eyebrow": "Services",
+    "h2": "Digital solutions built to grow.",
+    "description": "We combine strategy, design, and technology to create digital products that generate real impact.",
+    "cta": "View all services",
+    "cards": [
+      { "name": "Web Development", "description": "Modern, fast, and scalable websites that represent the essence of your brand.", "link": "Learn more" },
+      { "name": "Mobile Development", "description": "Native and hybrid apps for iOS and Android focused on user experience.", "link": "Learn more" },
+      { "name": "Cloud Solutions", "description": "Infrastructure, systems, and tools to scale your business securely.", "link": "Learn more" },
+      { "name": "Support & Maintenance", "description": "Continuous support, updates, and optimization so everything always works perfectly.", "link": "Learn more" }
+    ]
+  },
+  "how": {
+    "eyebrow": "How we work",
+    "steps": [
+      { "num": "01", "title": "Describe what you need.", "description": "Tell us about your project and goals. We analyze your situation and design the ideal tech solution for your business." },
+      { "num": "02", "title": "We design your solution.", "description": "We create prototypes, architecture, and visual design. Every decision is backed by strategy and real experience." },
+      { "num": "03", "title": "We build and deliver.", "description": "We build with the best technologies. Incremental deliveries, clean code, and testing at every stage." },
+      { "num": "04", "title": "We grow with you.", "description": "After launch, we stay with you. Support, metrics, continuous improvements, and scale when you need it." }
+    ]
+  },
+  "projects": {
+    "eyebrow": "Featured projects",
+    "h2": "Results that speak for themselves.",
+    "cta": "View all projects",
+    "cards": [
+      { "category": "Web Development", "name": "Kayzen", "description": "Corporate web platform focused on experience, performance, and scalability.", "link": "View project" },
+      { "category": "Mobile Development", "name": "Novum", "description": "Mobile app for financial management with intuitive UX and minimalist design.", "link": "View project" },
+      { "category": "Digital Solution", "name": "Delta Analytics", "description": "Internal system for data analysis and advanced visualization.", "link": "View project" }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Contact us",
+    "h2": "Have a project in mind?",
+    "subtitle": "We work with companies across Latin America, fully online. Tell us your idea and let's build something amazing together.",
+    "email_label": "Response within 24h",
+    "whatsapp_label": "WhatsApp available",
+    "instagram_label": "Instagram",
+    "location_label": "Online service across LATAM",
+    "form": {
+      "name": "Name", "name_placeholder": "Your full name",
+      "email": "Email", "email_placeholder": "you@email.com",
+      "company": "Company", "company_placeholder": "Your company name",
+      "service": "Service of interest", "service_placeholder": "Web, Mobile, Cloud, Support...",
+      "message": "Message", "message_placeholder": "Tell us about your project...",
+      "submit": "Send message"
+    }
+  },
+  "footer": {
+    "tagline": "We build digital solutions",
+    "cols": { "services": "Services", "company": "Company", "contact": "Contact" },
+    "copyright": "All rights reserved"
+  }
+}

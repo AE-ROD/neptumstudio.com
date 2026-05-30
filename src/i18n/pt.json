@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "home": "Início",
+    "services": "Serviços",
+    "projects": "Projetos",
+    "about": "Sobre nós",
+    "blog": "Blog",
+    "contact": "Contato"
+  },
+  "hero": {
+    "eyebrow": "Desenvolvemos soluções digitais",
+    "h1": "Criamos soluções digitais que impulsionam",
+    "h1_em": "o seu negócio.",
+    "subtitle": "Desenvolvimento web, aplicativos móveis e soluções tecnológicas sob medida para seus objetivos.",
+    "cta_primary": "Nossos serviços",
+    "cta_secondary": "Ver projetos",
+    "clients_label": "+50 empresas confiam em nós"
+  },
+  "services": {
+    "eyebrow": "Serviços",
+    "h2": "Soluções digitais pensadas para crescer.",
+    "description": "Combinamos estratégia, design e tecnologia para criar produtos digitais que geram impacto real.",
+    "cta": "Ver todos os serviços",
+    "cards": [
+      { "name": "Desenvolvimento Web", "description": "Sites modernos, rápidos e escaláveis que representam a essência da sua marca.", "link": "Saiba mais" },
+      { "name": "Desenvolvimento Mobile", "description": "Aplicativos nativos e híbridos para iOS e Android com foco em experiência do usuário.", "link": "Saiba mais" },
+      { "name": "Soluções em Nuvem", "description": "Infraestrutura, sistemas e ferramentas para escalar seu negócio com segurança.", "link": "Saiba mais" },
+      { "name": "Suporte e Manutenção", "description": "Suporte contínuo, atualizações e otimização para que tudo funcione sempre perfeitamente.", "link": "Saiba mais" }
+    ]
+  },
+  "how": {
+    "eyebrow": "Como trabalhamos",
+    "steps": [
+      { "num": "01", "title": "Descreva o que você precisa.", "description": "Conte-nos sobre seu projeto e objetivos. Analisamos sua situação e desenhamos a solução tecnológica ideal para o seu negócio." },
+      { "num": "02", "title": "Desenhamos sua solução.", "description": "Criamos protótipos, arquitetura e design visual. Cada decisão é respaldada por estratégia e experiência real." },
+      { "num": "03", "title": "Desenvolvemos e entregamos.", "description": "Construímos com as melhores tecnologias. Entregas incrementais, código limpo e testes em cada etapa." },
+      { "num": "04", "title": "Crescemos com você.", "description": "Após o lançamento, continuamos com você. Suporte, métricas, melhorias contínuas e escala quando precisar." }
+    ]
+  },
+  "projects": {
+    "eyebrow": "Projetos em destaque",
+    "h2": "Resultados que falam por si.",
+    "cta": "Ver todos os projetos",
+    "cards": [
+      { "category": "Desenvolvimento Web", "name": "Kayzen", "description": "Plataforma web corporativa com foco em experiência, desempenho e escalabilidade.", "link": "Ver projeto" },
+      { "category": "Desenvolvimento Mobile", "name": "Novum", "description": "Aplicativo móvel para gestão financeira com UX intuitiva e design minimalista.", "link": "Ver projeto" },
+      { "category": "Solução Digital", "name": "Delta Analytics", "description": "Sistema interno para análise de dados e visualização avançada.", "link": "Ver projeto" }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Entre em contato",
+    "h2": "Tem um projeto em mente?",
+    "subtitle": "Trabalhamos com empresas de toda a América Latina de forma 100% online. Conte sua ideia e construamos algo incrível juntos.",
+    "email_label": "Resposta em 24h",
+    "whatsapp_label": "WhatsApp disponível",
+    "instagram_label": "Instagram",
+    "location_label": "Atendimento online em toda LATAM",
+    "form": {
+      "name": "Nome", "name_placeholder": "Seu nome completo",
+      "email": "Email", "email_placeholder": "voce@email.com",
+      "company": "Empresa", "company_placeholder": "Nome da sua empresa",
+      "service": "Serviço de interesse", "service_placeholder": "Web, Mobile, Nuvem, Suporte...",
+      "message": "Mensagem", "message_placeholder": "Conte-nos sobre seu projeto...",
+      "submit": "Enviar mensagem"
+    }
+  },
+  "footer": {
+    "tagline": "Desenvolvemos soluções digitais",
+    "cols": { "services": "Serviços", "company": "Empresa", "contact": "Contato" },
+    "copyright": "Todos os direitos reservados"
+  }
+}
