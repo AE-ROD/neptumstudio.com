@@ -1,0 +1,207 @@
+---
+// src/components/Contact.astro
+// Formspree — replace YOUR_FORM_ID after signing up at formspree.io with neptumstudio@gmail.com
+import type { Locale } from '../i18n';
+import { getT } from '../i18n';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+const FORMSPREE_ID = 'YOUR_FORM_ID';
+---
+
+<section id="contact" class="contact-section">
+  <div class="container contact-grid">
+
+    <div class="contact-info">
+      <p class="eyebrow">{t.contact.eyebrow}</p>
+      <h2 class="display-lg contact-h2">{t.contact.h2}</h2>
+      <p class="contact-sub">{t.contact.subtitle}</p>
+
+      <ul class="contact-details">
+        <li class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div>
+            <a href="mailto:neptumstudio@gmail.com" class="contact-val">neptumstudio@gmail.com</a>
+            <span class="contact-sub-label">{t.contact.email_label}</span>
+          </div>
+        </li>
+        <li class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <div>
+            <a href="https://wa.me/56956077885" target="_blank" rel="noopener" class="contact-val">+56 9 5607 7885</a>
+            <span class="contact-sub-label">{t.contact.whatsapp_label}</span>
+          </div>
+        </li>
+        <li class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <div>
+            <a href="https://instagram.com/neptumstudio" target="_blank" rel="noopener" class="contact-val">@neptumstudio</a>
+            <span class="contact-sub-label">{t.contact.instagram_label}</span>
+          </div>
+        </li>
+        <li class="contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div>
+            <span class="contact-val">Santiago, Chile</span>
+            <span class="contact-sub-label">{t.contact.location_label}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <form
+      class="contact-form"
+      action={`https://formspree.io/f/${FORMSPREE_ID}`}
+      method="POST"
+      id="contact-form"
+    >
+      <div class="form-row">
+        <div class="form-field">
+          <label for="name">{t.contact.form.name}</label>
+          <input type="text" id="name" name="name" placeholder={t.contact.form.name_placeholder} required />
+        </div>
+        <div class="form-field">
+          <label for="email">{t.contact.form.email}</label>
+          <input type="email" id="email" name="email" placeholder={t.contact.form.email_placeholder} required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="company">{t.contact.form.company}</label>
+        <input type="text" id="company" name="company" placeholder={t.contact.form.company_placeholder} />
+      </div>
+      <div class="form-field">
+        <label for="service">{t.contact.form.service}</label>
+        <input type="text" id="service" name="service" placeholder={t.contact.form.service_placeholder} />
+      </div>
+      <div class="form-field">
+        <label for="message">{t.contact.form.message}</label>
+        <textarea id="message" name="message" rows="5" placeholder={t.contact.form.message_placeholder} required></textarea>
+      </div>
+      <button type="submit" class="form-submit">{t.contact.form.submit} →</button>
+      <p class="form-success" id="form-success" aria-live="polite"></p>
+    </form>
+
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    background: var(--color-cream);
+    padding: var(--section-pad) 0;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .contact-h2 { color: var(--color-navy-deep); margin-top: 0.75rem; margin-bottom: 1rem; }
+  .contact-sub {
+    font-size: 0.9375rem;
+    color: var(--color-slate);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .contact-details { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; }
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+  .contact-item svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--color-slate); margin-top: 2px; }
+  .contact-val {
+    display: block;
+    font-size: 0.9375rem;
+    color: var(--color-navy-deep);
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  a.contact-val:hover { color: var(--color-slate); }
+  .contact-sub-label {
+    display: block;
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+    margin-top: 2px;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .form-field label {
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+    font-weight: 500;
+  }
+  .form-field input,
+  .form-field textarea {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--color-navy-deep);
+    background: transparent;
+    border: 1px solid var(--color-cream-border);
+    border-radius: 4px;
+    padding: 0.65rem 0.875rem;
+    transition: border-color 0.2s;
+    outline: none;
+    resize: none;
+  }
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: var(--color-slate);
+  }
+  .form-submit {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    background: var(--color-navy-deep);
+    color: var(--color-cream);
+    padding: 0.9rem 1.5rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+    align-self: flex-start;
+    cursor: pointer;
+  }
+  .form-submit:hover { background: var(--color-navy-mid); }
+
+  .form-success {
+    font-size: 0.875rem;
+    color: #52b788;
+    min-height: 1.5em;
+  }
+
+  @media (max-width: 768px) {
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const success = document.getElementById('form-success');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { Accept: 'application/json' }
+    });
+    if (success) {
+      if (res.ok) {
+        form.reset();
+        success.textContent = '✓ Mensaje enviado. Te responderemos pronto.';
+      } else {
+        success.textContent = 'Error al enviar. Por favor intenta de nuevo.';
+      }
+    }
+  });
+</script>
