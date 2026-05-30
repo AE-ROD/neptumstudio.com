@@ -1,0 +1,356 @@
+---
+// src/components/Scrollytelling.astro
+import type { Locale } from '../i18n';
+import { getT } from '../i18n';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+---
+
+<div id="how-wrapper" class="how-wrapper">
+  <section id="how" class="how-section">
+
+    <div class="scrolly-card" id="scrolly-card">
+
+      <div class="scrolly-panels">
+        {t.how.steps.map((step, i) => (
+          <div class:list={['scrolly-panel', { active: i === 0 }]} data-panel={i}>
+
+            <div class="panel-left">
+              {i === 0 && (
+                <div class="terminal-card" id="typewriter-card">
+                  <div class="terminal-bar">
+                    <span class="t-dot"></span>
+                    <span class="t-dot"></span>
+                    <span class="t-dot"></span>
+                  </div>
+                  <pre class="terminal-code"><span id="typewriter-output"></span><span class="t-cursor"></span></pre>
+                </div>
+              )}
+              {i === 1 && (
+                <div class="design-visual">
+                  <div class="design-frame">
+                    <div class="design-bar"></div>
+                    <div class="design-content">
+                      <div class="design-block tall"></div>
+                      <div class="design-row">
+                        <div class="design-block"></div>
+                        <div class="design-block"></div>
+                      </div>
+                      <div class="design-block short"></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {i === 2 && (
+                <div class="build-visual">
+                  <div class="build-line"><span class="build-label success">✓</span><span>Dependencies installed</span></div>
+                  <div class="build-line"><span class="build-label success">✓</span><span>TypeScript compiled</span></div>
+                  <div class="build-line"><span class="build-label success">✓</span><span>Assets optimized</span></div>
+                  <div class="build-line"><span class="build-label active">▶</span><span>Deploying to production...</span></div>
+                  <div class="build-progress"><div class="build-bar"></div></div>
+                </div>
+              )}
+              {i === 3 && (
+                <div class="metrics-visual">
+                  <div class="metric-card"><span class="metric-val">98</span><span class="metric-lbl">Lighthouse</span></div>
+                  <div class="metric-card"><span class="metric-val">+120%</span><span class="metric-lbl">Conversión</span></div>
+                  <div class="metric-card"><span class="metric-val">24/7</span><span class="metric-lbl">Soporte</span></div>
+                </div>
+              )}
+              {i < t.how.steps.length - 1 && <div class="step-connector"></div>}
+            </div>
+
+            <div class="panel-right">
+              <span class="step-num">{step.num} —</span>
+              <h3 class="step-title">{step.title}</h3>
+              <p class="step-desc">{step.description}</p>
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+      <div class="scrolly-dots" aria-hidden="true">
+        {t.how.steps.map((_, i) => (
+          <button class:list={['scrolly-dot', { active: i === 0 }]} data-step={i} />
+        ))}
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<style>
+  .how-wrapper {
+    background: var(--color-cream);
+    height: calc(100vh * 5);
+  }
+
+  .how-section {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .scrolly-card {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--color-navy-deep);
+    border-radius: 20px;
+    min-height: 60vh;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scrolly-dots {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 2rem 1.5rem;
+    align-items: center;
+  }
+  .scrolly-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.4s var(--ease-out-expo);
+    cursor: pointer;
+    padding: 0;
+  }
+  .scrolly-dot.active {
+    width: 2px;
+    height: 20px;
+    border-radius: 1px;
+    background: rgba(255,255,255,0.8);
+  }
+
+  .scrolly-panels { flex: 1; position: relative; min-height: 60vh; }
+  .scrolly-panel {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 42% 1fr;
+    gap: 3rem;
+    padding: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+  .scrolly-panel.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .panel-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+  }
+
+  .terminal-card {
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 1.25rem;
+    background: rgba(255,255,255,0.03);
+  }
+  .terminal-bar {
+    display: flex; gap: 6px; margin-bottom: 0.75rem;
+  }
+  .t-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: block;
+  }
+  .terminal-code {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.8);
+    white-space: pre-wrap;
+    min-height: 8em;
+  }
+  .t-cursor {
+    display: inline-block;
+    width: 7px; height: 0.85em;
+    background: var(--color-silver);
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .step-connector {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.15);
+    margin: 1rem auto 0;
+  }
+
+  .design-visual { padding: 1rem; }
+  .design-frame {
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .design-bar {
+    height: 28px;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .design-content { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .design-block { background: rgba(255,255,255,0.08); border-radius: 4px; height: 40px; }
+  .design-block.tall { height: 60px; }
+  .design-block.short { height: 20px; width: 60%; }
+  .design-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+
+  .build-visual {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+  .build-line { display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.7); }
+  .build-label { width: 16px; text-align: center; }
+  .build-label.success { color: #52b788; }
+  .build-label.active { color: var(--color-silver); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .build-progress {
+    height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
+  }
+  .build-bar {
+    height: 100%;
+    background: var(--color-silver);
+    width: 0;
+    border-radius: 2px;
+    animation: progress 2s ease-in-out infinite;
+  }
+  @keyframes progress { 0%{width:0} 80%{width:90%} 100%{width:90%} }
+
+  .metrics-visual {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .metric-card {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 1.25rem 1rem;
+    display: flex; flex-direction: column; gap: 0.35rem; align-items: center;
+  }
+  .metric-val {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 300;
+    color: var(--color-white);
+  }
+  .metric-lbl {
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+  }
+
+  .panel-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .step-num {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 0.75rem;
+  }
+  .step-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    font-weight: 400;
+    color: var(--color-white);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .step-desc {
+    font-size: 0.9375rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+    max-width: 320px;
+    font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .how-wrapper { height: calc(100vh * 6); }
+    .scrolly-panel { grid-template-columns: 1fr; padding: 2rem; }
+    .panel-left { display: none; }
+    .metrics-visual { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const wrapper    = document.getElementById('how-wrapper')!;
+  const panels     = Array.from(document.querySelectorAll('.scrolly-panel'));
+  const dots       = Array.from(document.querySelectorAll('.scrolly-dot'));
+  const totalSteps = panels.length;
+  let currentStep  = 0;
+
+  function activateStep(idx: number) {
+    if (idx === currentStep && panels[idx].classList.contains('active')) return;
+    panels[currentStep]?.classList.remove('active');
+    dots[currentStep]?.classList.remove('active');
+    currentStep = idx;
+    panels[idx].classList.add('active');
+    dots[idx].classList.add('active');
+    if (idx === 0) startTypewriter();
+  }
+
+  const code = `// neptum.config.js\nclient: "tu empresa",\nstack: ["web", "mobile"],\nobjetivo: "crecer online",\ninicio: "hoy mismo"`;
+  const output = document.getElementById('typewriter-output');
+  let typewriterDone = false;
+
+  function startTypewriter() {
+    if (!output || typewriterDone) return;
+    typewriterDone = true;
+    let i = 0;
+    const interval = setInterval(() => {
+      if (output) output.textContent = code.slice(0, ++i);
+      if (i >= code.length) clearInterval(interval);
+    }, 38);
+  }
+
+  window.addEventListener('scroll', () => {
+    const rect   = wrapper.getBoundingClientRect();
+    const total  = wrapper.offsetHeight - window.innerHeight;
+    const scrolled = -rect.top;
+    if (scrolled < 0 || scrolled > total) return;
+    const progress = scrolled / total;
+    const stepIdx  = Math.min(Math.floor(progress * totalSteps), totalSteps - 1);
+    activateStep(stepIdx);
+  }, { passive: true });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const total  = wrapper.offsetHeight - window.innerHeight;
+      const target = wrapper.offsetTop + (i / totalSteps) * total;
+      window.scrollTo({ top: target, behavior: 'smooth' });
+    });
+  });
+
+  startTypewriter();
+</script>
