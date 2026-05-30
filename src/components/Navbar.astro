@@ -1,0 +1,254 @@
+---
+// src/components/Navbar.astro
+import type { Locale } from '../i18n';
+import { getT, localeRoutes } from '../i18n';
+import Logo from '../assets/logo.svg?raw';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = getT(locale);
+---
+
+<header id="navbar" data-hero-reveal style="transform: translateY(50vh)">
+  <div class="nav-inner container">
+
+    <a href={localeRoutes[locale]} class="nav-logo" aria-label="Neptum Studio">
+      <Fragment set:html={Logo} />
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href={`${localeRoutes[locale]}#services`}>{t.nav.services}</a>
+      <a href={`${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
+      <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
+      <a href={`${localeRoutes[locale]}#contact`}>{t.nav.blog}</a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="lang-switch" role="navigation" aria-label="Language selector">
+        {(['es', 'en', 'pt'] as const).map((lang) => (
+          <a
+            href={localeRoutes[lang]}
+            class:list={['lang-btn', { active: lang === locale }]}
+            lang={lang}
+            aria-current={lang === locale ? 'true' : undefined}
+          >
+            {lang.toUpperCase()}
+          </a>
+        ))}
+      </div>
+
+      <a href={`${localeRoutes[locale]}#contact`} class="nav-cta">
+        {t.nav.contact} ↗
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav class="mobile-links">
+      <a href={`${localeRoutes[locale]}#services`}>{t.nav.services}</a>
+      <a href={`${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
+      <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
+      <a href={`${localeRoutes[locale]}#contact`}>{t.nav.blog}</a>
+      <a href={`${localeRoutes[locale]}#contact`} class="mobile-cta">{t.nav.contact} ↗</a>
+    </nav>
+    <div class="mobile-lang">
+      {(['es', 'en', 'pt'] as const).map((lang) => (
+        <a href={localeRoutes[lang]} class:list={['lang-btn', { active: lang === locale }]}>
+          {lang.toUpperCase()}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<style>
+  #navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    height: var(--nav-height);
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  }
+  #navbar.scrolled {
+    background: rgba(13, 27, 42, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-navy-mid);
+  }
+
+  .nav-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .nav-logo { display: flex; align-items: center; }
+  .nav-logo svg { height: 32px; width: auto; color: var(--color-white); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    color: var(--color-silver);
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--color-white); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lang-switch {
+    display: flex;
+    border: 1px solid var(--color-navy-mid);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .lang-btn {
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.5rem;
+    color: var(--color-slate);
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-btn.active,
+  .lang-btn:hover {
+    background: var(--color-navy-mid);
+    color: var(--color-white);
+  }
+
+  .nav-cta {
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-silver);
+    color: var(--color-silver);
+    padding: 0.4rem 0.9rem;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover {
+    background: var(--color-white);
+    color: var(--color-navy-deep);
+    border-color: var(--color-white);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0.25rem;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px; height: 1.5px;
+    background: var(--color-silver);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .hamburger[aria-expanded="true"] span:nth-child(2) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: var(--color-navy-deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 99;
+  }
+  .mobile-menu.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mobile-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .mobile-links a {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--color-white);
+    transition: color 0.2s;
+  }
+  .mobile-links a:hover { color: var(--color-silver); }
+  .mobile-cta {
+    font-family: var(--font-body) !important;
+    font-size: 0.875rem !important;
+    color: var(--color-silver) !important;
+    border: 1px solid var(--color-silver);
+    padding: 0.5rem 1.5rem;
+    border-radius: 3px;
+  }
+  .mobile-lang {
+    display: flex;
+    gap: 1rem;
+  }
+  .mobile-lang .lang-btn {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--color-navy-mid);
+    border-radius: 3px;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .lang-switch { display: none; }
+  }
+</style>
+
+<script>
+  const navbar = document.getElementById('navbar')!;
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  const hamburger = document.getElementById('hamburger')!;
+  const mobileMenu = document.getElementById('mobile-menu')!;
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
