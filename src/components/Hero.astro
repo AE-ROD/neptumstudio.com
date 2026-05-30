@@ -1,0 +1,188 @@
+---
+// src/components/Hero.astro
+import type { Locale } from '../i18n';
+import { getT } from '../i18n';
+import LogoMark from '../assets/logo-mark.svg?raw';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+---
+
+<section id="hero">
+  <div class="hero-content" data-hero-reveal style="transform: translateY(50vh)">
+    <p class="eyebrow">{t.hero.eyebrow}</p>
+    <h1 class="display-xl hero-h1">
+      {t.hero.h1} <em>{t.hero.h1_em}</em>
+    </h1>
+    <p class="hero-sub">{t.hero.subtitle}</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">{t.hero.cta_primary} →</a>
+      <a href="#projects" class="btn-ghost">{t.hero.cta_secondary}</a>
+    </div>
+  </div>
+
+  <div class="hero-visual" data-hero-reveal style="transform: translateY(50vh)">
+    <div class="hero-visual-inner">
+      <Fragment set:html={LogoMark} />
+    </div>
+  </div>
+
+  <div class="hero-clients" data-hero-reveal style="transform: translateY(50vh)">
+    <span class="clients-label">{t.hero.clients_label}</span>
+    <div class="clients-logos">
+      <span>KAYZEN</span>
+      <span>NOVUM</span>
+      <span>DELTA.</span>
+      <span>AVEN.</span>
+      <span>LUMEN</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  #hero {
+    min-height: 100vh;
+    background: var(--color-navy-deep);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+      "content visual"
+      "clients clients";
+    align-items: center;
+    padding: var(--nav-height) 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    grid-area: content;
+    padding: var(--section-pad) 0 var(--section-pad) max(1.5rem, (100vw - 1200px) / 2);
+    max-width: 660px;
+  }
+
+  .hero-content .eyebrow { margin-bottom: 1.25rem; }
+
+  .hero-h1 {
+    color: var(--color-white);
+    margin-bottom: 1.25rem;
+  }
+  .hero-h1 em {
+    color: var(--color-silver);
+    font-style: normal;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--color-silver);
+    line-height: 1.7;
+    max-width: 420px;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-white);
+    color: var(--color-navy-deep);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.8rem 1.5rem;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--color-silver);
+  }
+
+  .btn-ghost {
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-silver);
+    border-bottom: 1px solid var(--color-slate);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover {
+    color: var(--color-white);
+    border-color: var(--color-white);
+  }
+
+  .hero-visual {
+    grid-area: visual;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-right: max(1.5rem, (100vw - 1200px) / 2);
+  }
+  .hero-visual-inner {
+    width: min(320px, 40vw);
+    height: min(320px, 40vw);
+    background: radial-gradient(ellipse at center, var(--color-navy-mid) 0%, transparent 70%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-visual-inner svg {
+    width: 55%;
+    height: 55%;
+    color: var(--color-silver);
+    opacity: 0.55;
+  }
+
+  .hero-clients {
+    grid-area: clients;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem max(1.5rem, (100vw - 1200px) / 2);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    flex-wrap: wrap;
+  }
+  .clients-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.18em;
+    color: var(--color-slate);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .clients-logos {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .clients-logos span {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--color-slate);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .clients-logos span:hover { color: var(--color-silver); }
+
+  @media (max-width: 768px) {
+    #hero {
+      grid-template-columns: 1fr;
+      grid-template-areas: "content" "clients";
+    }
+    .hero-visual { display: none; }
+    .hero-content {
+      padding: calc(var(--nav-height) + 3rem) 1.5rem 3rem;
+    }
+  }
+</style>
