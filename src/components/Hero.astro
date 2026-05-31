@@ -52,6 +52,7 @@ const t = getT(locale);
 <style>
   #hero {
     min-height: 100vh;
+    min-height: 100svh; /* iOS Safari: exclude browser chrome */
     background: var(--color-navy-deep);
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -201,10 +202,17 @@ const t = getT(locale);
     #hero {
       grid-template-columns: 1fr;
       grid-template-areas: "content" "clients";
+      /* top-align on mobile — content stacks from nav downward, no giant gap */
+      align-items: start;
+      min-height: 100svh; /* small viewport height excludes browser chrome on iOS */
     }
     .hero-visual { display: none; }
     .hero-content {
-      padding: calc(var(--nav-height) + 3rem) 1.5rem 3rem;
+      padding: calc(var(--nav-height) + 2.5rem) 1.5rem 2.5rem;
+    }
+    .hero-clients {
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
     }
   }
 </style>
