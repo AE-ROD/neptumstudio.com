@@ -2,7 +2,6 @@
 // src/components/Footer.astro
 import type { Locale } from '../i18n';
 import { getT, localeRoutes } from '../i18n';
-import LogoMark from '../assets/logo-mark.svg?raw';
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
@@ -16,7 +15,15 @@ const year = new Date().getFullYear();
     <div class="footer-top">
       <div class="footer-brand">
         <a href={localeRoutes[locale]} class="footer-logo" aria-label="Neptum Studio">
-          <Fragment set:html={LogoMark} />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class="footer-mark">
+            <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          </svg>
           <span>neptumstudio</span>
         </a>
         <p class="footer-tagline">{t.footer.tagline}</p>
@@ -85,7 +92,7 @@ const year = new Date().getFullYear();
     gap: 0.6rem;
     margin-bottom: 0.75rem;
   }
-  .footer-logo svg { width: 28px; height: auto; color: var(--color-white); }
+  .footer-mark { width: 28px; height: auto; color: var(--color-white); }
   .footer-logo span {
     font-family: var(--font-display);
     font-size: 1.1rem;

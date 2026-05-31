@@ -2,7 +2,6 @@
 // src/components/Hero.astro
 import type { Locale } from '../i18n';
 import { getT } from '../i18n';
-import LogoMark from '../assets/logo-mark.svg?raw';
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
@@ -25,7 +24,15 @@ const t = getT(locale);
   <div class="hero-visual" data-hero-reveal style="transform: translateY(50vh)">
     <div class="hero-visual-inner">
       <div class="hero-glow"></div>
-      <Fragment set:html={LogoMark} />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class="hero-mark">
+        <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      </svg>
     </div>
   </div>
 
@@ -149,7 +156,7 @@ const t = getT(locale);
     0%,100% { transform: scale(1); opacity: 0.8; }
     50%      { transform: scale(1.08); opacity: 1; }
   }
-  .hero-visual-inner svg {
+  .hero-mark {
     width: 52%;
     height: 52%;
     color: var(--color-silver);
