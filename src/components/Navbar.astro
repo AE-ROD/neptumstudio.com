@@ -18,7 +18,7 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
 <header id="navbar" data-hero-reveal style="transform: translateY(50vh)" data-vertical={vertical ? 'true' : undefined}>
   <div class="nav-inner container">
 
-    <a href={localeRoutes[locale]} class="nav-logo" aria-label="Neptum Studio">
+    <a href={vertical ? verticalRoutes[locale][vertical] : localeRoutes[locale]} class="nav-logo" aria-label="Neptum Studio">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 68" fill="none" class="logo-svg">
         <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
         <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -38,7 +38,7 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     <nav class="nav-links" aria-label="Main navigation">
       <a href={vertical ? '#services' : `${localeRoutes[locale]}#services`}>{t.nav.services}</a>
       <a href={vertical ? '#projects' : `${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
-      <a href={vertical ? localeRoutes[locale] : `${localeRoutes[locale]}#how`}>{t.nav.about}</a>
+      <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
       <div class="nav-dropdown">
         <span class="nav-dropdown-trigger">{sectorNavLabel[locale]} ↓</span>
         <div class="dropdown-menu">
@@ -49,7 +49,6 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
           </div>
         </div>
       </div>
-      <a href={vertical ? '#contact' : `${localeRoutes[locale]}#contact`}>{t.nav.blog}</a>
     </nav>
 
     <div class="nav-right">
@@ -82,7 +81,7 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     <nav class="mobile-links">
       <a href={vertical ? '#services' : `${localeRoutes[locale]}#services`}>{t.nav.services}</a>
       <a href={vertical ? '#projects' : `${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
-      <a href={vertical ? localeRoutes[locale] : `${localeRoutes[locale]}#how`}>{t.nav.about}</a>
+      <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
       <span class="mobile-sector-label">{sectorNavLabel[locale]}</span>
       {verticals.map(v => (
         <a href={verticalRoutes[locale][v]} class="mobile-vertical-link" data-astro-reload>{verticalNavLabels[locale][v]}</a>

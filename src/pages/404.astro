@@ -1,0 +1,94 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="Página no encontrada — Neptum Studio"
+  description="La página que buscas no existe."
+  locale="es"
+  canonicalUrl="https://neptumstudio.com/404"
+>
+  <style>
+    .not-found {
+      min-height: 100vh;
+      background: var(--color-navy-deep);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      gap: 1.5rem;
+    }
+    .not-found-code {
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--color-navy-mid);
+      letter-spacing: -0.02em;
+    }
+    .not-found-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 300;
+      color: var(--color-white);
+    }
+    .not-found-sub {
+      font-size: 0.9375rem;
+      color: var(--color-silver);
+      max-width: 380px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+    .not-found-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    .not-found-btn {
+      display: inline-flex;
+      align-items: center;
+      background: var(--color-white);
+      color: var(--color-navy-deep);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.5rem;
+      border-radius: 3px;
+      transition: background 0.2s;
+    }
+    .not-found-btn:hover { background: var(--color-silver); }
+    .not-found-ghost {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-silver);
+      border-bottom: 1px solid var(--color-slate);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .not-found-ghost:hover { color: var(--color-white); border-color: var(--color-white); }
+  </style>
+
+  <div class="not-found">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" style="width:48px;height:48px;color:#1B2B45">
+      <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    </svg>
+    <div class="not-found-code">404</div>
+    <div class="not-found-title">Página no encontrada</div>
+    <p class="not-found-sub">La ruta que buscas no existe o fue movida. Vuelve al inicio o explora nuestros servicios.</p>
+    <div class="not-found-links">
+      <a href="/" class="not-found-btn">Volver al inicio →</a>
+      <a href="/#contact" class="not-found-ghost">Contactar</a>
+    </div>
+  </div>
+</Layout>

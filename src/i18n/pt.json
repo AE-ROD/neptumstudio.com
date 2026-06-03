@@ -91,12 +91,12 @@
         ]
       },
       "projects": {
-        "eyebrow": "Casos em saúde",
-        "h2": "Clínicas que já crescem conosco.",
+        "eyebrow": "Projetos em destaque",
+        "h2": "Soluções já em funcionamento.",
         "cards": [
-          { "category": "Agendamento", "name": "ClínicaSur", "description": "Portal de agendamento online que reduziu o absenteísmo em 40% em 3 meses." },
-          { "category": "Telemedicina", "name": "MedConnect", "description": "Plataforma de videoconsultas para rede de especialistas em 5 países." },
-          { "category": "Portal Paciente", "name": "VidaSalud", "description": "App móvel com histórico clínico, resultados e receitas digitais." }
+          { "category": "Saúde Pública · Projeto real", "name": "Salud 365", "description": "Plataforma de visualização de estabelecimentos de saúde pública no Chile — CESFAM, hospitais e SAPU com classificação de fluxo de pacientes.", "url": "https://github.com/AE-ROD/salud-365" },
+          { "category": "Telemedicina · Conceito", "name": "MedConnect", "description": "Plataforma de videoconsultas para rede de especialistas em vários países.", "url": "" },
+          { "category": "Portal Paciente · Conceito", "name": "VidaSalud", "description": "App móvel com histórico clínico, resultados e receitas digitais.", "url": "" }
         ]
       },
       "cta_section": {

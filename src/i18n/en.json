@@ -91,12 +91,12 @@
         ]
       },
       "projects": {
-        "eyebrow": "Healthcare cases",
-        "h2": "Clinics already growing with us.",
+        "eyebrow": "Featured projects",
+        "h2": "Solutions already up and running.",
         "cards": [
-          { "category": "Scheduling", "name": "ClínicaSur", "description": "Online scheduling portal that reduced no-shows by 40% in 3 months." },
-          { "category": "Telemedicine", "name": "MedConnect", "description": "Video consultation platform for a specialist network across 5 countries." },
-          { "category": "Patient Portal", "name": "VidaSalud", "description": "Mobile app with clinical history, results and digital prescriptions." }
+          { "category": "Public Health · Real project", "name": "Salud 365", "description": "Visualization platform for public health facilities in Chile — CESFAM, hospitals and SAPU with patient flow classification.", "url": "https://github.com/AE-ROD/salud-365" },
+          { "category": "Telemedicine · Concept", "name": "MedConnect", "description": "Video consultation platform for a specialist network across multiple countries.", "url": "" },
+          { "category": "Patient Portal · Concept", "name": "VidaSalud", "description": "Mobile app with clinical history, results and digital prescriptions.", "url": "" }
         ]
       },
       "cta_section": {

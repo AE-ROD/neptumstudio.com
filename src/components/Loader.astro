@@ -9,16 +9,16 @@
       <div class="rounded-div"></div>
     </div>
 
-    <div class="loading-words" id="loader-words">
-      <h2>Hello</h2>
-      <h2>Bonjour</h2>
-      <h2>स्वागत हे</h2>
-      <h2>Ciao</h2>
-      <h2>Olá</h2>
-      <h2>おい</h2>
-      <h2>Hallå</h2>
-      <h2>Guten tag</h2>
-      <h2>Hallo</h2>
+    <div class="loading-words" id="loader-words" aria-hidden="true">
+      <span>Hello</span>
+      <span>Bonjour</span>
+      <span>Ciao</span>
+      <span>Olá</span>
+      <span>Hola</span>
+      <span>こんにちは</span>
+      <span>Hallå</span>
+      <span>Guten tag</span>
+      <span>Hallo</span>
     </div>
 
     <div class="rounded-div-wrap bottom" id="loader-bottom">
@@ -85,7 +85,7 @@
     text-align: center;
     opacity: 0;
   }
-  .loading-words h2 {
+  .loading-words span {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 300;
@@ -106,13 +106,19 @@
   const container = document.getElementById('loader')!;
   const screen    = document.getElementById('loader-screen')!;
   const wordsEl   = document.getElementById('loader-words')!;
-  const words     = Array.from(wordsEl.querySelectorAll('h2')) as HTMLElement[];
+  const words     = Array.from(wordsEl.querySelectorAll('span')) as HTMLElement[];
 
   function clearLoader() {
     container.style.display = 'none';
     document.body.style.overflow = '';
     document.body.style.cursor   = 'auto';
   }
+
+  // Skip intro on subsequent navigations within the same browser session
+  if (sessionStorage.getItem('introSeen')) {
+    clearLoader();
+    gsap.set('[data-hero-reveal]', { y: 0 });
+  } else {
 
   document.body.style.overflow = 'hidden';
   document.body.style.cursor   = 'wait';
@@ -123,6 +129,7 @@
   const tl = gsap.timeline({
     onComplete() {
       clearTimeout(safetyTimer);
+      sessionStorage.setItem('introSeen', '1');
       clearLoader();
     }
   });
@@ -164,4 +171,6 @@
       });
     }
   });
+
+  } // end else (sessionStorage check)
 </script>

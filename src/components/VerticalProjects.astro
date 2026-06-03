@@ -59,7 +59,7 @@ const accent = accentByVertical[vertical];
           <div class="proj-info">
             <h3 class="proj-name">{card.name}</h3>
             <p class="proj-desc">{card.description}</p>
-            <a href="#contact" class="proj-link">{viewProjectLabel[locale]}</a>
+            <a href={(card as any).url || '#contact'} class="proj-link" target={(card as any).url ? '_blank' : undefined} rel={(card as any).url ? 'noopener noreferrer' : undefined}>{viewProjectLabel[locale]}</a>
           </div>
         </article>
       ))}
