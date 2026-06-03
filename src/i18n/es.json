@@ -155,6 +155,20 @@
           { "category": "Portal Paciente · Concepto", "name": "VidaSalud", "description": "App móvil con historial clínico, resultados y recetas digitales.", "url": "" }
         ]
       },
+      "pains": {
+        "eyebrow": "¿Te suena alguna de estas?",
+        "h2": "Si respondiste sí a alguna, podemos ayudarte.",
+        "items": [
+          "¿Tus pacientes llaman para agendar y no siempre contestas a tiempo?",
+          "¿Tienes horas disponibles que se quedan vacías por falta de visibilidad online?",
+          "¿Tu equipo pierde horas al teléfono coordinando en vez de atender?",
+          "¿Los pacientes no llegan a su cita porque nadie les envió un recordatorio?",
+          "¿Resultados de exámenes que llegan en papel o por WhatsApp informal?",
+          "¿Tus pacientes te piden consulta online pero no tienes cómo ofrecerla?",
+          "¿No puedes medir la satisfacción de tus pacientes después de la atención?",
+          "¿Tu sistema de fichas sigue siendo en papel o en planillas de Excel?"
+        ]
+      },
       "cta_section": {
         "h2": "¿Tienes una clínica o centro médico?",
         "subtitle": "Cuéntanos tu caso y te mostramos cómo podemos digitalizarte en 30 días.",
@@ -190,6 +204,20 @@
           { "category": "Loyalty", "name": "CaféRed", "description": "Programa de fidelización digital para cadena de 12 locales con 8.000 clientes activos." }
         ]
       },
+      "pains": {
+        "eyebrow": "¿Te suena alguna de estas?",
+        "h2": "Si respondiste sí a alguna, podemos ayudarte.",
+        "items": [
+          "¿Le pagas comisiones a PedidosYa o Rappi que reducen tu margen?",
+          "¿Tu menú impreso quedó desactualizado y es caro de cambiar?",
+          "¿Pierdes reservas porque no contestas el teléfono a tiempo?",
+          "¿Tus clientes habituales no vuelven tan seguido como quisieras?",
+          "¿No sabes qué platos venden más ni en qué horarios?",
+          "¿Reseñas negativas online que no sabes cómo gestionar o responder?",
+          "¿Los martes y miércoles están vacíos mientras el fin de semana se llena?",
+          "¿No tienes forma de comunicarte con tus clientes cuando tienes una promo?"
+        ]
+      },
       "cta_section": {
         "h2": "¿Tienes un restaurante o cadena?",
         "subtitle": "Te mostramos cómo dejar de depender de los marketplaces y crecer con tu propia plataforma.",
@@ -223,6 +251,20 @@
           { "category": "Electricidad", "name": "ElectroSur", "description": "Sitio web + cotizador online que triplicó las consultas en el primer mes." },
           { "category": "Climatización", "name": "FríoCalor Pro", "description": "Agenda online que eliminó el doble-booking y redujo el tiempo en llamadas un 70%." },
           { "category": "Plomería", "name": "AquaFix", "description": "WhatsApp automatizado con triage de urgencias que convirtió el 60% de consultas en trabajos." }
+        ]
+      },
+      "pains": {
+        "eyebrow": "¿Te suena alguna de estas?",
+        "h2": "Si respondiste sí a alguna, podemos ayudarte.",
+        "items": [
+          "¿Pierdes horas del día coordinando visitas por teléfono?",
+          "¿Tus clientes no te encuentran cuando buscan en Google?",
+          "¿Te piden presupuesto y después desaparecen sin responder?",
+          "¿No tienes forma de mostrar tu trabajo de forma profesional?",
+          "¿Clientes que confirman y después cancelan sin avisar?",
+          "¿Tu negocio depende 100% del boca a boca y no crece?",
+          "¿Cobras por intuición y a veces terminas trabajando a pérdida?",
+          "¿No puedes atender consultas nuevas cuando estás trabajando en obra?"
         ]
       },
       "cta_section": {

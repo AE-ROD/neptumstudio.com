@@ -99,6 +99,20 @@
           { "category": "Patient Portal · Concept", "name": "VidaSalud", "description": "Mobile app with clinical history, results and digital prescriptions.", "url": "" }
         ]
       },
+      "pains": {
+        "eyebrow": "Does any of this sound familiar?",
+        "h2": "If you said yes to any of these, we can help.",
+        "items": [
+          "Do patients call to book but you can't always answer in time?",
+          "Are available appointment slots going unfilled because you lack online visibility?",
+          "Is your staff spending hours on the phone scheduling instead of seeing patients?",
+          "Are patients missing appointments because nobody sent them a reminder?",
+          "Are lab results being delivered on paper or through informal WhatsApp messages?",
+          "Do your patients ask for online consultations but you have no way to offer them?",
+          "Can you not measure patient satisfaction after each visit?",
+          "Is your patient record system still paper-based or running on spreadsheets?"
+        ]
+      },
       "cta_section": {
         "h2": "Do you have a clinic or medical center?",
         "subtitle": "Tell us your case and we'll show you how we can digitize you in 30 days.",
@@ -134,6 +148,20 @@
           { "category": "Loyalty", "name": "CaféRed", "description": "Digital loyalty program for a chain of 12 locations with 8,000 active customers." }
         ]
       },
+      "pains": {
+        "eyebrow": "Does any of this sound familiar?",
+        "h2": "If you said yes to any of these, we can help.",
+        "items": [
+          "Are you paying marketplace commissions that eat into your margins?",
+          "Is your printed menu outdated and expensive to update?",
+          "Are you losing reservations because you can't always answer the phone?",
+          "Are your regulars not coming back as often as you'd like?",
+          "Do you know which dishes sell best and at what times?",
+          "Are negative online reviews hurting you and you don't know how to manage them?",
+          "Are Tuesday and Wednesday nights empty while weekends are packed?",
+          "Do you have no way to reach your customers when you have a promotion?"
+        ]
+      },
       "cta_section": {
         "h2": "Do you have a restaurant or chain?",
         "subtitle": "We'll show you how to stop depending on marketplaces and grow with your own platform.",
@@ -167,6 +195,20 @@
           { "category": "Electrical", "name": "ElectroSur", "description": "Website + online quote tool that tripled inquiries in the first month." },
           { "category": "HVAC", "name": "FríoCalor Pro", "description": "Online calendar that eliminated double-booking and reduced phone time by 70%." },
           { "category": "Plumbing", "name": "AquaFix", "description": "Automated WhatsApp with urgency triage that converted 60% of inquiries into jobs." }
+        ]
+      },
+      "pains": {
+        "eyebrow": "Does any of this sound familiar?",
+        "h2": "If you said yes to any of these, we can help.",
+        "items": [
+          "Are you spending hours of your day scheduling visits over the phone?",
+          "Can your clients not find you when they search on Google?",
+          "Do people ask for a quote and then disappear without responding?",
+          "Do you have no way to showcase your work professionally?",
+          "Do clients confirm jobs and then cancel without notice?",
+          "Does your business rely 100% on word of mouth with no growth strategy?",
+          "Are you pricing by gut feel and sometimes end up working at a loss?",
+          "Can you not take new inquiries while you're on-site working?"
         ]
       },
       "cta_section": {

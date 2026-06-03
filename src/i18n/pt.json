@@ -99,6 +99,20 @@
           { "category": "Portal Paciente · Conceito", "name": "VidaSalud", "description": "App móvel com histórico clínico, resultados e receitas digitais.", "url": "" }
         ]
       },
+      "pains": {
+        "eyebrow": "Alguma dessas situações te soa familiar?",
+        "h2": "Se respondeu sim a alguma, podemos te ajudar.",
+        "items": [
+          "Seus pacientes ligam para agendar e você nem sempre consegue atender a tempo?",
+          "Horários disponíveis ficam vazios por falta de visibilidade online?",
+          "Sua equipe perde horas ao telefone coordenando em vez de atender pacientes?",
+          "Pacientes faltam à consulta porque ninguém enviou um lembrete?",
+          "Resultados de exames chegam em papel ou por WhatsApp informal?",
+          "Seus pacientes pedem consulta online mas você não tem como oferecer?",
+          "Você não consegue medir a satisfação dos seus pacientes após o atendimento?",
+          "Seu sistema de fichas ainda é em papel ou planilhas de Excel?"
+        ]
+      },
       "cta_section": {
         "h2": "Você tem uma clínica ou centro médico?",
         "subtitle": "Conte-nos seu caso e mostraremos como podemos digitalizá-lo em 30 dias.",
@@ -134,6 +148,20 @@
           { "category": "Loyalty", "name": "CaféRed", "description": "Programa de fidelização digital para rede de 12 locais com 8.000 clientes ativos." }
         ]
       },
+      "pains": {
+        "eyebrow": "Alguma dessas situações te soa familiar?",
+        "h2": "Se respondeu sim a alguma, podemos te ajudar.",
+        "items": [
+          "Você paga comissões para marketplaces que corroem sua margem?",
+          "Seu cardápio impresso ficou desatualizado e é caro de mudar?",
+          "Você perde reservas porque nem sempre atende o telefone a tempo?",
+          "Seus clientes habituais não voltam tão frequentemente quanto você gostaria?",
+          "Você sabe quais pratos vendem mais e em quais horários?",
+          "Avaliações negativas online te prejudicam e você não sabe como gerenciar?",
+          "Terças e quartas ficam vazias enquanto o fim de semana está lotado?",
+          "Você não tem como avisar seus clientes quando tem uma promoção especial?"
+        ]
+      },
       "cta_section": {
         "h2": "Você tem um restaurante ou rede?",
         "subtitle": "Mostraremos como parar de depender dos marketplaces e crescer com sua própria plataforma.",
@@ -167,6 +195,20 @@
           { "category": "Elétrica", "name": "ElectroSur", "description": "Site + cotador online que triplicou as consultas no primeiro mês." },
           { "category": "Climatização", "name": "FríoCalor Pro", "description": "Agenda online que eliminou reservas duplicadas e reduziu o tempo em chamadas em 70%." },
           { "category": "Encanamento", "name": "AquaFix", "description": "WhatsApp automatizado com triagem de urgências que converteu 60% das consultas em trabalhos." }
+        ]
+      },
+      "pains": {
+        "eyebrow": "Alguma dessas situações te soa familiar?",
+        "h2": "Se respondeu sim a alguma, podemos te ajudar.",
+        "items": [
+          "Você perde horas do dia coordenando visitas pelo telefone?",
+          "Seus clientes não te encontram quando pesquisam no Google?",
+          "Te pedem orçamento e depois somem sem responder?",
+          "Você não tem como mostrar seu trabalho de forma profissional?",
+          "Clientes confirmam e depois cancelam sem avisar?",
+          "Seu negócio depende 100% de indicações e não está crescendo?",
+          "Você cobra por intuição e às vezes termina trabalhando no prejuízo?",
+          "Você não consegue atender novas consultas quando está em obra?"
         ]
       },
       "cta_section": {

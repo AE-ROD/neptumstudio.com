@@ -1,0 +1,138 @@
+---
+// src/components/VerticalPains.astro
+import type { Locale, Vertical } from '../i18n';
+import { getT } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  vertical: Vertical;
+}
+const { locale, vertical } = Astro.props;
+const t = getT(locale);
+const p = t.verticals[vertical].pains;
+---
+
+<section class="pains-section">
+  <div class="container">
+
+    <div class="pains-header">
+      <p class="eyebrow pains-eyebrow">{p.eyebrow}</p>
+      <h2 class="display-lg pains-h2">{p.h2}</h2>
+    </div>
+
+    <ul class="pains-grid">
+      {p.items.map((item) => (
+        <li class="pain-card js-pain-reveal">
+          <span class="pain-mark" aria-hidden="true">?</span>
+          <p class="pain-text">{item}</p>
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .pains-section {
+    background: var(--color-navy-deep);
+    padding: var(--section-pad) 0;
+    border-top: 1px solid var(--color-navy-mid);
+  }
+
+  .pains-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto clamp(3rem, 5vw, 4.5rem);
+  }
+  .pains-eyebrow {
+    color: var(--vp-accent);
+    margin-bottom: 0.75rem;
+  }
+  .pains-h2 { color: var(--color-white); }
+
+  .pains-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    list-style: none;
+    background: var(--color-navy-mid);
+    border: 1px solid var(--color-navy-mid);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .pain-card {
+    background: var(--color-navy-deep);
+    padding: 1.75rem 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.45s ease, transform 0.45s ease, background 0.2s;
+  }
+  .pain-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .pain-card:hover {
+    background: rgba(255,255,255,0.03);
+  }
+
+  .pain-mark {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--vp-accent);
+    line-height: 1.4;
+    flex-shrink: 0;
+    width: 1.5rem;
+    text-align: center;
+    opacity: 0.7;
+  }
+
+  .pain-text {
+    font-size: 0.9375rem;
+    color: var(--color-silver);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* Rounded corners on first/last cards in each row */
+  .pain-card:first-child { border-radius: 11px 0 0 0; }
+  .pain-card:nth-child(2) { border-radius: 0 11px 0 0; }
+  .pain-card:nth-last-child(2) { border-radius: 0 0 0 11px; }
+  .pain-card:last-child { border-radius: 0 0 11px 0; }
+
+  /* Light mode */
+  @media (prefers-color-scheme: light) {
+    .pains-section {
+      background: var(--color-navy-deep);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pains-grid { grid-template-columns: 1fr; }
+    .pain-card:first-child { border-radius: 11px 11px 0 0; }
+    .pain-card:nth-child(2) { border-radius: 0; }
+    .pain-card:nth-last-child(2) { border-radius: 0; }
+    .pain-card:last-child { border-radius: 0 0 11px 11px; }
+    .pain-card { padding: 1.25rem 1.5rem; }
+  }
+</style>
+
+<script>
+  const cards = document.querySelectorAll('.pain-card.js-pain-reveal');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.05 }
+  );
+  cards.forEach(card => observer.observe(card));
+</script>

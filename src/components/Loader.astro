@@ -114,8 +114,12 @@
     document.body.style.cursor   = 'auto';
   }
 
-  // Skip intro on subsequent navigations within the same browser session
-  if (sessionStorage.getItem('introSeen')) {
+  // Show loader on first visit AND on hard reload (Cmd+Shift+R / F5).
+  // Skip only on in-session navigations (data-astro-reload links between pages).
+  const navType = (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined)?.type;
+  const isHardLoad = !sessionStorage.getItem('introSeen') || navType === 'reload';
+
+  if (!isHardLoad) {
     clearLoader();
     gsap.set('[data-hero-reveal]', { y: 0 });
   } else {
