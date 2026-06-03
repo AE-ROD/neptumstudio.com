@@ -183,9 +183,17 @@ const WEB3FORMS_KEY = 'e1284dcc-41d0-40c1-938b-c5b385d80892';
     min-height: 1.5em;
   }
 
-  @media (max-width: 768px) {
+  /* Tablet portrait: stack info + form */
+  @media (max-width: 900px) {
     .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+  /* Mobile: stack form-row fields */
+  @media (max-width: 600px) {
     .form-row { grid-template-columns: 1fr; }
+  }
+  /* Safe area for iOS bottom (notch/home bar) */
+  @media (max-width: 768px) {
+    .contact-section { padding-bottom: calc(var(--section-pad) + env(safe-area-inset-bottom, 0px)); }
   }
 </style>
 

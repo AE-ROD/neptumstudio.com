@@ -55,4 +55,13 @@ const c = t.verticals[vertical].cta_section;
     margin-top: 0.5rem;
   }
   .vcta-btn:hover { filter: brightness(1.1); }
+
+  @media (max-width: 768px) {
+    .vcta-h2 { font-size: clamp(1.5rem, 6vw, 2.5rem); }
+    .vcta-sub { font-size: 0.9375rem; }
+  }
+  @media (max-width: 400px) {
+    .vcta-inner { gap: 1.25rem; }
+    .vcta-btn { width: 100%; justify-content: center; }
+  }
 </style>

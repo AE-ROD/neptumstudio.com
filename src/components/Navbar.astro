@@ -304,7 +304,16 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     border-radius: 3px;
   }
 
-  @media (max-width: 768px) {
+  /* Tablet compact (901-1200px) */
+  @media (min-width: 901px) and (max-width: 1200px) {
+    .nav-links { gap: 1.25rem; }
+    .nav-inner { gap: 1rem; }
+    .nav-links a { font-size: 0.625rem; }
+    .nav-cta { display: none; }
+  }
+
+  /* Mobile + tablet portrait (≤900px) */
+  @media (max-width: 900px) {
     .nav-links { display: none; }
     .nav-cta { display: none; }
     .hamburger { display: flex; }

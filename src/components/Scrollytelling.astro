@@ -334,11 +334,29 @@ const t = getT(locale);
     font-weight: 300;
   }
 
+  /* Tablet portrait (769-900px): hide visual, single column */
+  @media (min-width: 769px) and (max-width: 900px) {
+    .how-wrapper { height: calc(100vh * 5); }
+    .scrolly-card { min-height: 55vh; }
+    .scrolly-panel { grid-template-columns: 1fr; padding: 2.5rem; gap: 0; }
+    .panel-left { display: none; }
+    .metrics-visual { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Mobile (≤768px) */
   @media (max-width: 768px) {
     .how-wrapper { height: calc(100vh * 6); }
-    .scrolly-panel { grid-template-columns: 1fr; padding: 2rem; }
+    .scrolly-card { min-height: 58vh; border-radius: 12px; }
+    .scrolly-panel { grid-template-columns: 1fr; padding: 1.75rem; }
     .panel-left { display: none; }
     .metrics-visual { grid-template-columns: 1fr; }
+    .step-title { font-size: clamp(1.25rem, 5vw, 1.75rem); }
+  }
+
+  /* Small phones (≤400px) */
+  @media (max-width: 400px) {
+    .scrolly-panel { padding: 1.25rem; }
+    .how-section { padding: 0 1rem; }
   }
 </style>
 
