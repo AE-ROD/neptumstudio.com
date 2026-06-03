@@ -1,13 +1,12 @@
 ---
 // src/components/Contact.astro
-// Formspree — replace YOUR_FORM_ID after signing up at formspree.io with neptumstudio@gmail.com
 import type { Locale } from '../i18n';
 import { getT } from '../i18n';
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = getT(locale);
-const FORMSPREE_ID = 'YOUR_FORM_ID';
+const WEB3FORMS_KEY = 'e1284dcc-41d0-40c1-938b-c5b385d80892';
 ---
 
 <section id="contact" class="contact-section">
@@ -52,10 +51,14 @@ const FORMSPREE_ID = 'YOUR_FORM_ID';
 
     <form
       class="contact-form"
-      action={`https://formspree.io/f/${FORMSPREE_ID}`}
+      action="https://api.web3forms.com/submit"
       method="POST"
       id="contact-form"
     >
+      <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+      <input type="hidden" name="subject" value="Nuevo contacto desde neptumstudio.com" />
+      <input type="hidden" name="from_name" value="NeptumStudio Web" />
+      <input type="checkbox" name="botcheck" style="display:none" />
       <div class="form-row">
         <div class="form-field">
           <label for="name">{t.contact.form.name}</label>
@@ -185,23 +188,44 @@ const FORMSPREE_ID = 'YOUR_FORM_ID';
 
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const success = document.getElementById('form-success');
+  const successEl = document.getElementById('form-success');
+  const submitBtn = form?.querySelector('.form-submit') as HTMLButtonElement | null;
 
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (!submitBtn) return;
+
+    const originalText = submitBtn.textContent ?? '';
+    submitBtn.textContent = '...';
+    submitBtn.disabled = true;
+
     const data = new FormData(form);
-    const res = await fetch(form.action, {
-      method: 'POST',
-      body: data,
-      headers: { Accept: 'application/json' }
-    });
-    if (success) {
-      if (res.ok) {
-        form.reset();
-        success.textContent = '✓ Mensaje enviado. Te responderemos pronto.';
-      } else {
-        success.textContent = 'Error al enviar. Por favor intenta de nuevo.';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' }
+      });
+      const json = await res.json();
+      if (successEl) {
+        if (json.success) {
+          form.reset();
+          successEl.textContent = '✓ Mensaje enviado. Te responderemos en menos de 24h.';
+          successEl.style.color = '#3db87a';
+        } else {
+          successEl.textContent = json.message || 'Error al enviar. Por favor intenta de nuevo.';
+          successEl.style.color = '#e2825a';
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
       }
+    } catch {
+      if (successEl) {
+        successEl.textContent = 'Error de conexión. Por favor intenta de nuevo.';
+        successEl.style.color = '#e2825a';
+      }
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
     }
   });
 </script>

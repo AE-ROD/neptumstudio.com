@@ -36,9 +36,9 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     </a>
 
     <nav class="nav-links" aria-label="Main navigation">
-      <a href={`${localeRoutes[locale]}#services`}>{t.nav.services}</a>
-      <a href={`${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
-      <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
+      <a href={vertical ? '#services' : `${localeRoutes[locale]}#services`}>{t.nav.services}</a>
+      <a href={vertical ? '#projects' : `${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
+      <a href={vertical ? localeRoutes[locale] : `${localeRoutes[locale]}#how`}>{t.nav.about}</a>
       <div class="nav-dropdown">
         <span class="nav-dropdown-trigger">{sectorNavLabel[locale]} ↓</span>
         <div class="dropdown-menu">
@@ -49,7 +49,7 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
           </div>
         </div>
       </div>
-      <a href={`${localeRoutes[locale]}#contact`}>{t.nav.blog}</a>
+      <a href={vertical ? '#contact' : `${localeRoutes[locale]}#contact`}>{t.nav.blog}</a>
     </nav>
 
     <div class="nav-right">
@@ -67,7 +67,7 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
         ))}
       </div>
 
-      <a href={`${localeRoutes[locale]}#contact`} class="nav-cta">
+      <a href={vertical ? '#contact' : `${localeRoutes[locale]}#contact`} class="nav-cta">
         {t.nav.contact} ↗
       </a>
 
@@ -80,14 +80,14 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
 
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
     <nav class="mobile-links">
-      <a href={`${localeRoutes[locale]}#services`}>{t.nav.services}</a>
-      <a href={`${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
-      <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
+      <a href={vertical ? '#services' : `${localeRoutes[locale]}#services`}>{t.nav.services}</a>
+      <a href={vertical ? '#projects' : `${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
+      <a href={vertical ? localeRoutes[locale] : `${localeRoutes[locale]}#how`}>{t.nav.about}</a>
       <span class="mobile-sector-label">{sectorNavLabel[locale]}</span>
       {verticals.map(v => (
         <a href={verticalRoutes[locale][v]} class="mobile-vertical-link" data-astro-reload>{verticalNavLabels[locale][v]}</a>
       ))}
-      <a href={`${localeRoutes[locale]}#contact`} class="mobile-cta">{t.nav.contact} ↗</a>
+      <a href={vertical ? '#contact' : `${localeRoutes[locale]}#contact`} class="mobile-cta">{t.nav.contact} ↗</a>
     </nav>
     <div class="mobile-lang">
       {(['es', 'en', 'pt'] as const).map((lang) => (
