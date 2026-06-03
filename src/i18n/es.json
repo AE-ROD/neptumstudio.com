@@ -124,5 +124,112 @@
       "contact": "Contacto"
     },
     "copyright": "Todos los derechos reservados"
+  },
+  "verticals": {
+    "salud": {
+      "badge": "Soluciones para el sector salud",
+      "hero": {
+        "eyebrow": "TRANSFORMACIÓN DIGITAL EN SALUD",
+        "h1": "Tecnología que mejora",
+        "h1_em": "la experiencia del paciente.",
+        "subtitle": "Desarrollamos plataformas de agendamiento, portales de pacientes y apps de telemedicina para clínicas, consultorios y centros médicos en LATAM.",
+        "cta_primary": "Ver soluciones",
+        "cta_secondary": "Ver casos"
+      },
+      "services": {
+        "eyebrow": "Servicios para salud",
+        "h2": "Todo lo que tu clínica necesita para digitalizarse.",
+        "cards": [
+          { "name": "Agendamiento Online", "description": "Sistema de reservas 24/7 integrado con tu agenda, confirmación automática y recordatorios por WhatsApp." },
+          { "name": "Portal del Paciente", "description": "Acceso seguro a resultados, historial médico y recetas desde cualquier dispositivo." },
+          { "name": "Telemedicina", "description": "Plataforma de videoconsultas HIPAA-compliant con sala de espera virtual y registro de atenciones." },
+          { "name": "Integración HIS/EMR", "description": "Conectamos tu nueva solución con los sistemas que ya usas: Meditech, OpenEMR, y otros." }
+        ]
+      },
+      "projects": {
+        "eyebrow": "Casos en salud",
+        "h2": "Clínicas que ya crecen con nosotros.",
+        "cards": [
+          { "category": "Agendamiento", "name": "ClínicaSur", "description": "Portal de agendamiento online que redujo el ausentismo un 40% en 3 meses." },
+          { "category": "Telemedicina", "name": "MedConnect", "description": "Plataforma de videoconsultas para red de especialistas en 5 países." },
+          { "category": "Portal Paciente", "name": "VidaSalud", "description": "App móvil con historial clínico, resultados y recetas digitales." }
+        ]
+      },
+      "cta_section": {
+        "h2": "¿Tienes una clínica o centro médico?",
+        "subtitle": "Cuéntanos tu caso y te mostramos cómo podemos digitalizarte en 30 días.",
+        "cta": "Hablar con un especialista"
+      }
+    },
+    "resto": {
+      "badge": "Soluciones para gastronomía",
+      "hero": {
+        "eyebrow": "DIGITALIZACIÓN GASTRONÓMICA",
+        "h1": "Más mesas llenas,",
+        "h1_em": "más pedidos online.",
+        "subtitle": "Desarrollamos cartas digitales, sistemas de reservas, apps de delivery propio y programas de fidelización para restaurantes y cadenas en LATAM.",
+        "cta_primary": "Ver soluciones",
+        "cta_secondary": "Ver casos"
+      },
+      "services": {
+        "eyebrow": "Servicios para gastronomía",
+        "h2": "Tu restaurante en el bolsillo de cada cliente.",
+        "cards": [
+          { "name": "Carta Digital QR", "description": "Menú interactivo con fotos, alérgenos y precios actualizables en tiempo real. Sin papel, sin costos de impresión." },
+          { "name": "Reservas Online", "description": "Sistema de reservas con confirmación automática, lista de espera y gestión de turnos desde tu panel." },
+          { "name": "App de Delivery Propio", "description": "Tu propia app sin comisiones de terceros. Pedidos directos, pagos integrados y tracking en tiempo real." },
+          { "name": "Loyalty & Fidelización", "description": "Programa de puntos, promociones segmentadas y campañas de WhatsApp para clientes recurrentes." }
+        ]
+      },
+      "projects": {
+        "eyebrow": "Casos en gastronomía",
+        "h2": "Restaurantes que multiplicaron sus pedidos.",
+        "cards": [
+          { "category": "Delivery", "name": "BurgerCraft", "description": "App de delivery propia que eliminó comisiones de PedidosYa y aumentó el margen un 18%." },
+          { "category": "Reservas", "name": "Ostería Firenze", "description": "Sistema de reservas online con lista de espera que llena el restaurante 7 días a la semana." },
+          { "category": "Loyalty", "name": "CaféRed", "description": "Programa de fidelización digital para cadena de 12 locales con 8.000 clientes activos." }
+        ]
+      },
+      "cta_section": {
+        "h2": "¿Tienes un restaurante o cadena?",
+        "subtitle": "Te mostramos cómo dejar de depender de los marketplaces y crecer con tu propia plataforma.",
+        "cta": "Hablar con un especialista"
+      }
+    },
+    "oficio": {
+      "badge": "Soluciones para oficios y servicios",
+      "hero": {
+        "eyebrow": "PRESENCIA DIGITAL PARA TU OFICIO",
+        "h1": "Más clientes,",
+        "h1_em": "menos complicaciones.",
+        "subtitle": "Creamos sitios web profesionales, sistemas de cotización y agendamiento para electricistas, plomeros, técnicos y proveedores de servicios locales.",
+        "cta_primary": "Ver soluciones",
+        "cta_secondary": "Ver casos"
+      },
+      "services": {
+        "eyebrow": "Servicios para oficios",
+        "h2": "Simple, profesional y que consigue clientes.",
+        "cards": [
+          { "name": "Sitio Web Profesional", "description": "Tu página lista en días: servicios, fotos de trabajos, testimonios y formulario de contacto directo." },
+          { "name": "Cotizaciones Online", "description": "Formulario inteligente que califica al cliente, envía una cotización automática y te notifica por WhatsApp." },
+          { "name": "Agenda de Servicios", "description": "Calendario de visitas online para que tus clientes agenden directamente sin llamadas de ida y vuelta." },
+          { "name": "WhatsApp Automatizado", "description": "Respuestas automáticas, confirmaciones de cita y seguimiento post-servicio sin que hagas nada manualmente." }
+        ]
+      },
+      "projects": {
+        "eyebrow": "Casos en oficios",
+        "h2": "Técnicos y artesanos que triplicaron sus consultas.",
+        "cards": [
+          { "category": "Electricidad", "name": "ElectroSur", "description": "Sitio web + cotizador online que triplicó las consultas en el primer mes." },
+          { "category": "Climatización", "name": "FríoCalor Pro", "description": "Agenda online que eliminó el doble-booking y redujo el tiempo en llamadas un 70%." },
+          { "category": "Plomería", "name": "AquaFix", "description": "WhatsApp automatizado con triage de urgencias que convirtió el 60% de consultas en trabajos." }
+        ]
+      },
+      "cta_section": {
+        "h2": "¿Trabajas por cuenta propia o tienes un equipo?",
+        "subtitle": "Te ponemos online en menos de una semana con todo lo que necesitas para conseguir más clientes.",
+        "cta": "Hablar con un especialista"
+      }
+    }
   }
 }

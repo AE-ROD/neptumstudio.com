@@ -9,9 +9,10 @@ interface Props {
   description: string;
   locale: Locale;
   canonicalUrl: string;
+  hreflangLinks?: Array<{ locale: string; href: string }>;
 }
 
-const { title, description, locale, canonicalUrl } = Astro.props;
+const { title, description, locale, canonicalUrl, hreflangLinks } = Astro.props;
 ---
 <!doctype html>
 <html lang={locale}>
@@ -30,9 +31,14 @@ const { title, description, locale, canonicalUrl } = Astro.props;
     <meta property="og:type" content="website" />
 
     <!-- Hreflang -->
-    <link rel="alternate" hreflang="es" href="https://neptumstudio.com/" />
-    <link rel="alternate" hreflang="en" href="https://neptumstudio.com/en/" />
-    <link rel="alternate" hreflang="pt" href="https://neptumstudio.com/pt/" />
+    {hreflangLinks
+      ? hreflangLinks.map(l => <link rel="alternate" hreflang={l.locale} href={l.href} />)
+      : <>
+          <link rel="alternate" hreflang="es" href="https://neptumstudio.com/" />
+          <link rel="alternate" hreflang="en" href="https://neptumstudio.com/en/" />
+          <link rel="alternate" hreflang="pt" href="https://neptumstudio.com/pt/" />
+        </>
+    }
 
     <!-- Font preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -3,10 +3,14 @@
 import type { Locale } from '../i18n';
 import { getT, localeRoutes } from '../i18n';
 
-interface Props { locale: Locale; }
-const { locale } = Astro.props;
+interface Props {
+  locale: Locale;
+  langRoutes?: Record<Locale, string>;
+}
+const { locale, langRoutes } = Astro.props;
 const t = getT(locale);
 const year = new Date().getFullYear();
+const resolvedLangRoutes = langRoutes ?? localeRoutes;
 ---
 
 <footer id="footer" class="footer">
@@ -58,7 +62,7 @@ const year = new Date().getFullYear();
       <div class="footer-right">
         <div class="footer-lang">
           {(['es', 'en', 'pt'] as const).map(lang => (
-            <a href={localeRoutes[lang]} class:list={['flang', { active: lang === locale }]}>{lang.toUpperCase()}</a>
+            <a href={resolvedLangRoutes[lang]} class:list={['flang', { active: lang === locale }]}>{lang.toUpperCase()}</a>
           ))}
         </div>
         <div class="footer-social">

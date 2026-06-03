@@ -68,5 +68,112 @@
     "tagline": "We build digital solutions",
     "cols": { "services": "Services", "company": "Company", "contact": "Contact" },
     "copyright": "All rights reserved"
+  },
+  "verticals": {
+    "salud": {
+      "badge": "Solutions for the healthcare sector",
+      "hero": {
+        "eyebrow": "DIGITAL TRANSFORMATION IN HEALTHCARE",
+        "h1": "Technology that improves",
+        "h1_em": "the patient experience.",
+        "subtitle": "We develop scheduling platforms, patient portals and telemedicine apps for clinics, medical offices and health centers across LATAM.",
+        "cta_primary": "See solutions",
+        "cta_secondary": "See cases"
+      },
+      "services": {
+        "eyebrow": "Services for healthcare",
+        "h2": "Everything your clinic needs to go digital.",
+        "cards": [
+          { "name": "Online Scheduling", "description": "24/7 booking system integrated with your calendar, automatic confirmation and WhatsApp reminders." },
+          { "name": "Patient Portal", "description": "Secure access to results, medical history and prescriptions from any device." },
+          { "name": "Telemedicine", "description": "HIPAA-compliant video consultation platform with virtual waiting room and visit records." },
+          { "name": "HIS/EMR Integration", "description": "We connect your new solution with the systems you already use: Meditech, OpenEMR, and others." }
+        ]
+      },
+      "projects": {
+        "eyebrow": "Healthcare cases",
+        "h2": "Clinics already growing with us.",
+        "cards": [
+          { "category": "Scheduling", "name": "ClínicaSur", "description": "Online scheduling portal that reduced no-shows by 40% in 3 months." },
+          { "category": "Telemedicine", "name": "MedConnect", "description": "Video consultation platform for a specialist network across 5 countries." },
+          { "category": "Patient Portal", "name": "VidaSalud", "description": "Mobile app with clinical history, results and digital prescriptions." }
+        ]
+      },
+      "cta_section": {
+        "h2": "Do you have a clinic or medical center?",
+        "subtitle": "Tell us your case and we'll show you how we can digitize you in 30 days.",
+        "cta": "Talk to a specialist"
+      }
+    },
+    "resto": {
+      "badge": "Solutions for the food & beverage sector",
+      "hero": {
+        "eyebrow": "RESTAURANT DIGITALIZATION",
+        "h1": "More full tables,",
+        "h1_em": "more online orders.",
+        "subtitle": "We develop digital menus, reservation systems, own delivery apps and loyalty programs for restaurants and chains across LATAM.",
+        "cta_primary": "See solutions",
+        "cta_secondary": "See cases"
+      },
+      "services": {
+        "eyebrow": "Services for restaurants",
+        "h2": "Your restaurant in every customer's pocket.",
+        "cards": [
+          { "name": "QR Digital Menu", "description": "Interactive menu with photos, allergens and real-time updatable prices. No paper, no printing costs." },
+          { "name": "Online Reservations", "description": "Booking system with automatic confirmation, waitlist and shift management from your dashboard." },
+          { "name": "Own Delivery App", "description": "Your own app with no third-party commissions. Direct orders, integrated payments and real-time tracking." },
+          { "name": "Loyalty Program", "description": "Points system, segmented promotions and WhatsApp campaigns for returning customers." }
+        ]
+      },
+      "projects": {
+        "eyebrow": "Restaurant cases",
+        "h2": "Restaurants that multiplied their orders.",
+        "cards": [
+          { "category": "Delivery", "name": "BurgerCraft", "description": "Own delivery app that eliminated marketplace commissions and increased margin by 18%." },
+          { "category": "Reservations", "name": "Ostería Firenze", "description": "Online reservation system with waitlist that fills the restaurant 7 days a week." },
+          { "category": "Loyalty", "name": "CaféRed", "description": "Digital loyalty program for a chain of 12 locations with 8,000 active customers." }
+        ]
+      },
+      "cta_section": {
+        "h2": "Do you have a restaurant or chain?",
+        "subtitle": "We'll show you how to stop depending on marketplaces and grow with your own platform.",
+        "cta": "Talk to a specialist"
+      }
+    },
+    "oficio": {
+      "badge": "Solutions for trades and services",
+      "hero": {
+        "eyebrow": "DIGITAL PRESENCE FOR YOUR TRADE",
+        "h1": "More clients,",
+        "h1_em": "less hassle.",
+        "subtitle": "We create professional websites, quote and scheduling systems for electricians, plumbers, technicians and local service providers.",
+        "cta_primary": "See solutions",
+        "cta_secondary": "See cases"
+      },
+      "services": {
+        "eyebrow": "Services for trades",
+        "h2": "Simple, professional and client-getting.",
+        "cards": [
+          { "name": "Professional Website", "description": "Your page ready in days: services, work photos, testimonials and direct contact form." },
+          { "name": "Online Quotes", "description": "Smart form that qualifies the client, sends an automatic quote and notifies you by WhatsApp." },
+          { "name": "Service Calendar", "description": "Online visit calendar so your clients can book directly without back-and-forth calls." },
+          { "name": "Automated WhatsApp", "description": "Automatic replies, appointment confirmations and post-service follow-up without manual work." }
+        ]
+      },
+      "projects": {
+        "eyebrow": "Trade cases",
+        "h2": "Technicians and craftsmen who tripled their inquiries.",
+        "cards": [
+          { "category": "Electrical", "name": "ElectroSur", "description": "Website + online quote tool that tripled inquiries in the first month." },
+          { "category": "HVAC", "name": "FríoCalor Pro", "description": "Online calendar that eliminated double-booking and reduced phone time by 70%." },
+          { "category": "Plumbing", "name": "AquaFix", "description": "Automated WhatsApp with urgency triage that converted 60% of inquiries into jobs." }
+        ]
+      },
+      "cta_section": {
+        "h2": "Are you self-employed or have a team?",
+        "subtitle": "We get you online in less than a week with everything you need to win more clients.",
+        "cta": "Talk to a specialist"
+      }
+    }
   }
 }
