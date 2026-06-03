@@ -10,12 +10,13 @@ interface Props {
   locale: Locale;
   canonicalUrl: string;
   hreflangLinks?: Array<{ locale: string; href: string }>;
+  accentColor?: string;
 }
 
-const { title, description, locale, canonicalUrl, hreflangLinks } = Astro.props;
+const { title, description, locale, canonicalUrl, hreflangLinks, accentColor } = Astro.props;
 ---
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} style={accentColor ? `--vp-accent: ${accentColor}` : undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

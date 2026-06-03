@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opción 2 · Personalidad Visual Plena — NeptumStudio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Montserrat', sans-serif; background: #07090d; color: #fff; min-height: 100vh; }
+
+.page-header {
+  padding: 3rem 5rem 2.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.option-badge { font-size: 0.5625rem; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.6rem; }
+.option-title { font-family: 'Cormorant Garamond', serif; font-size: 2.75rem; font-weight: 300; letter-spacing: -0.01em; }
+.option-title em { font-style: italic; color: #e8c87a; }
+.option-concept { font-size: 0.6875rem; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 380px; font-weight: 300; text-align: right; }
+.option-concept strong { color: rgba(255,255,255,0.65); font-weight: 500; }
+
+.panels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 2.5rem 5rem 5rem; }
+
+.panel { border-radius: 14px; overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.07); }
+.panel-label {
+  font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase;
+  padding: 0.6rem 1.25rem; background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.07); color: rgba(255,255,255,0.4);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.panel-label .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+.mock { height: 540px; position: relative; overflow: hidden; }
+
+/* ── NAVBAR ── */
+.mock-nav {
+  height: 58px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.5rem; position: relative; z-index: 10;
+  background: rgba(13,27,42,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.mock-logo { display: flex; align-items: center; gap: 0.5rem; }
+.mock-logo svg { width: 22px; height: 22px; color: #fff; }
+.mock-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; letter-spacing: 0.06em; color: #fff; }
+.mock-nav-links { display: flex; gap: 1.25rem; align-items: center; }
+.mock-nav-links span { font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+.mock-nav-right { display: flex; align-items: center; gap: 0.75rem; }
+.mock-lang { font-size: 0.45rem; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.25); padding: 0.2rem 0.4rem; border-radius: 3px; color: rgba(255,255,255,0.7); }
+
+/* ── HERO con gradiente dramático ── */
+.mock-hero {
+  height: calc(540px - 58px - 90px);
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+  position: relative; overflow: hidden;
+}
+
+/* Gradiente diagonal dramático */
+.mock-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--hero-gradient);
+  z-index: 0;
+}
+
+/* Noise texture overlay */
+.mock-hero::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px;
+  opacity: 0.5; z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+.mock-hero-content { position: relative; z-index: 2; }
+.mock-badge {
+  display: inline-block; font-size: 0.45rem; letter-spacing: 0.18em; text-transform: uppercase;
+  border: 1px solid; border-radius: 3px; padding: 0.25rem 0.6rem;
+  margin-bottom: 0.7rem; font-weight: 500;
+}
+.mock-eyebrow { font-size: 0.45rem; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.55; margin-bottom: 0.6rem; color: #fff; }
+.mock-h1 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; line-height: 1.1; margin-bottom: 0.75rem; color: #fff; }
+.mock-sub { font-size: 0.55rem; line-height: 1.65; color: rgba(255,255,255,0.6); font-weight: 300; max-width: 200px; margin-bottom: 1rem; }
+.mock-btns { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+.mock-btn-primary {
+  font-size: 0.45rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.45rem 0.9rem; border-radius: 3px; font-weight: 700; white-space: nowrap;
+}
+.mock-btn-ghost {
+  font-size: 0.45rem; letter-spacing: 0.12em; text-transform: uppercase;
+  border-bottom: 1px solid; padding-bottom: 1px; white-space: nowrap;
+}
+.mock-hero-visual { display: flex; align-items: center; justify-content: center; height: 100%; position: relative; z-index: 2; }
+.mock-hero-visual svg { width: 90px; height: 90px; }
+
+/* Peek */
+.mock-services-peek {
+  height: 90px; display: flex; align-items: center; gap: 0.75rem;
+  padding: 0 1.75rem; border-top: 1px solid rgba(0,0,0,0.08); overflow: hidden;
+}
+.mock-svc-card { flex: 1; background: #fff; border-radius: 4px; padding: 0.6rem 0.7rem; min-width: 0; border-left: 3px solid; }
+.mock-svc-icon { width: 14px; height: 14px; margin-bottom: 0.3rem; }
+.mock-svc-name { font-size: 0.4rem; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 0.2rem; }
+.mock-svc-desc { font-size: 0.35rem; line-height: 1.5; opacity: 0.5; }
+
+/* ────────────────────────────────────────────
+   SALUD  — verde profundo, estilo médico limpio
+──────────────────────────────────────────── */
+.salud .panel-label .dot { background: #2e8b57; }
+.salud .mock-hero { --hero-gradient: linear-gradient(135deg, #0d1b2a 0%, #0d1b2a 40%, #0a2a18 100%); }
+.salud .mock-badge { border-color: #2e8b57; color: #6ecf9a; }
+.salud .mock-h1 { font-weight: 400; }
+.salud .mock-h1 em { font-style: normal; color: #6ecf9a; }
+.salud .mock-btn-primary { background: #2e8b57; color: #fff; }
+.salud .mock-btn-ghost { border-color: rgba(110,207,154,0.4); color: #6ecf9a; }
+.salud .mock-hero-visual svg { color: #6ecf9a; opacity: 0.4; }
+.salud .mock-services-peek { background: #f2fbf6; }
+.salud .mock-svc-card { border-left-color: #2e8b57; }
+.salud .mock-svc-name { color: #0a2a18; }
+.salud .mock-svc-icon { color: #2e8b57; }
+.salud .mock-nav .mock-cta-btn-wrap { color: #6ecf9a; }
+
+/* ────────────────────────────────────────────
+   RESTO  — cobre oscuro, tipografía italic, cálido
+──────────────────────────────────────────── */
+.resto .panel-label .dot { background: #c0522b; }
+.resto .mock-hero { --hero-gradient: linear-gradient(135deg, #0d1b2a 0%, #0d1b2a 35%, #2a1005 100%); }
+.resto .mock-badge { border-color: #c0522b; color: #f2a070; }
+.resto .mock-h1 { font-style: italic; font-weight: 300; letter-spacing: 0.01em; }
+.resto .mock-h1 em { font-style: italic; color: #d4a853; }
+.resto .mock-btn-primary { background: #c0522b; color: #fff; }
+.resto .mock-btn-ghost { border-color: rgba(212,168,83,0.5); color: #d4a853; }
+.resto .mock-hero-visual svg { color: #f2a070; opacity: 0.4; }
+.resto .mock-services-peek { background: #fdf5ec; }
+.resto .mock-svc-card { border-left-color: #c0522b; }
+.resto .mock-svc-name { color: #2a1005; }
+.resto .mock-svc-icon { color: #c0522b; }
+
+/* ────────────────────────────────────────────
+   OFICIO  — antracita, bold, industrial
+──────────────────────────────────────────── */
+.oficio .panel-label .dot { background: #e87722; }
+.oficio .mock-hero { --hero-gradient: linear-gradient(135deg, #0d1b2a 0%, #0d1b2a 30%, #1a1a22 100%); }
+.oficio .mock-badge { border-color: #e87722; color: #e87722; }
+.oficio .mock-h1 { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.5rem; letter-spacing: -0.02em; }
+.oficio .mock-h1 em { font-style: normal; color: #e87722; }
+.oficio .mock-eyebrow { font-weight: 600; }
+.oficio .mock-btn-primary { background: #1565c0; color: #fff; }
+.oficio .mock-btn-ghost { border-color: rgba(232,119,34,0.5); color: #e87722; }
+.oficio .mock-hero-visual svg { color: #9ec5e8; opacity: 0.4; }
+.oficio .mock-services-peek { background: #f2f4f8; }
+.oficio .mock-svc-card { border-left-color: #e87722; }
+.oficio .mock-svc-name { color: #0f1a28; font-weight: 700; }
+.oficio .mock-svc-icon { color: #1565c0; }
+
+/* ── Mega-menu indicator ── */
+.mega-note {
+  text-align: center; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(255,255,255,0.25); padding: 1.25rem 5rem 0;
+  border-top: 1px solid rgba(255,255,255,0.05); margin-top: 0;
+}
+
+.mega-preview {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; padding: 1.5rem 5rem 3rem; margin-top: 1rem;
+}
+.mega-panel {
+  border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.mega-panel-inner {
+  padding: 1.25rem; display: flex; align-items: center; gap: 1rem;
+}
+.mega-panel-icon { width: 36px; height: 36px; opacity: 0.8; flex-shrink: 0; }
+.mega-panel-text {}
+.mega-panel-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; margin-bottom: 0.2rem; }
+.mega-panel-desc { font-size: 0.5rem; opacity: 0.55; line-height: 1.5; font-weight: 300; }
+.mega-label { font-size: 0.45rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 0.5rem 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div class="option-badge">NeptumStudio · Mockup Comparativo</div>
+    <div class="option-title">Opción 2 — <em>Personalidad Visual Plena</em></div>
+  </div>
+  <div class="option-concept">
+    Cada sector tiene su propio <strong>mood completo</strong>: gradiente diagonal dramático en el hero, tipografía con peso diferente (médico = limpio, resto = italic cálido, oficio = bold industrial) y card borders de acento.<br>
+    El dropdown se convierte en un <strong>mega-menu</strong> con panel visual de 3 columnas.
+  </div>
+</div>
+
+<div class="panels-grid">
+
+  <!-- SALUD -->
+  <div class="panel salud">
+    <div class="panel-label"><div class="dot"></div> NeptumSalud · Estilo médico / limpio</div>
+    <div class="mock">
+      <div class="mock-nav">
+        <div class="mock-logo">
+          <svg viewBox="0 0 60 68" fill="none"><line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+          <div class="mock-logo-text">neptumstudio</div>
+        </div>
+        <div class="mock-nav-links">
+          <span>Servicios</span><span>Proyectos</span><span style="color:#6ecf9a">Sectores ↓</span><span>Blog</span>
+        </div>
+        <div class="mock-nav-right">
+          <div class="mock-lang">ES · EN · PT</div>
+          <span style="font-size:0.45rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(110,207,154,0.4);color:#6ecf9a;padding:0.3rem 0.7rem;border-radius:3px">Contacto ↗</span>
+        </div>
+      </div>
+      <div class="mock-hero">
+        <div class="mock-hero-content">
+          <div class="mock-badge">Soluciones para el sector salud</div>
+          <div class="mock-eyebrow">Transformación digital en salud</div>
+          <div class="mock-h1">Tecnología que mejora<br><em>la experiencia<br>del paciente.</em></div>
+          <div class="mock-sub">Plataformas de agendamiento, portales de pacientes y apps de telemedicina.</div>
+          <div class="mock-btns">
+            <div class="mock-btn-primary">Ver soluciones →</div>
+            <div class="mock-btn-ghost" style="border-color:rgba(110,207,154,0.4);color:#6ecf9a">Ver casos</div>
+          </div>
+        </div>
+        <div class="mock-hero-visual">
+          <svg viewBox="0 0 60 68" fill="none">
+            <line x1="30" y1="10" x2="30" y2="46" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="14" y1="28" x2="46" y2="28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <polyline points="4,58 12,58 17,50 21,64 25,54 30,58 46,58 56,58" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mock-services-peek">
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+          <div class="mock-svc-name">Agendamiento Online</div>
+          <div class="mock-svc-desc">Reservas 24/7 con confirmación.</div>
+        </div>
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.9L15 14"/><rect x="3" y="6" width="12" height="12" rx="2"/></svg>
+          <div class="mock-svc-name">Telemedicina</div>
+          <div class="mock-svc-desc">Videoconsultas HIPAA-compliant.</div>
+        </div>
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <div class="mock-svc-name">Portal Paciente</div>
+          <div class="mock-svc-desc">Historial y resultados seguros.</div>
+        </div>
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="12" r="3"/><circle cx="17" cy="12" r="3"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+          <div class="mock-svc-name">Integración HIS</div>
+          <div class="mock-svc-desc">Meditech, OpenEMR y más.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESTO -->
+  <div class="panel resto">
+    <div class="panel-label"><div class="dot"></div> NeptumResto · Estilo orgánico / cálido</div>
+    <div class="mock">
+      <div class="mock-nav">
+        <div class="mock-logo">
+          <svg viewBox="0 0 60 68" fill="none"><line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+          <div class="mock-logo-text">neptumstudio</div>
+        </div>
+        <div class="mock-nav-links">
+          <span>Servicios</span><span>Proyectos</span><span style="color:#f2a070">Sectores ↓</span><span>Blog</span>
+        </div>
+        <div class="mock-nav-right">
+          <div class="mock-lang">ES · EN · PT</div>
+          <span style="font-size:0.45rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(242,160,112,0.4);color:#f2a070;padding:0.3rem 0.7rem;border-radius:3px">Contacto ↗</span>
+        </div>
+      </div>
+      <div class="mock-hero">
+        <div class="mock-hero-content">
+          <div class="mock-badge">Soluciones para gastronomía</div>
+          <div class="mock-eyebrow">Digitalización gastronómica</div>
+          <div class="mock-h1">Más mesas llenas,<br><em>más pedidos<br>online.</em></div>
+          <div class="mock-sub">Cartas digitales, delivery propio y programas de fidelización para restaurantes.</div>
+          <div class="mock-btns">
+            <div class="mock-btn-primary">Ver soluciones →</div>
+            <div class="mock-btn-ghost" style="border-color:rgba(212,168,83,0.5);color:#d4a853">Ver casos</div>
+          </div>
+        </div>
+        <div class="mock-hero-visual">
+          <svg viewBox="0 0 60 68" fill="none">
+            <line x1="14" y1="8" x2="14" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="20" y1="8" x2="20" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="26" y1="8" x2="26" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M14 20 Q20 26 26 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <line x1="20" y1="26" x2="20" y2="60" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M34 8 Q30 22 38 28 Q46 22 42 8 Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <line x1="38" y1="28" x2="38" y2="52" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="32" y1="52" x2="44" y2="52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mock-services-peek">
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <div class="mock-svc-name">Carta Digital QR</div>
+          <div class="mock-svc-desc">Menú interactivo en tiempo real.</div>
+        </div>
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9,16 11,18 15,14"/></svg>
+          <div class="mock-svc-name">Reservas Online</div>
+          <div class="mock-svc-desc">Confirmación y lista de espera.</div>
+        </div>
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7l3 3 3-3"/></svg>
+          <div class="mock-svc-name">App Delivery Propio</div>
+          <div class="mock-svc-desc">Sin comisiones de terceros.</div>
+        </div>
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="mock-svc-name">Loyalty</div>
+          <div class="mock-svc-desc">Puntos y campañas WhatsApp.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFICIO -->
+  <div class="panel oficio">
+    <div class="panel-label"><div class="dot"></div> NeptumOficio · Estilo bold / industrial</div>
+    <div class="mock">
+      <div class="mock-nav">
+        <div class="mock-logo">
+          <svg viewBox="0 0 60 68" fill="none"><line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>
+          <div class="mock-logo-text">neptumstudio</div>
+        </div>
+        <div class="mock-nav-links">
+          <span>Servicios</span><span>Proyectos</span><span style="color:#e87722">Sectores ↓</span><span>Blog</span>
+        </div>
+        <div class="mock-nav-right">
+          <div class="mock-lang">ES · EN · PT</div>
+          <span style="font-size:0.45rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid rgba(232,119,34,0.5);color:#e87722;padding:0.3rem 0.7rem;border-radius:3px">Contacto ↗</span>
+        </div>
+      </div>
+      <div class="mock-hero">
+        <div class="mock-hero-content">
+          <div class="mock-badge">Soluciones para oficios y servicios</div>
+          <div class="mock-eyebrow">Presencia digital para tu oficio</div>
+          <div class="mock-h1">Más clientes,<br><em>menos<br>complicaciones.</em></div>
+          <div class="mock-sub">Sitios web, cotizaciones online y agenda para electricistas, plomeros y técnicos.</div>
+          <div class="mock-btns">
+            <div class="mock-btn-primary">Ver soluciones →</div>
+            <div class="mock-btn-ghost" style="border-color:rgba(232,119,34,0.5);color:#e87722">Ver casos</div>
+          </div>
+        </div>
+        <div class="mock-hero-visual">
+          <svg viewBox="0 0 60 68" fill="none">
+            <path d="M10 58 L28 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="34" cy="34" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <circle cx="34" cy="34" r="3.5" stroke="currentColor" stroke-width="2" fill="none"/>
+            <circle cx="44" cy="48" r="9" stroke="currentColor" stroke-width="2" fill="none"/>
+            <circle cx="44" cy="48" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+            <line x1="44" y1="39" x2="44" y2="36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="44" y1="57" x2="44" y2="60" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="35" y1="48" x2="32" y2="48" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="53" y1="48" x2="56" y2="48" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mock-services-peek">
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <div class="mock-svc-name">Sitio Web Profesional</div>
+          <div class="mock-svc-desc">Tu página lista en días.</div>
+        </div>
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+          <div class="mock-svc-name">Cotizaciones Online</div>
+          <div class="mock-svc-desc">Formulario inteligente + WhatsApp.</div>
+        </div>
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <div class="mock-svc-name">Agenda de Servicios</div>
+          <div class="mock-svc-desc">Reservas directas sin llamadas.</div>
+        </div>
+        <div class="mock-svc-card">
+          <svg class="mock-svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <div class="mock-svc-name">WhatsApp Automatizado</div>
+          <div class="mock-svc-desc">Respuestas y seguimiento auto.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Mega-menu preview -->
+<div class="mega-note">↓ Así se vería el mega-menu "Sectores ↓" en esta opción</div>
+<div class="mega-preview">
+  <div class="mega-panel">
+    <div class="mega-label" style="color:#6ecf9a">Salud</div>
+    <div class="mega-panel-inner" style="background:linear-gradient(135deg,#0a2a18,#0d1b2a)">
+      <svg class="mega-panel-icon" viewBox="0 0 60 68" fill="none" style="color:#6ecf9a"><line x1="30" y1="10" x2="30" y2="46" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><line x1="14" y1="28" x2="46" y2="28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      <div class="mega-panel-text">
+        <div class="mega-panel-name">NeptumSalud</div>
+        <div class="mega-panel-desc">Clínicas, consultorios y telemedicina</div>
+      </div>
+    </div>
+  </div>
+  <div class="mega-panel">
+    <div class="mega-label" style="color:#f2a070">Gastronomía</div>
+    <div class="mega-panel-inner" style="background:linear-gradient(135deg,#2a1005,#0d1b2a)">
+      <svg class="mega-panel-icon" viewBox="0 0 60 68" fill="none" style="color:#f2a070"><line x1="20" y1="8" x2="20" y2="60" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M14 8 L14 20 Q20 26 26 20 L26 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+      <div class="mega-panel-text">
+        <div class="mega-panel-name">NeptumResto</div>
+        <div class="mega-panel-desc">Restaurantes y cadenas gastronómicas</div>
+      </div>
+    </div>
+  </div>
+  <div class="mega-panel">
+    <div class="mega-label" style="color:#e87722">Oficios</div>
+    <div class="mega-panel-inner" style="background:linear-gradient(135deg,#1a1a22,#0d1b2a)">
+      <svg class="mega-panel-icon" viewBox="0 0 60 68" fill="none" style="color:#9ec5e8"><circle cx="34" cy="34" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/><circle cx="34" cy="34" r="3.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M10 58 L28 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      <div class="mega-panel-text">
+        <div class="mega-panel-name">NeptumOficio</div>
+        <div class="mega-panel-desc">Técnicos y proveedores de servicios</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

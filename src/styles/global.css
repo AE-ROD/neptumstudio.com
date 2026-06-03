@@ -6,6 +6,7 @@
 /* ── Design Tokens ── */
 :root {
   --color-navy-deep:  #0D1B2A;
+
   --color-navy-mid:   #1B2B45;
   --color-slate:      #415466;
   --color-silver:     #A7ADBA;
@@ -25,6 +26,45 @@
   --nav-height: 72px;
   --section-pad: clamp(4rem, 8vw, 8rem);
   --container:   min(1200px, 100% - 3rem);
+
+  /* ── Vertical pages — dark mode defaults (overridden per-page via --vp-accent) ── */
+  --vp-accent:        #A7ADBA;          /* fallback — each vertical overrides this */
+  --vp-bg:            #0D1B2A;
+  --vp-bg-nav:        rgba(13,27,42,0.95);
+  --vp-bg-nav-border: rgba(255,255,255,0.07);
+  --vp-bg-mid:        #1B2B45;
+  --vp-text:          #ffffff;
+  --vp-text-2:        #A7ADBA;
+  --vp-text-3:        #415466;
+  --vp-border:        rgba(255,255,255,0.08);
+  --vp-logo-color:    #ffffff;
+  --vp-svc-bg:        #F6F4F0;
+  --vp-svc-card:      #ffffff;
+  --vp-svc-border:    #D4D2CE;
+  --vp-svc-text:      #0D1B2A;
+  --vp-svc-desc:      #415466;
+  --vp-btn-text:      #0D1B2A;         /* text on accent-colored button */
+}
+
+/* ── Vertical pages — light mode overrides ── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --vp-bg:            #F6F4F0;
+    --vp-bg-nav:        rgba(246,244,240,0.97);
+    --vp-bg-nav-border: rgba(0,0,0,0.08);
+    --vp-bg-mid:        #EDE9E3;
+    --vp-text:          #0D1B2A;
+    --vp-text-2:        #415466;
+    --vp-text-3:        #6A7A8A;
+    --vp-border:        rgba(0,0,0,0.1);
+    --vp-logo-color:    #0D1B2A;
+    --vp-svc-bg:        #ffffff;
+    --vp-svc-card:      #F9F8F6;
+    --vp-svc-border:    #E4E2DE;
+    --vp-svc-text:      #0D1B2A;
+    --vp-svc-desc:      #5A6A7A;
+    --vp-btn-text:      #0D1B2A;
+  }
 }
 
 /* ── Reset ── */

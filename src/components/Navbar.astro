@@ -7,14 +7,15 @@ import type { Vertical } from '../i18n';
 interface Props {
   locale: Locale;
   langRoutes?: Record<Locale, string>;
+  vertical?: Vertical;
 }
-const { locale, langRoutes } = Astro.props;
+const { locale, langRoutes, vertical } = Astro.props;
 const t = getT(locale);
 const resolvedLangRoutes = langRoutes ?? localeRoutes;
 const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
 ---
 
-<header id="navbar" data-hero-reveal style="transform: translateY(50vh)">
+<header id="navbar" data-hero-reveal style="transform: translateY(50vh)" data-vertical={vertical ? 'true' : undefined}>
   <div class="nav-inner container">
 
     <a href={localeRoutes[locale]} class="nav-logo" aria-label="Neptum Studio">
@@ -26,7 +27,11 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
         <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
         <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        <text x="70" y="42" font-family="'Cormorant Garamond', serif" font-size="22" font-weight="400" fill="currentColor" letter-spacing="2">neptumstudio</text>
+        {vertical ? (
+          <text x="70" y="42" font-family="'Cormorant Garamond', serif" font-size="22" font-weight="400" fill="currentColor" letter-spacing="2">neptum<tspan fill="var(--vp-accent)">{vertical}</tspan></text>
+        ) : (
+          <text x="70" y="42" font-family="'Cormorant Garamond', serif" font-size="22" font-weight="400" fill="currentColor" letter-spacing="2">neptumstudio</text>
+        )}
       </svg>
     </a>
 
@@ -37,9 +42,11 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
       <div class="nav-dropdown">
         <span class="nav-dropdown-trigger">{sectorNavLabel[locale]} ↓</span>
         <div class="dropdown-menu">
-          {verticals.map(v => (
-            <a href={verticalRoutes[locale][v]}>{verticalNavLabels[locale][v]}</a>
-          ))}
+          <div class="dropdown-menu-inner">
+            {verticals.map(v => (
+              <a href={verticalRoutes[locale][v]} data-astro-reload>{verticalNavLabels[locale][v]}</a>
+            ))}
+          </div>
         </div>
       </div>
       <a href={`${localeRoutes[locale]}#contact`}>{t.nav.blog}</a>
@@ -53,6 +60,7 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
             class:list={['lang-btn', { active: lang === locale }]}
             lang={lang}
             aria-current={lang === locale ? 'true' : undefined}
+            data-astro-reload
           >
             {lang.toUpperCase()}
           </a>
@@ -77,13 +85,13 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
       <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
       <span class="mobile-sector-label">{sectorNavLabel[locale]}</span>
       {verticals.map(v => (
-        <a href={verticalRoutes[locale][v]} class="mobile-vertical-link">{verticalNavLabels[locale][v]}</a>
+        <a href={verticalRoutes[locale][v]} class="mobile-vertical-link" data-astro-reload>{verticalNavLabels[locale][v]}</a>
       ))}
       <a href={`${localeRoutes[locale]}#contact`} class="mobile-cta">{t.nav.contact} ↗</a>
     </nav>
     <div class="mobile-lang">
       {(['es', 'en', 'pt'] as const).map((lang) => (
-        <a href={resolvedLangRoutes[lang]} class:list={['lang-btn', { active: lang === locale }]}>
+        <a href={resolvedLangRoutes[lang]} class:list={['lang-btn', { active: lang === locale }]} data-astro-reload>
           {lang.toUpperCase()}
         </a>
       ))}
@@ -147,24 +155,26 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
   .nav-dropdown:hover .nav-dropdown-trigger { color: var(--color-white); }
   .dropdown-menu {
     position: absolute;
-    top: calc(100% + 0.75rem);
+    top: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-4px);
-    background: var(--color-navy-mid);
-    border: 1px solid var(--color-slate);
-    border-radius: 4px;
-    padding: 0.4rem 0;
+    transform: translateX(-50%);
+    padding-top: 0.75rem;
     min-width: 160px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.15s ease;
   }
   .nav-dropdown:hover .dropdown-menu {
     opacity: 1;
     pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
   }
-  .dropdown-menu a {
+  .dropdown-menu-inner {
+    background: var(--color-navy-mid);
+    border: 1px solid var(--color-slate);
+    border-radius: 4px;
+    padding: 0.4rem 0;
+  }
+  .dropdown-menu-inner a {
     display: block;
     padding: 0.5rem 1rem;
     font-size: 0.625rem;
@@ -173,7 +183,7 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     text-transform: uppercase;
     transition: color 0.2s, background 0.2s;
   }
-  .dropdown-menu a:hover {
+  .dropdown-menu-inner a:hover {
     color: var(--color-white);
     background: rgba(255,255,255,0.05);
   }
@@ -300,6 +310,83 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     .nav-cta { display: none; }
     .hamburger { display: flex; }
     .lang-switch { display: none; }
+  }
+
+  /* ── Light mode — solo en páginas verticales ── */
+  @media (prefers-color-scheme: light) {
+    #navbar[data-vertical].scrolled {
+      background: var(--vp-bg-nav);
+      border-bottom-color: var(--vp-bg-nav-border);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    #navbar[data-vertical] {
+      color: var(--vp-logo-color);
+    }
+    #navbar[data-vertical] .logo-svg {
+      color: var(--vp-logo-color);
+    }
+    #navbar[data-vertical] .nav-links a {
+      color: var(--vp-text-2);
+    }
+    #navbar[data-vertical] .nav-links a:hover {
+      color: var(--vp-text);
+    }
+    #navbar[data-vertical] .nav-dropdown-trigger {
+      color: var(--vp-text-2);
+    }
+    #navbar[data-vertical] .nav-dropdown:hover .nav-dropdown-trigger {
+      color: var(--vp-text);
+    }
+    #navbar[data-vertical] .dropdown-menu-inner {
+      background: var(--vp-svc-card);
+      border-color: var(--vp-border);
+    }
+    #navbar[data-vertical] .dropdown-menu-inner a {
+      color: var(--vp-text-2);
+    }
+    #navbar[data-vertical] .dropdown-menu-inner a:hover {
+      color: var(--vp-text);
+      background: rgba(0,0,0,0.04);
+    }
+    #navbar[data-vertical] .lang-switch {
+      border-color: var(--vp-border);
+    }
+    #navbar[data-vertical] .lang-btn {
+      color: var(--vp-text-3);
+    }
+    #navbar[data-vertical] .lang-btn.active,
+    #navbar[data-vertical] .lang-btn:hover {
+      background: var(--vp-bg-mid);
+      color: var(--vp-text);
+    }
+    #navbar[data-vertical] .nav-cta {
+      border-color: var(--vp-text-2);
+      color: var(--vp-text-2);
+    }
+    #navbar[data-vertical] .nav-cta:hover {
+      background: var(--vp-text);
+      color: var(--vp-bg);
+      border-color: var(--vp-text);
+    }
+    #navbar[data-vertical] .hamburger span {
+      background: var(--vp-text);
+    }
+    #navbar[data-vertical] .mobile-menu {
+      background: var(--vp-bg);
+    }
+    #navbar[data-vertical] .mobile-links a {
+      color: var(--vp-text);
+    }
+    #navbar[data-vertical] .mobile-sector-label {
+      color: var(--vp-text-3);
+    }
+    #navbar[data-vertical] .mobile-vertical-link {
+      color: var(--vp-text-2) !important;
+    }
+    #navbar[data-vertical] .mobile-cta {
+      border-color: var(--vp-text-2);
+      color: var(--vp-text-2) !important;
+    }
   }
 </style>
 

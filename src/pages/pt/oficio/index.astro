@@ -11,6 +11,7 @@ import Footer from '../../../components/Footer.astro';
 
 const locale = 'pt' as const;
 const vertical = 'oficio' as const;
+const accentColor = '#5b9bd5';
 const hreflangLinks = [
   { locale: 'es', href: 'https://neptumstudio.com/oficio/' },
   { locale: 'en', href: 'https://neptumstudio.com/en/trade/' },
@@ -23,10 +24,11 @@ const langRoutes = { es: '/oficio/', en: '/en/trade/', pt: '/pt/oficio/' };
   description="Presença digital profissional para eletricistas, encanadores e técnicos. Cotações online, agenda e WhatsApp automatizado."
   locale={locale}
   canonicalUrl="https://neptumstudio.com/pt/oficio/"
+  accentColor={accentColor}
   hreflangLinks={hreflangLinks}
 >
   <Loader />
-  <Navbar locale={locale} langRoutes={langRoutes} />
+  <Navbar locale={locale} langRoutes={langRoutes} vertical={vertical} />
   <main>
     <VerticalHero locale={locale} vertical={vertical} />
     <VerticalServices locale={locale} vertical={vertical} />

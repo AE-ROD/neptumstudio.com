@@ -11,6 +11,7 @@ import Footer from '../../../components/Footer.astro';
 
 const locale = 'en' as const;
 const vertical = 'salud' as const;
+const accentColor = '#3db87a';
 const hreflangLinks = [
   { locale: 'es', href: 'https://neptumstudio.com/salud/' },
   { locale: 'en', href: 'https://neptumstudio.com/en/health/' },
@@ -23,10 +24,11 @@ const langRoutes = { es: '/salud/', en: '/en/health/', pt: '/pt/saude/' };
   description="Online scheduling, patient portals and telemedicine platforms for clinics across Latin America."
   locale={locale}
   canonicalUrl="https://neptumstudio.com/en/health/"
+  accentColor={accentColor}
   hreflangLinks={hreflangLinks}
 >
   <Loader />
-  <Navbar locale={locale} langRoutes={langRoutes} />
+  <Navbar locale={locale} langRoutes={langRoutes} vertical={vertical} />
   <main>
     <VerticalHero locale={locale} vertical={vertical} />
     <VerticalServices locale={locale} vertical={vertical} />

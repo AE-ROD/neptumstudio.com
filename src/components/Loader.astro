@@ -108,20 +108,28 @@
   const wordsEl   = document.getElementById('loader-words')!;
   const words     = Array.from(wordsEl.querySelectorAll('h2')) as HTMLElement[];
 
+  function clearLoader() {
+    container.style.display = 'none';
+    document.body.style.overflow = '';
+    document.body.style.cursor   = 'auto';
+  }
+
   document.body.style.overflow = 'hidden';
   document.body.style.cursor   = 'wait';
 
+  // Safety: always clear if GSAP is interrupted (hot reload, slow tab, etc.)
+  const safetyTimer = setTimeout(clearLoader, 5000);
+
   const tl = gsap.timeline({
     onComplete() {
-      container.style.display = 'none';
-      document.body.style.overflow = '';
-      document.body.style.cursor   = 'auto';
+      clearTimeout(safetyTimer);
+      clearLoader();
     }
   });
 
-  gsap.set(screen,   { top: 0 });
-  gsap.set(wordsEl,  { opacity: 0, y: -50 });
-  gsap.set(words,    { opacity: 0 });
+  gsap.set(screen,  { top: 0 });
+  gsap.set(wordsEl, { opacity: 0, y: -50 });
+  gsap.set(words,   { opacity: 0 });
   if (words[0]) gsap.set(words[0], { opacity: 1 });
 
   tl.to(wordsEl, {

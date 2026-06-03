@@ -67,10 +67,11 @@ const badge = t.verticals[vertical].badge;
 </section>
 
 <style>
+  /* ── Dark mode (default) ── */
   #hero {
     min-height: 100vh;
     min-height: 100svh;
-    background: var(--color-navy-deep);
+    background: var(--vp-bg);
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
@@ -79,6 +80,30 @@ const badge = t.verticals[vertical].badge;
     padding: var(--nav-height) 0 0;
     position: relative;
     overflow: hidden;
+    /* Diagonal accent splash from top-right */
+    background-image: radial-gradient(
+      ellipse 55% 70% at 100% 0%,
+      var(--vp-accent) 0%,
+      transparent 65%
+    );
+    background-blend-mode: normal;
+  }
+
+  /* Lower the splash opacity in dark mode */
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--vp-bg);
+    opacity: 0.82;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-content,
+  .hero-visual {
+    position: relative;
+    z-index: 1;
   }
 
   .hero-content {
@@ -93,22 +118,31 @@ const badge = t.verticals[vertical].badge;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     font-weight: 500;
-    color: var(--color-silver);
-    background: var(--color-navy-mid);
-    border: 1px solid var(--color-slate);
+    color: var(--vp-accent);
+    border: 1px solid var(--vp-accent);
     border-radius: 3px;
     padding: 0.25rem 0.6rem;
     margin-bottom: 0.75rem;
+    opacity: 0.9;
   }
 
-  .hero-content .eyebrow { margin-bottom: 1.25rem; }
+  .hero-content .eyebrow {
+    color: var(--vp-text-2);
+    margin-bottom: 1.25rem;
+  }
 
-  .hero-h1 { color: var(--color-white); margin-bottom: 1.25rem; }
-  .hero-h1 em { color: var(--color-silver); font-style: normal; }
+  .hero-h1 {
+    color: var(--vp-text);
+    margin-bottom: 1.25rem;
+  }
+  .hero-h1 em {
+    font-style: normal;
+    color: var(--vp-accent);
+  }
 
   .hero-sub {
     font-size: 1rem;
-    color: var(--color-silver);
+    color: var(--vp-text-2);
     line-height: 1.7;
     max-width: 420px;
     margin-bottom: 2rem;
@@ -125,28 +159,29 @@ const badge = t.verticals[vertical].badge;
   .btn-primary {
     display: inline-flex;
     align-items: center;
-    background: var(--color-white);
-    color: var(--color-navy-deep);
+    background: var(--vp-accent);
+    color: var(--vp-btn-text);
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 0.8rem 1.5rem;
     border-radius: 3px;
-    transition: background 0.2s, color 0.2s;
+    transition: filter 0.2s;
   }
-  .btn-primary:hover { background: var(--color-silver); }
+  .btn-primary:hover { filter: brightness(1.1); }
 
   .btn-ghost {
     font-size: 0.6875rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-silver);
-    border-bottom: 1px solid var(--color-slate);
+    color: var(--vp-accent);
+    border-bottom: 1px solid var(--vp-accent);
     padding-bottom: 2px;
-    transition: color 0.2s, border-color 0.2s;
+    opacity: 0.8;
+    transition: opacity 0.2s;
   }
-  .btn-ghost:hover { color: var(--color-white); border-color: var(--color-white); }
+  .btn-ghost:hover { opacity: 1; }
 
   .hero-visual {
     grid-area: visual;
@@ -168,22 +203,41 @@ const badge = t.verticals[vertical].badge;
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgba(27,43,69,0.9) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, var(--vp-accent) 0%, transparent 70%);
+    opacity: 0.12;
     animation: pulse-glow 4s ease-in-out infinite;
   }
   @keyframes pulse-glow {
-    0%,100% { transform: scale(1); opacity: 0.8; }
-    50%      { transform: scale(1.08); opacity: 1; }
+    0%,100% { transform: scale(1); opacity: 0.10; }
+    50%      { transform: scale(1.1); opacity: 0.16; }
   }
   .hero-mark {
     width: 52%;
     height: 52%;
-    color: var(--color-silver);
-    opacity: 0.5;
+    color: var(--vp-accent);
+    opacity: 0.45;
     position: relative;
     z-index: 1;
   }
 
+  /* ── Light mode ── */
+  @media (prefers-color-scheme: light) {
+    #hero::before {
+      opacity: 0.88;
+    }
+    /* Stronger splash visibility on light bg */
+    #hero {
+      background-image: radial-gradient(
+        ellipse 55% 70% at 100% 0%,
+        var(--vp-accent) 0%,
+        transparent 60%
+      );
+    }
+    .hero-mark { opacity: 0.3; }
+    .hero-glow { opacity: 0.08; }
+  }
+
+  /* ── Mobile ── */
   @media (max-width: 768px) {
     #hero {
       grid-template-columns: 1fr;
@@ -192,7 +246,9 @@ const badge = t.verticals[vertical].badge;
       min-height: 100svh;
     }
     .hero-visual { display: none; }
-    .hero-content { padding: calc(var(--nav-height) + 2.5rem) 1.5rem 2.5rem; }
+    .hero-content {
+      padding: calc(var(--nav-height) + 2.5rem) 1.5rem 2.5rem;
+    }
   }
 </style>
 

@@ -11,6 +11,7 @@ import Footer from '../../components/Footer.astro';
 
 const locale = 'es' as const;
 const vertical = 'resto' as const;
+const accentColor = '#e2825a';
 const hreflangLinks = [
   { locale: 'es', href: 'https://neptumstudio.com/resto/' },
   { locale: 'en', href: 'https://neptumstudio.com/en/restaurant/' },
@@ -23,10 +24,11 @@ const langRoutes = { es: '/resto/', en: '/en/restaurant/', pt: '/pt/restaurante/
   description="Cartas digitales, apps de delivery propio y sistemas de reservas para restaurantes y cadenas en LATAM."
   locale={locale}
   canonicalUrl="https://neptumstudio.com/resto/"
+  accentColor={accentColor}
   hreflangLinks={hreflangLinks}
 >
   <Loader />
-  <Navbar locale={locale} langRoutes={langRoutes} />
+  <Navbar locale={locale} langRoutes={langRoutes} vertical={vertical} />
   <main>
     <VerticalHero locale={locale} vertical={vertical} />
     <VerticalServices locale={locale} vertical={vertical} />

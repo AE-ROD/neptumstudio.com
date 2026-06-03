@@ -62,11 +62,11 @@ const icons = iconsByVertical[vertical];
 
 <style>
   .services-section {
-    background: var(--color-cream);
+    background: var(--vp-svc-bg);
     padding: var(--section-pad) 0;
   }
   .services-header { margin-bottom: clamp(3rem, 5vw, 5rem); }
-  .services-h2 { color: var(--color-navy-deep); margin-top: 0.75rem; }
+  .services-h2 { color: var(--vp-svc-text); margin-top: 0.75rem; }
 
   .services-grid {
     display: grid;
@@ -76,8 +76,8 @@ const icons = iconsByVertical[vertical];
 
   .svc-card {
     padding: 2rem 1.5rem;
-    background: var(--color-white);
-    border: 1px solid var(--color-cream-border);
+    background: var(--vp-svc-card);
+    border: 1px solid var(--vp-svc-border);
     border-radius: 6px;
     opacity: 0;
     transform: translateY(20px);
@@ -89,7 +89,7 @@ const icons = iconsByVertical[vertical];
   .svc-icon {
     width: 36px;
     height: 36px;
-    color: var(--color-navy-deep);
+    color: var(--vp-accent);
     margin-bottom: 1.25rem;
   }
   .svc-icon svg { width: 100%; height: 100%; }
@@ -97,13 +97,13 @@ const icons = iconsByVertical[vertical];
   .svc-name {
     font-size: 1rem;
     font-weight: 500;
-    color: var(--color-navy-deep);
+    color: var(--vp-svc-text);
     margin-bottom: 0.6rem;
     line-height: 1.3;
   }
   .svc-desc {
     font-size: 0.8125rem;
-    color: var(--color-slate);
+    color: var(--vp-svc-desc);
     line-height: 1.65;
     margin-bottom: 1.25rem;
     font-weight: 300;
@@ -112,12 +112,13 @@ const icons = iconsByVertical[vertical];
     font-size: 0.625rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-navy-deep);
-    border-bottom: 1px solid var(--color-cream-border);
+    color: var(--vp-accent);
+    border-bottom: 1px solid var(--vp-accent);
     padding-bottom: 1px;
-    transition: border-color 0.2s;
+    opacity: 0.8;
+    transition: opacity 0.2s;
   }
-  .svc-link:hover { border-color: var(--color-navy-deep); }
+  .svc-link:hover { opacity: 1; }
 
   @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
