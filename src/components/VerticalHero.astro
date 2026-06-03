@@ -1,0 +1,207 @@
+---
+// src/components/VerticalHero.astro
+import type { Locale, Vertical } from '../i18n';
+import { getT } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  vertical: Vertical;
+}
+const { locale, vertical } = Astro.props;
+const t = getT(locale);
+const h = t.verticals[vertical].hero;
+const badge = t.verticals[vertical].badge;
+---
+
+<section id="hero">
+  <div class="hero-content" data-hero-reveal style="transform: translateY(50vh)">
+    <span class="vertical-badge">{badge}</span>
+    <p class="eyebrow">{h.eyebrow}</p>
+    <h1 class="display-xl hero-h1">
+      {h.h1} <em>{h.h1_em}</em>
+    </h1>
+    <p class="hero-sub">{h.subtitle}</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">{h.cta_primary} →</a>
+      <a href="#projects" class="btn-ghost">{h.cta_secondary}</a>
+    </div>
+  </div>
+
+  <div class="hero-visual" data-hero-reveal style="transform: translateY(50vh)">
+    <div class="hero-visual-inner">
+      <div class="hero-glow"></div>
+      {vertical === 'salud' && (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class="hero-mark">
+          <line x1="30" y1="10" x2="30" y2="46" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <line x1="14" y1="28" x2="46" y2="28" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <polyline points="4,58 12,58 17,50 21,64 25,54 30,58 46,58 56,58" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      )}
+      {vertical === 'resto' && (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class="hero-mark">
+          <line x1="14" y1="8" x2="14" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="20" y1="8" x2="20" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="26" y1="8" x2="26" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M14 20 Q20 26 26 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <line x1="20" y1="26" x2="20" y2="60" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M34 8 Q30 22 38 28 Q46 22 42 8 Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <line x1="38" y1="28" x2="38" y2="52" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="32" y1="52" x2="44" y2="52" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      )}
+      {vertical === 'oficio' && (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class="hero-mark">
+          <path d="M10 58 L28 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="34" cy="34" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <circle cx="34" cy="34" r="3.5" stroke="currentColor" stroke-width="2" fill="none"/>
+          <circle cx="44" cy="48" r="9" stroke="currentColor" stroke-width="2" fill="none"/>
+          <circle cx="44" cy="48" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+          <line x1="44" y1="39" x2="44" y2="36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="44" y1="57" x2="44" y2="60" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="35" y1="48" x2="32" y2="48" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="53" y1="48" x2="56" y2="48" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  #hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    background: var(--color-navy-deep);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "content visual";
+    align-items: center;
+    padding: var(--nav-height) 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    grid-area: content;
+    padding: var(--section-pad) 0 var(--section-pad) max(1.5rem, (100vw - 1200px) / 2);
+    max-width: 660px;
+  }
+
+  .vertical-badge {
+    display: inline-block;
+    font-size: 0.5625rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-silver);
+    background: var(--color-navy-mid);
+    border: 1px solid var(--color-slate);
+    border-radius: 3px;
+    padding: 0.25rem 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-content .eyebrow { margin-bottom: 1.25rem; }
+
+  .hero-h1 { color: var(--color-white); margin-bottom: 1.25rem; }
+  .hero-h1 em { color: var(--color-silver); font-style: normal; }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--color-silver);
+    line-height: 1.7;
+    max-width: 420px;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    background: var(--color-white);
+    color: var(--color-navy-deep);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.8rem 1.5rem;
+    border-radius: 3px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-primary:hover { background: var(--color-silver); }
+
+  .btn-ghost {
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-silver);
+    border-bottom: 1px solid var(--color-slate);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--color-white); border-color: var(--color-white); }
+
+  .hero-visual {
+    grid-area: visual;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-right: max(1.5rem, (100vw - 1200px) / 2);
+  }
+  .hero-visual-inner {
+    width: min(360px, 42vw);
+    height: min(360px, 42vw);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(27,43,69,0.9) 0%, transparent 70%);
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%,100% { transform: scale(1); opacity: 0.8; }
+    50%      { transform: scale(1.08); opacity: 1; }
+  }
+  .hero-mark {
+    width: 52%;
+    height: 52%;
+    color: var(--color-silver);
+    opacity: 0.5;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    #hero {
+      grid-template-columns: 1fr;
+      grid-template-areas: "content";
+      align-items: start;
+      min-height: 100svh;
+    }
+    .hero-visual { display: none; }
+    .hero-content { padding: calc(var(--nav-height) + 2.5rem) 1.5rem 2.5rem; }
+  }
+</style>
+
+<script>
+  const visual = document.querySelector('.hero-visual-inner') as HTMLElement | null;
+  if (visual) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY * 0.25;
+      visual.style.transform = `translateY(-${y}px)`;
+    }, { passive: true });
+  }
+</script>

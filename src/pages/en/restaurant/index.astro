@@ -1,0 +1,38 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Loader from '../../../components/Loader.astro';
+import Navbar from '../../../components/Navbar.astro';
+import VerticalHero from '../../../components/VerticalHero.astro';
+import VerticalServices from '../../../components/VerticalServices.astro';
+import VerticalProjects from '../../../components/VerticalProjects.astro';
+import VerticalCTA from '../../../components/VerticalCTA.astro';
+import Contact from '../../../components/Contact.astro';
+import Footer from '../../../components/Footer.astro';
+
+const locale = 'en' as const;
+const vertical = 'resto' as const;
+const hreflangLinks = [
+  { locale: 'es', href: 'https://neptumstudio.com/resto/' },
+  { locale: 'en', href: 'https://neptumstudio.com/en/restaurant/' },
+  { locale: 'pt', href: 'https://neptumstudio.com/pt/restaurante/' },
+];
+const langRoutes = { es: '/resto/', en: '/en/restaurant/', pt: '/pt/restaurante/' };
+---
+<Layout
+  title="Digital solutions for restaurants — Neptum Studio"
+  description="Digital menus, delivery apps and reservation systems for restaurants and chains in Latin America."
+  locale={locale}
+  canonicalUrl="https://neptumstudio.com/en/restaurant/"
+  hreflangLinks={hreflangLinks}
+>
+  <Loader />
+  <Navbar locale={locale} langRoutes={langRoutes} />
+  <main>
+    <VerticalHero locale={locale} vertical={vertical} />
+    <VerticalServices locale={locale} vertical={vertical} />
+    <VerticalProjects locale={locale} vertical={vertical} />
+    <VerticalCTA locale={locale} vertical={vertical} />
+    <Contact locale={locale} />
+  </main>
+  <Footer locale={locale} langRoutes={langRoutes} />
+</Layout>

@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Loader from '../../components/Loader.astro';
+import Navbar from '../../components/Navbar.astro';
+import VerticalHero from '../../components/VerticalHero.astro';
+import VerticalServices from '../../components/VerticalServices.astro';
+import VerticalProjects from '../../components/VerticalProjects.astro';
+import VerticalCTA from '../../components/VerticalCTA.astro';
+import Contact from '../../components/Contact.astro';
+import Footer from '../../components/Footer.astro';
+
+const locale = 'es' as const;
+const vertical = 'salud' as const;
+const hreflangLinks = [
+  { locale: 'es', href: 'https://neptumstudio.com/salud/' },
+  { locale: 'en', href: 'https://neptumstudio.com/en/health/' },
+  { locale: 'pt', href: 'https://neptumstudio.com/pt/saude/' },
+];
+const langRoutes = { es: '/salud/', en: '/en/health/', pt: '/pt/saude/' };
+---
+<Layout
+  title="Desarrollo digital para clínicas y salud — Neptum Studio"
+  description="Plataformas de agendamiento, telemedicina y portales de pacientes para clínicas en LATAM. Desarrollo web y móvil especializado en salud."
+  locale={locale}
+  canonicalUrl="https://neptumstudio.com/salud/"
+  hreflangLinks={hreflangLinks}
+>
+  <Loader />
+  <Navbar locale={locale} langRoutes={langRoutes} />
+  <main>
+    <VerticalHero locale={locale} vertical={vertical} />
+    <VerticalServices locale={locale} vertical={vertical} />
+    <VerticalProjects locale={locale} vertical={vertical} />
+    <VerticalCTA locale={locale} vertical={vertical} />
+    <Contact locale={locale} />
+  </main>
+  <Footer locale={locale} langRoutes={langRoutes} />
+</Layout>

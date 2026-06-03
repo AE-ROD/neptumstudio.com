@@ -1,0 +1,138 @@
+---
+// src/components/VerticalServices.astro
+import type { Locale, Vertical } from '../i18n';
+import { getT } from '../i18n';
+
+interface Props {
+  locale: Locale;
+  vertical: Vertical;
+}
+const { locale, vertical } = Astro.props;
+const t = getT(locale);
+const s = t.verticals[vertical].services;
+
+const iconsByVertical: Record<Vertical, string[]> = {
+  salud: [
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M9 20v-1a3 3 0 0 1 6 0v1" opacity="0.4"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.9L15 14"/><rect x="3" y="6" width="12" height="12" rx="2"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="3"/><circle cx="17" cy="12" r="3"/><line x1="10" y1="12" x2="14" y2="12"/><path d="M4 12H2M22 12h-2"/></svg>`,
+  ],
+  resto: [
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9,16 11,18 15,14"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/><path d="M9 7l3 3 3-3"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  ],
+  oficio: [
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="14" x2="12.01" y2="14"/></svg>`,
+  ],
+};
+
+const learnMore: Record<Locale, string> = {
+  es: 'Saber más →',
+  en: 'Learn more →',
+  pt: 'Saiba mais →',
+};
+
+const icons = iconsByVertical[vertical];
+---
+
+<section id="services" class="services-section">
+  <div class="container">
+    <div class="services-header">
+      <p class="eyebrow">{s.eyebrow}</p>
+      <h2 class="display-lg services-h2">{s.h2}</h2>
+    </div>
+    <div class="services-grid">
+      {s.cards.map((card, i) => (
+        <article class="svc-card js-reveal">
+          <div class="svc-icon" set:html={icons[i]} />
+          <h3 class="svc-name">{card.name}</h3>
+          <p class="svc-desc">{card.description}</p>
+          <a href="#contact" class="svc-link">{learnMore[locale]}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-section {
+    background: var(--color-cream);
+    padding: var(--section-pad) 0;
+  }
+  .services-header { margin-bottom: clamp(3rem, 5vw, 5rem); }
+  .services-h2 { color: var(--color-navy-deep); margin-top: 0.75rem; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .svc-card {
+    padding: 2rem 1.5rem;
+    background: var(--color-white);
+    border: 1px solid var(--color-cream-border);
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s;
+  }
+  .svc-card.visible { opacity: 1; transform: translateY(0); }
+  .svc-card:hover { box-shadow: 0 8px 32px rgba(13,27,42,0.08); }
+
+  .svc-icon {
+    width: 36px;
+    height: 36px;
+    color: var(--color-navy-deep);
+    margin-bottom: 1.25rem;
+  }
+  .svc-icon svg { width: 100%; height: 100%; }
+
+  .svc-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-navy-deep);
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+  .svc-desc {
+    font-size: 0.8125rem;
+    color: var(--color-slate);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+  .svc-link {
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-navy-deep);
+    border-bottom: 1px solid var(--color-cream-border);
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+  .svc-link:hover { border-color: var(--color-navy-deep); }
+
+  @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const cards = document.querySelectorAll('.svc-card.js-reveal');
+  const observer = new IntersectionObserver(
+    entries => entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        observer.unobserve(e.target);
+      }
+    }),
+    { threshold: 0.1 }
+  );
+  cards.forEach(c => observer.observe(c));
+</script>
