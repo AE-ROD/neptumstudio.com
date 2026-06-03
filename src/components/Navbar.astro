@@ -76,27 +76,50 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     </div>
 
   </div>
-
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <nav class="mobile-links">
-      <a href={vertical ? '#services' : `${localeRoutes[locale]}#services`}>{t.nav.services}</a>
-      <a href={vertical ? '#projects' : `${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
-      <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
-      <span class="mobile-sector-label">{sectorNavLabel[locale]}</span>
-      {verticals.map(v => (
-        <a href={verticalRoutes[locale][v]} class="mobile-vertical-link" data-astro-reload>{verticalNavLabels[locale][v]}</a>
-      ))}
-      <a href={vertical ? '#contact' : `${localeRoutes[locale]}#contact`} class="mobile-cta">{t.nav.contact} ↗</a>
-    </nav>
-    <div class="mobile-lang">
-      {(['es', 'en', 'pt'] as const).map((lang) => (
-        <a href={resolvedLangRoutes[lang]} class:list={['lang-btn', { active: lang === locale }]} data-astro-reload>
-          {lang.toUpperCase()}
-        </a>
-      ))}
-    </div>
-  </div>
 </header>
+
+<!-- Mobile menu lives OUTSIDE <header> so position:fixed isn't broken by GSAP transforms on navbar -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+
+  <!-- Logo identity del sector en el menú mobile -->
+  <div class="mobile-menu-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class="mobile-logo-mark">
+      <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span class="mobile-logo-text">
+      neptum{vertical
+        ? <span class="mobile-logo-sector">{vertical}</span>
+        : 'studio'
+      }
+    </span>
+  </div>
+
+  <nav class="mobile-links">
+    <a href={vertical ? '#services' : `${localeRoutes[locale]}#services`}>{t.nav.services}</a>
+    <a href={vertical ? '#projects' : `${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
+    <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
+    <span class="mobile-sector-label">{sectorNavLabel[locale]}</span>
+    {verticals.map(v => (
+      <a href={verticalRoutes[locale][v]} class="mobile-vertical-link" data-astro-reload>{verticalNavLabels[locale][v]}</a>
+    ))}
+    <a href={vertical ? '#contact' : `${localeRoutes[locale]}#contact`} class="mobile-cta">{t.nav.contact} ↗</a>
+  </nav>
+
+  <div class="mobile-lang">
+    {(['es', 'en', 'pt'] as const).map((lang) => (
+      <a href={resolvedLangRoutes[lang]} class:list={['lang-btn', { active: lang === locale }]} data-astro-reload>
+        {lang.toUpperCase()}
+      </a>
+    ))}
+  </div>
+
+</div>
 
 <style>
   #navbar {
@@ -255,9 +278,33 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
-    z-index: 99;
+    z-index: 200; /* higher than navbar (100) — no transform parent to break fixed */
+    padding: 2rem 1.5rem;
   }
   .mobile-menu.open { opacity: 1; pointer-events: auto; }
+
+  /* Logo identity in mobile menu */
+  .mobile-menu-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .mobile-logo-mark {
+    width: 28px;
+    height: 28px;
+    color: var(--color-white);
+  }
+  .mobile-logo-text {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--color-white);
+  }
+  .mobile-logo-sector {
+    color: var(--vp-accent, var(--color-silver));
+  }
 
   .mobile-links {
     display: flex;
