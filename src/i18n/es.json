@@ -1,277 +1,204 @@
 {
+  "meta": {
+    "home_title": "Neptum Studio — Páginas web y marca que atraen clientes",
+    "home_description": "Estudio de desarrollo web y marca en Santiago, Chile. Landings, rediseños, identidad de marca y planes mensuales con precios claros en CLP.",
+    "services_title": "Servicios y precios — Neptum Studio",
+    "services_description": "Catálogo completo de Neptum Studio: landings, rediseño, reposicionamiento de marca, Línea Crecimiento, packs, planes mensuales y complementos. Precios en CLP.",
+    "contact_title": "Contacto — Neptum Studio",
+    "contact_description": "Cotiza tu proyecto o reserva un Diagnóstico Digital. WhatsApp, email e Instagram de Neptum Studio en Santiago, Chile."
+  },
   "nav": {
-    "home": "Inicio",
     "services": "Servicios",
-    "projects": "Proyectos",
-    "about": "Nosotros",
-    "blog": "Blog",
-    "contact": "Contacto"
+    "how": "Cómo trabajamos",
+    "contact": "Contacto",
+    "diagnostic": "Diagnóstico Digital",
+    "menu_open": "Abrir menú",
+    "menu_close": "Cerrar menú",
+    "main_label": "Navegación principal",
+    "lang_label": "Idioma",
+    "home_label": "Neptum Studio — Inicio"
   },
   "hero": {
-    "eyebrow": "Desarrollamos soluciones digitales",
-    "h1": "Creamos soluciones digitales que impulsan",
-    "h1_em": "tu negocio.",
-    "subtitle": "Desarrollo web, aplicaciones móviles y soluciones tecnológicas a la medida de tus objetivos.",
-    "cta_primary": "Nuestros servicios",
-    "cta_secondary": "Ver proyectos",
-    "clients_label": "+50 empresas confían en nosotros"
+    "eyebrow": "Estudio de diseño y desarrollo web · Santiago, Chile",
+    "h1": "Páginas web y marca que",
+    "h1_em": "atraen clientes.",
+    "subtitle": "Diseñamos y construimos landings, sitios y marcas para negocios que quieren más contactos. Precios claros, plazos definidos y acompañamiento después del lanzamiento.",
+    "cta_services": "Ver servicios",
+    "cta_diagnostic": "Diagnóstico Digital"
   },
-  "services": {
+  "lines": {
     "eyebrow": "Servicios",
-    "h2": "Soluciones digitales pensadas para crecer.",
-    "description": "Combinamos estrategia, diseño y tecnología para crear productos digitales que generan impacto real.",
-    "cta": "Ver todos los servicios",
-    "cards": [
-      {
-        "name": "Desarrollo Web",
-        "description": "Sitios modernos, rápidos y escalables que representan la esencia de tu marca.",
-        "link": "Saber más"
-      },
-      {
-        "name": "Desarrollo Móvil",
-        "description": "Aplicaciones nativas e híbridas para iOS y Android con enfoque en experiencia de usuario.",
-        "link": "Saber más"
-      },
-      {
-        "name": "Soluciones en la Nube",
-        "description": "Infraestructura, sistemas y herramientas para escalar tu negocio con seguridad.",
-        "link": "Saber más"
-      },
-      {
-        "name": "Soporte y Mantenimiento",
-        "description": "Soporte continuo, actualizaciones y optimización para que todo funcione siempre perfecto.",
-        "link": "Saber más"
-      }
-    ]
+    "h2": "Cuatro líneas, un mismo objetivo: que te contacten.",
+    "description": "Elige por dónde partir según el momento de tu negocio. Cada línea tiene tres niveles con precio y plazo definidos.",
+    "cta": "Ver catálogo completo",
+    "from": "Desde",
+    "view": "Ver niveles"
   },
   "how": {
     "eyebrow": "Cómo trabajamos",
+    "h2": "Cuatro pasos, sin vueltas.",
     "steps": [
       {
         "num": "01",
         "title": "Describe lo que necesitas.",
-        "description": "Cuéntanos tu proyecto y objetivos. Analizamos tu situación y diseñamos la solución tecnológica ideal para tu negocio."
+        "description": "Cuéntanos tu negocio y tus objetivos. Revisamos tu situación y te proponemos el nivel que más te conviene, con precio y plazo claros."
       },
       {
         "num": "02",
         "title": "Diseñamos tu solución.",
-        "description": "Creamos prototipos, arquitectura y diseño visual. Cada decisión está respaldada por estrategia y experiencia real."
+        "description": "Creamos la estructura, los textos y el diseño visual. Cada decisión apunta a lo mismo: que quien llegue a tu sitio te contacte."
       },
       {
         "num": "03",
         "title": "Desarrollamos y entregamos.",
-        "description": "Construimos con las mejores tecnologías. Entregas incrementales, código limpio y pruebas en cada etapa."
+        "description": "Construimos tu sitio adaptado a celular, lo probamos y lo publicamos dentro del plazo acordado. Revisas y ajustamos antes de salir."
       },
       {
         "num": "04",
         "title": "Crecemos contigo.",
-        "description": "Lanzado el producto, seguimos contigo. Soporte, métricas, mejoras continuas y escala cuando lo necesites."
+        "description": "Después del lanzamiento puedes seguir con un plan mensual: hosting, cambios, reportes y nuevas funciones cuando las necesites."
       }
-    ]
+    ],
+    "brief": [
+      "// tu brief",
+      "negocio: \"tu empresa\"",
+      "objetivo: \"más contactos\"",
+      "plazo: \"7 días hábiles\"",
+      "inicio: \"cuando quieras\""
+    ],
+    "step3_title": "Incluido en toda landing",
+    "step4_title": "Planes mensuales",
+    "steps_label": "Pasos"
+  },
+  "plans": {
+    "eyebrow": "Planes mensuales",
+    "h2": "Tu sitio no se lanza y se olvida.",
+    "description": "Después del lanzamiento puedes seguir con nosotros: hosting, cambios, reportes y nuevas funciones según lo que necesites.",
+    "cta": "Ver planes en detalle"
+  },
+  "contact_short": {
+    "eyebrow": "Contacto",
+    "h2": "¿Conversamos sobre tu proyecto?",
+    "text": "Cuéntanos qué necesitas y te respondemos en 24 horas hábiles con una propuesta clara.",
+    "cta": "Escríbenos",
+    "cta_diagnostic": "Reservar Diagnóstico Digital"
   },
   "projects": {
-    "eyebrow": "Proyectos destacados",
-    "h2": "Resultados que hablan por nosotros.",
-    "cta": "Ver todos los proyectos",
-    "cards": [
-      {
-        "category": "Desarrollo Web",
-        "name": "Kayzen",
-        "description": "Plataforma web corporativa con enfoque en experiencia, rendimiento y escalabilidad.",
-        "link": "Ver proyecto"
-      },
-      {
-        "category": "Desarrollo Móvil",
-        "name": "Novum",
-        "description": "Aplicación móvil para gestión financiera con UX intuitiva y diseño minimalista.",
-        "link": "Ver proyecto"
-      },
-      {
-        "category": "Solución Digital",
-        "name": "Delta Analytics",
-        "description": "Sistema interno para análisis de datos y visualización avanzada.",
-        "link": "Ver proyecto"
-      }
-    ]
+    "eyebrow": "Proyectos",
+    "h2": "Trabajos recientes.",
+    "view": "Ver proyecto"
   },
-  "contact": {
-    "eyebrow": "Contáctanos",
-    "h2": "¿Tienes un proyecto en mente?",
-    "subtitle": "Trabajamos con empresas de toda Latinoamérica de forma 100% online. Cuéntanos tu idea y construyamos algo increíble juntos.",
-    "email_label": "Respuesta en 24h",
-    "whatsapp_label": "WhatsApp disponible",
-    "instagram_label": "Instagram",
-    "location_label": "Atención online toda LATAM",
+  "services_page": {
+    "eyebrow": "Catálogo de servicios",
+    "h1": "Todos los servicios, con precio y plazo.",
+    "intro": "Valores en pesos chilenos (CLP). Elige una categoría para comparar niveles o revisar packs, planes y complementos.",
+    "start": {
+      "eyebrow": "Punto de partida",
+      "h2": "Empieza con un Diagnóstico Digital.",
+      "text": "Antes de invertir en un sitio o una marca nueva, revisamos lo que ya tienes y te decimos qué conviene hacer primero.",
+      "includes": "Incluye",
+      "cta": "Reservar diagnóstico"
+    },
+    "tabs_label": "Categorías del catálogo",
+    "intros": {
+      "landing": "Una página que presenta tu negocio y convierte visitas en contactos. Las tres incluyen dominio y hosting del primer año.",
+      "rediseno": "Tu sitio actual, renovado para verse bien y generar contactos.",
+      "reposicionamiento": "Identidad y mensaje de marca para destacar frente a tu competencia.",
+      "crecimiento": "Sitios completos, tiendas y plataformas a medida. Es la Línea Crecimiento, distinta del Plan Crecimiento mensual.",
+      "packs": "Combinaciones de servicios con descuento. El ahorro se calcula sobre el precio de lista de cada componente.",
+      "planes": "Acompañamiento mensual después del lanzamiento. El Plan Crecimiento es un plan mensual, distinto de la Línea Crecimiento.",
+      "complementos": "Agrega lo que necesites a cualquier landing, sitio o rediseño."
+    },
+    "table": {
+      "caption": "Comparación de niveles de la línea {line}",
+      "feature": "Característica",
+      "ideal_for": "Ideal para",
+      "included": "Incluido",
+      "not_included": "No incluido",
+      "most_chosen": "El más elegido",
+      "swipe": "Desliza para comparar",
+      "region_label": "Tabla comparativa de {line}"
+    },
+    "cards": {
+      "for": "Para quién",
+      "includes": "Incluye",
+      "components": "Compuesto por",
+      "you_save": "Ahorras {amount}",
+      "months_of": "{n} meses de {name}"
+    },
+    "quote": "Cotizar",
+    "quote_aria": "Cotizar {name}",
+    "footnote": "Valores en pesos chilenos (CLP). Los precios indicados como «desde» se confirman en la cotización según el alcance de cada proyecto."
+  },
+  "contact_page": {
+    "eyebrow": "Contacto",
+    "h1": "Cuéntanos qué necesitas.",
+    "intro": "Completa el formulario o escríbenos directo por WhatsApp. Respondemos en 24 horas hábiles.",
+    "channels": {
+      "email": "Email",
+      "email_hint": "Respuesta en 24 horas hábiles",
+      "whatsapp": "WhatsApp",
+      "whatsapp_hint": "Escríbenos directo",
+      "instagram": "Instagram",
+      "instagram_hint": "Nuestro trabajo día a día",
+      "location": "Ubicación",
+      "location_value": "Santiago, Chile",
+      "location_hint": "Atención online en todo Chile y Latinoamérica"
+    },
     "form": {
+      "legend": "Formulario de contacto",
       "name": "Nombre",
-      "name_placeholder": "Tu nombre completo",
+      "name_placeholder": "Tu nombre",
       "email": "Email",
       "email_placeholder": "tu@email.com",
-      "company": "Empresa",
-      "company_placeholder": "Nombre de tu empresa",
+      "company": "Empresa o proyecto",
+      "company_placeholder": "Nombre de tu negocio (opcional)",
       "service": "Servicio de interés",
-      "service_placeholder": "Web, Móvil, Nube, Soporte...",
+      "service_placeholder": "Elige un servicio",
+      "service_other": "Aún no lo sé / otro",
+      "service_group_start": "Punto de partida",
       "message": "Mensaje",
-      "message_placeholder": "Cuéntanos tu proyecto...",
-      "submit": "Enviar mensaje"
+      "message_placeholder": "Cuéntanos sobre tu negocio y qué necesitas…",
+      "submit": "Enviar mensaje",
+      "sending": "Enviando…",
+      "success_title": "Mensaje enviado.",
+      "success_text": "Gracias por escribirnos. Te respondemos en 24 horas hábiles al correo que indicaste.",
+      "error_title": "No pudimos enviar tu mensaje.",
+      "error_text": "Inténtalo de nuevo o escríbenos por WhatsApp.",
+      "subject": "Cotización: {service} — Neptum Studio",
+      "subject_default": "Nuevo contacto — Neptum Studio",
+      "privacy": "Usamos tus datos solo para responderte."
+    },
+    "booking": {
+      "eyebrow": "Diagnóstico Digital",
+      "h2": "Reserva tu Diagnóstico Digital.",
+      "text": "Elige un horario y conversemos 45 minutos sobre tu sitio, tus redes y tu competencia.",
+      "cta": "Reservar horario"
     }
   },
   "footer": {
-    "tagline": "Desarrollamos soluciones digitales",
+    "tagline": "Páginas web y marca que atraen clientes",
     "cols": {
       "services": "Servicios",
-      "company": "Empresa",
+      "studio": "Estudio",
       "contact": "Contacto"
+    },
+    "links": {
+      "packs": "Packs",
+      "plans": "Planes mensuales"
     },
     "copyright": "Todos los derechos reservados"
   },
-  "verticals": {
-    "salud": {
-      "badge": "Soluciones para el sector salud",
-      "hero": {
-        "eyebrow": "TRANSFORMACIÓN DIGITAL EN SALUD",
-        "h1": "Tecnología que mejora",
-        "h1_em": "la experiencia del paciente.",
-        "subtitle": "Desarrollamos plataformas de agendamiento, portales de pacientes y apps de telemedicina para clínicas, consultorios y centros médicos en LATAM.",
-        "cta_primary": "Ver soluciones",
-        "cta_secondary": "Ver casos"
-      },
-      "services": {
-        "eyebrow": "Servicios para salud",
-        "h2": "Todo lo que tu clínica necesita para digitalizarse.",
-        "cards": [
-          { "name": "Agendamiento Online", "description": "Sistema de reservas 24/7 integrado con tu agenda, confirmación automática y recordatorios por WhatsApp." },
-          { "name": "Portal del Paciente", "description": "Acceso seguro a resultados, historial médico y recetas desde cualquier dispositivo." },
-          { "name": "Telemedicina", "description": "Plataforma de videoconsultas HIPAA-compliant con sala de espera virtual y registro de atenciones." },
-          { "name": "Integración HIS/EMR", "description": "Conectamos tu nueva solución con los sistemas que ya usas: Meditech, OpenEMR, y otros." }
-        ]
-      },
-      "projects": {
-        "eyebrow": "Proyectos destacados",
-        "h2": "Soluciones que ya están en funcionamiento.",
-        "cards": [
-          { "category": "Salud Pública · Proyecto real", "name": "Salud 365", "description": "Plataforma de visualización de establecimientos de salud pública en Chile — CESFAM, hospitales y SAPU con clasificación de flujo de pacientes.", "url": "https://github.com/AE-ROD/salud-365" },
-          { "category": "Telemedicina · Concepto", "name": "MedConnect", "description": "Plataforma de videoconsultas para red de especialistas en múltiples países.", "url": "" },
-          { "category": "Portal Paciente · Concepto", "name": "VidaSalud", "description": "App móvil con historial clínico, resultados y recetas digitales.", "url": "" }
-        ]
-      },
-      "pains": {
-        "eyebrow": "¿Te suena alguna de estas?",
-        "h2": "Si respondiste sí a alguna, podemos ayudarte.",
-        "items": [
-          "¿Tus pacientes llaman para agendar y no siempre contestas a tiempo?",
-          "¿Tienes horas disponibles que se quedan vacías por falta de visibilidad online?",
-          "¿Tu equipo pierde horas al teléfono coordinando en vez de atender?",
-          "¿Los pacientes no llegan a su cita porque nadie les envió un recordatorio?",
-          "¿Resultados de exámenes que llegan en papel o por WhatsApp informal?",
-          "¿Tus pacientes te piden consulta online pero no tienes cómo ofrecerla?",
-          "¿No puedes medir la satisfacción de tus pacientes después de la atención?",
-          "¿Tu sistema de fichas sigue siendo en papel o en planillas de Excel?"
-        ]
-      },
-      "cta_section": {
-        "h2": "¿Tienes una clínica o centro médico?",
-        "subtitle": "Cuéntanos tu caso y te mostramos cómo podemos digitalizarte en 30 días.",
-        "cta": "Hablar con un especialista"
-      }
-    },
-    "resto": {
-      "badge": "Soluciones para gastronomía",
-      "hero": {
-        "eyebrow": "DIGITALIZACIÓN GASTRONÓMICA",
-        "h1": "Más mesas llenas,",
-        "h1_em": "más pedidos online.",
-        "subtitle": "Desarrollamos cartas digitales, sistemas de reservas, apps de delivery propio y programas de fidelización para restaurantes y cadenas en LATAM.",
-        "cta_primary": "Ver soluciones",
-        "cta_secondary": "Ver casos"
-      },
-      "services": {
-        "eyebrow": "Servicios para gastronomía",
-        "h2": "Tu restaurante en el bolsillo de cada cliente.",
-        "cards": [
-          { "name": "Carta Digital QR", "description": "Menú interactivo con fotos, alérgenos y precios actualizables en tiempo real. Sin papel, sin costos de impresión." },
-          { "name": "Reservas Online", "description": "Sistema de reservas con confirmación automática, lista de espera y gestión de turnos desde tu panel." },
-          { "name": "App de Delivery Propio", "description": "Tu propia app sin comisiones de terceros. Pedidos directos, pagos integrados y tracking en tiempo real." },
-          { "name": "Loyalty & Fidelización", "description": "Programa de puntos, promociones segmentadas y campañas de WhatsApp para clientes recurrentes." }
-        ]
-      },
-      "projects": {
-        "eyebrow": "Casos en gastronomía",
-        "h2": "Restaurantes que multiplicaron sus pedidos.",
-        "cards": [
-          { "category": "Delivery", "name": "BurgerCraft", "description": "App de delivery propia que eliminó comisiones de PedidosYa y aumentó el margen un 18%." },
-          { "category": "Reservas", "name": "Ostería Firenze", "description": "Sistema de reservas online con lista de espera que llena el restaurante 7 días a la semana." },
-          { "category": "Loyalty", "name": "CaféRed", "description": "Programa de fidelización digital para cadena de 12 locales con 8.000 clientes activos." }
-        ]
-      },
-      "pains": {
-        "eyebrow": "¿Te suena alguna de estas?",
-        "h2": "Si respondiste sí a alguna, podemos ayudarte.",
-        "items": [
-          "¿Le pagas comisiones a PedidosYa o Rappi que reducen tu margen?",
-          "¿Tu menú impreso quedó desactualizado y es caro de cambiar?",
-          "¿Pierdes reservas porque no contestas el teléfono a tiempo?",
-          "¿Tus clientes habituales no vuelven tan seguido como quisieras?",
-          "¿No sabes qué platos venden más ni en qué horarios?",
-          "¿Reseñas negativas online que no sabes cómo gestionar o responder?",
-          "¿Los martes y miércoles están vacíos mientras el fin de semana se llena?",
-          "¿No tienes forma de comunicarte con tus clientes cuando tienes una promo?"
-        ]
-      },
-      "cta_section": {
-        "h2": "¿Tienes un restaurante o cadena?",
-        "subtitle": "Te mostramos cómo dejar de depender de los marketplaces y crecer con tu propia plataforma.",
-        "cta": "Hablar con un especialista"
-      }
-    },
-    "oficio": {
-      "badge": "Soluciones para oficios y servicios",
-      "hero": {
-        "eyebrow": "PRESENCIA DIGITAL PARA TU OFICIO",
-        "h1": "Más clientes,",
-        "h1_em": "menos complicaciones.",
-        "subtitle": "Creamos sitios web profesionales, sistemas de cotización y agendamiento para electricistas, plomeros, técnicos y proveedores de servicios locales.",
-        "cta_primary": "Ver soluciones",
-        "cta_secondary": "Ver casos"
-      },
-      "services": {
-        "eyebrow": "Servicios para oficios",
-        "h2": "Simple, profesional y que consigue clientes.",
-        "cards": [
-          { "name": "Sitio Web Profesional", "description": "Tu página lista en días: servicios, fotos de trabajos, testimonios y formulario de contacto directo." },
-          { "name": "Cotizaciones Online", "description": "Formulario inteligente que califica al cliente, envía una cotización automática y te notifica por WhatsApp." },
-          { "name": "Agenda de Servicios", "description": "Calendario de visitas online para que tus clientes agenden directamente sin llamadas de ida y vuelta." },
-          { "name": "WhatsApp Automatizado", "description": "Respuestas automáticas, confirmaciones de cita y seguimiento post-servicio sin que hagas nada manualmente." }
-        ]
-      },
-      "projects": {
-        "eyebrow": "Casos en oficios",
-        "h2": "Técnicos y artesanos que triplicaron sus consultas.",
-        "cards": [
-          { "category": "Electricidad", "name": "ElectroSur", "description": "Sitio web + cotizador online que triplicó las consultas en el primer mes." },
-          { "category": "Climatización", "name": "FríoCalor Pro", "description": "Agenda online que eliminó el doble-booking y redujo el tiempo en llamadas un 70%." },
-          { "category": "Plomería", "name": "AquaFix", "description": "WhatsApp automatizado con triage de urgencias que convirtió el 60% de consultas en trabajos." }
-        ]
-      },
-      "pains": {
-        "eyebrow": "¿Te suena alguna de estas?",
-        "h2": "Si respondiste sí a alguna, podemos ayudarte.",
-        "items": [
-          "¿Pierdes horas del día coordinando visitas por teléfono?",
-          "¿Tus clientes no te encuentran cuando buscan en Google?",
-          "¿Te piden presupuesto y después desaparecen sin responder?",
-          "¿No tienes forma de mostrar tu trabajo de forma profesional?",
-          "¿Clientes que confirman y después cancelan sin avisar?",
-          "¿Tu negocio depende 100% del boca a boca y no crece?",
-          "¿Cobras por intuición y a veces terminas trabajando a pérdida?",
-          "¿No puedes atender consultas nuevas cuando estás trabajando en obra?"
-        ]
-      },
-      "cta_section": {
-        "h2": "¿Trabajas por cuenta propia o tienes un equipo?",
-        "subtitle": "Te ponemos online en menos de una semana con todo lo que necesitas para conseguir más clientes.",
-        "cta": "Hablar con un especialista"
-      }
-    }
+  "common": {
+    "from": "desde",
+    "per_month": "/mes",
+    "skip_to_content": "Saltar al contenido"
+  },
+  "not_found": {
+    "title": "Página no encontrada — Neptum Studio",
+    "h1": "Página no encontrada",
+    "text": "La ruta que buscas no existe o fue movida. Vuelve al inicio o revisa nuestros servicios.",
+    "home": "Volver al inicio",
+    "services": "Ver servicios"
   }
 }
