@@ -2,5 +2,98 @@
   "framework": "astro",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/salud",
+      "destination": "/servicios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/salud/",
+      "destination": "/servicios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/resto",
+      "destination": "/servicios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/resto/",
+      "destination": "/servicios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/oficio",
+      "destination": "/servicios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/oficio/",
+      "destination": "/servicios/",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/health",
+      "destination": "/en/services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/health/",
+      "destination": "/en/services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/restaurant",
+      "destination": "/en/services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/restaurant/",
+      "destination": "/en/services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/trade",
+      "destination": "/en/services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/en/trade/",
+      "destination": "/en/services/",
+      "statusCode": 301
+    },
+    {
+      "source": "/pt/saude",
+      "destination": "/pt/servicos/",
+      "statusCode": 301
+    },
+    {
+      "source": "/pt/saude/",
+      "destination": "/pt/servicos/",
+      "statusCode": 301
+    },
+    {
+      "source": "/pt/restaurante",
+      "destination": "/pt/servicos/",
+      "statusCode": 301
+    },
+    {
+      "source": "/pt/restaurante/",
+      "destination": "/pt/servicos/",
+      "statusCode": 301
+    },
+    {
+      "source": "/pt/oficio",
+      "destination": "/pt/servicos/",
+      "statusCode": 301
+    },
+    {
+      "source": "/pt/oficio/",
+      "destination": "/pt/servicos/",
+      "statusCode": 301
+    }
+  ]
 }

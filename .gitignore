@@ -6,3 +6,6 @@ dist/
 .DS_Store
 .superpowers/
 .vercel
+
+# Plantilla de variables de entorno (sí se versiona)
+!.env.example
