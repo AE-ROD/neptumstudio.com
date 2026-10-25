@@ -51,7 +51,7 @@ const diagnosticUrl = quoteHref(locale, diagnostic.id);
 
       <a href={diagnosticUrl} class="btn btn-light nav-cta">{t.nav.diagnostic}</a>
 
-      <button class="hamburger" id="hamburger" aria-label={t.nav.menu_open} aria-expanded="false" aria-controls="mobile-menu">
+      <button class="hamburger" id="hamburger" aria-label={t.nav.menu_open} aria-expanded="false" aria-controls="mobile-menu" data-label-open={t.nav.menu_open} data-label-close={t.nav.menu_close}>
         <span></span><span></span>
       </button>
     </div>
@@ -217,7 +217,7 @@ const diagnosticUrl = quoteHref(locale, diagnostic.id);
     if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 20);
   }
 
-  function setMenu(open: boolean): void {
+  function setMenu(open: boolean, unlockScroll = true): void {
     const hamburger = document.getElementById('hamburger');
     const menu = document.getElementById('mobile-menu');
     if (!hamburger || !menu) return;
@@ -225,7 +225,10 @@ const diagnosticUrl = quoteHref(locale, diagnostic.id);
     hamburger.setAttribute('aria-expanded', String(open));
     hamburger.setAttribute('aria-label', open ? (hamburger.dataset.labelClose ?? 'Close') : (hamburger.dataset.labelOpen ?? 'Menu'));
     menu.setAttribute('aria-hidden', String(!open));
-    document.body.style.overflow = open ? 'hidden' : '';
+    // Al navegar a otra página, el scroll se libera en astro:page-load para no alterar el viewport
+    // durante la transición de vista (la barra de scroll cambiaría el tamaño y la abortaría).
+    if (open) document.body.style.overflow = 'hidden';
+    else if (unlockScroll) document.body.style.overflow = '';
   }
 
   function init(): void {
@@ -233,20 +236,20 @@ const diagnosticUrl = quoteHref(locale, diagnostic.id);
     const menu = document.getElementById('mobile-menu');
     if (!hamburger || !menu) return;
 
-    hamburger.dataset.labelOpen = hamburger.getAttribute('aria-label') ?? '';
-    hamburger.dataset.labelClose = hamburger.dataset.labelClose ?? hamburger.dataset.labelOpen;
-
+    document.body.style.overflow = '';
     hamburger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
-    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+    menu.querySelectorAll('a').forEach((link) =>
+      link.addEventListener('click', () => {
+        const samePage = link.pathname === location.pathname && link.search === location.search;
+        setMenu(false, samePage);
+      }),
+    );
 
     if (!globalBound) {
       globalBound = true;
       window.addEventListener('scroll', onScroll, { passive: true });
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') setMenu(false);
-      });
-      document.addEventListener('astro:after-swap', () => {
-        document.body.style.overflow = '';
       });
     }
     onScroll();

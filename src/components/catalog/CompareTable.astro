@@ -81,6 +81,9 @@ const lineName = lineInfo[line].name[locale];
     margin-bottom: 0.75rem;
   }
   .cmp-scroll {
+    /* position: relative para que los textos .sr-only (absolutos) queden dentro del contenedor
+       con scroll y no ensanchen el documento en móvil */
+    position: relative;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;

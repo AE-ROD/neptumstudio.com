@@ -1,9 +1,10 @@
 ---
 // src/components/LogoMark.astro — isotipo (tridente con ola), hereda el color del texto.
-interface Props { class?: string; }
-const { class: className } = Astro.props;
+// Se propagan el resto de props (incluido el atributo de estilos con ámbito del padre) al <svg>.
+interface Props { class?: string; [key: string]: unknown; }
+const { class: className, ...rest } = Astro.props;
 ---
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class={className} aria-hidden="true" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class={className} aria-hidden="true" focusable="false" {...rest}>
   <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
   <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>

@@ -28,9 +28,6 @@ const xDefault = page ? abs(routes[defaultLocale][page]) : undefined;
 const ogImage = abs(`/og-${locale}.png`);
 const ogLocale = localeTags[locale].replace('-', '_');
 
-const FONTS_URL =
-  'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Montserrat:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap';
-
 const organization = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
@@ -84,10 +81,9 @@ const organization = {
     {alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
     {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault} />}
 
-    <!-- Fuentes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href={FONTS_URL} />
+    <!-- Fuentes autoalojadas (ver global.css); se precargan las dos que pintan el primer contenido -->
+    <link rel="preload" href="/fonts/cormorant-garamond-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/montserrat-variable.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Datos estructurados -->
     <script type="application/ld+json" is:inline set:html={JSON.stringify(organization)} />

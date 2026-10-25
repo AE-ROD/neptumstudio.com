@@ -124,7 +124,7 @@
 
     if (!isHardLoad) {
       hideLoader();
-      gsap.set('[data-hero-reveal]', { clearProps: 'transform' });
+      gsap.set('[data-hero-reveal]', { clearProps: 'transform,opacity' });
       return;
     }
 
@@ -140,7 +140,7 @@
     // Seguridad: si la animación se interrumpe, nunca dejamos la pantalla tapada.
     const safetyTimer = setTimeout(() => {
       hideLoader();
-      gsap.set(reveal, { clearProps: 'transform' });
+      gsap.set(reveal, { clearProps: 'transform,opacity' });
     }, 5000);
 
     const tl = gsap.timeline({
@@ -151,7 +151,8 @@
       },
     });
 
-    gsap.set(reveal, { y: '50vh' });
+    // El contenido entra elevándose un poco y apareciendo, sin cruzar otras secciones
+    gsap.set(reveal, { y: 40, opacity: 0 });
     gsap.set(screen, { top: 0 });
     gsap.set(wordsEl, { opacity: 0, y: -50 });
     gsap.set(words, { opacity: 0 });
@@ -177,10 +178,11 @@
       onStart() {
         gsap.to(reveal, {
           y: 0,
+          opacity: 1,
           duration: 0.8,
           ease: 'power4.out',
           stagger: 0.08,
-          onComplete() { gsap.set(reveal, { clearProps: 'transform' }); },
+          onComplete() { gsap.set(reveal, { clearProps: 'transform,opacity' }); },
         });
       },
     });
