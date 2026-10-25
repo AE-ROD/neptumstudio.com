@@ -1,0 +1,23 @@
+---
+// src/components/PageHero.astro — portada compacta de página interior (fondo navy).
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+}
+const { eyebrow, title, lead } = Astro.props;
+---
+<section class="page-hero section--navy">
+  <div class="container page-hero-inner" data-hero-reveal>
+    <p class="eyebrow eyebrow--light">{eyebrow}</p>
+    <h1 class="display-xl page-hero-title">{title}</h1>
+    {lead && <p class="section-lead page-hero-lead">{lead}</p>}
+  </div>
+</section>
+
+<style>
+  .page-hero { padding: calc(var(--nav-height) + clamp(3rem, 7vw, 6rem)) 0 clamp(3rem, 6vw, 5rem); }
+  .page-hero-inner { display: flex; flex-direction: column; gap: 1.25rem; max-width: 760px; }
+  .page-hero-title { color: var(--color-white); }
+  .page-hero-lead { font-size: 1rem; }
+</style>

@@ -1,16 +1,18 @@
 ---
 // src/components/Footer.astro
-import type { Locale } from '../i18n';
-import { getT, localeRoutes } from '../i18n';
+import type { Locale, PageKey } from '../i18n';
+import { getT, locales, routes, href } from '../i18n';
+import { lines, lineInfo } from '../data/catalog';
+import { CONTACT } from '../data/contact';
+import LogoMark from './LogoMark.astro';
 
 interface Props {
   locale: Locale;
-  langRoutes?: Record<Locale, string>;
+  page: PageKey;
 }
-const { locale, langRoutes } = Astro.props;
+const { locale, page } = Astro.props;
 const t = getT(locale);
 const year = new Date().getFullYear();
-const resolvedLangRoutes = langRoutes ?? localeRoutes;
 ---
 
 <footer id="footer" class="footer">
@@ -18,58 +20,47 @@ const resolvedLangRoutes = langRoutes ?? localeRoutes;
 
     <div class="footer-top">
       <div class="footer-brand">
-        <a href={localeRoutes[locale]} class="footer-logo" aria-label="Neptum Studio">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class="footer-mark">
-            <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-            <polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-            <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-          </svg>
-          <span>neptumstudio</span>
+        <a href={routes[locale].home} class="footer-logo" aria-label={t.nav.home_label}>
+          <LogoMark class="footer-mark" />
+          <span>Neptum Studio</span>
         </a>
         <p class="footer-tagline">{t.footer.tagline}</p>
       </div>
 
       <div class="footer-cols">
         <div class="footer-col">
-          <h4>{t.footer.cols.services}</h4>
-          {t.services.cards.map(card => (
-            <a href="#services">{card.name}</a>
+          <h2>{t.footer.cols.services}</h2>
+          {lines.map((line) => (
+            <a href={href(locale, 'services', { hash: line })}>{lineInfo[line].label[locale]}</a>
           ))}
+          <a href={href(locale, 'services', { hash: 'packs' })}>{t.footer.links.packs}</a>
+          <a href={href(locale, 'services', { hash: 'planes' })}>{t.footer.links.plans}</a>
         </div>
         <div class="footer-col">
-          <h4>{t.footer.cols.company}</h4>
-          <a href="#projects">{t.nav.projects}</a>
-          <a href="#how">{t.nav.about}</a>
-          <a href="#contact">{t.nav.blog}</a>
-          <a href="#contact">{t.nav.contact}</a>
+          <h2>{t.footer.cols.studio}</h2>
+          <a href={href(locale, 'home', { hash: 'how' })}>{t.nav.how}</a>
+          <a href={href(locale, 'services', { hash: 'diagnostico' })}>{t.nav.diagnostic}</a>
+          <a href={routes[locale].contact}>{t.nav.contact}</a>
         </div>
         <div class="footer-col">
-          <h4>{t.footer.cols.contact}</h4>
-          <a href="mailto:neptumstudio@gmail.com">neptumstudio@gmail.com</a>
-          <a href="https://wa.me/56956077885" target="_blank" rel="noopener">+56 9 5607 7885</a>
-          <a href="https://instagram.com/neptumstudio" target="_blank" rel="noopener">@neptumstudio</a>
-          <span>Santiago, Chile</span>
+          <h2>{t.footer.cols.contact}</h2>
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener">{CONTACT.phoneDisplay}</a>
+          <a href={CONTACT.instagramUrl} target="_blank" rel="noopener">{CONTACT.instagramHandle}</a>
+          <span>{CONTACT.city}, {CONTACT.country}</span>
         </div>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <span>© {year} neptumstudio · {t.footer.copyright}</span>
-      <div class="footer-right">
-        <div class="footer-lang">
-          {(['es', 'en', 'pt'] as const).map(lang => (
-            <a href={resolvedLangRoutes[lang]} class:list={['flang', { active: lang === locale }]}>{lang.toUpperCase()}</a>
-          ))}
-        </div>
-        <div class="footer-social">
-          <a href="https://instagram.com/neptumstudio" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
-          <a href="https://github.com/neptumstudio" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
-        </div>
-      </div>
+      <span>© {year} Neptum Studio · {t.footer.copyright}</span>
+      <nav class="footer-lang" aria-label={t.nav.lang_label}>
+        {locales.map((lang) => (
+          <a href={routes[lang][page]} class:list={['flang', { active: lang === locale }]} lang={lang} hreflang={lang} aria-current={lang === locale ? 'true' : undefined}>
+            {lang.toUpperCase()}
+          </a>
+        ))}
+      </nav>
     </div>
 
   </div>
@@ -79,6 +70,7 @@ const resolvedLangRoutes = langRoutes ?? localeRoutes;
   .footer {
     background: var(--color-dark);
     padding: clamp(3rem, 5vw, 5rem) 0 2rem;
+    color: var(--color-silver);
   }
   .footer-top {
     display: flex;
@@ -88,44 +80,29 @@ const resolvedLangRoutes = langRoutes ?? localeRoutes;
     border-bottom: 1px solid var(--color-navy-mid);
     margin-bottom: 1.5rem;
   }
-
-  .footer-brand { max-width: 220px; }
-  .footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 0.75rem;
-  }
-  .footer-mark { width: 28px; height: auto; color: var(--color-white); }
-  .footer-logo span {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    letter-spacing: 0.08em;
-    color: var(--color-white);
-  }
+  .footer-brand { max-width: 260px; }
+  .footer-logo { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; color: var(--color-white); }
+  .footer-mark { width: 28px; height: auto; }
+  .footer-logo span { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 0.08em; }
   .footer-tagline {
     font-size: 0.625rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--color-slate);
+    color: var(--color-silver);
   }
 
-  .footer-cols {
-    display: flex;
-    gap: 3rem;
-    flex-wrap: wrap;
-  }
-  .footer-col { min-width: 120px; }
-  .footer-col h4 {
-    font-size: 0.5625rem;
+  .footer-cols { display: flex; gap: 3rem; flex-wrap: wrap; }
+  .footer-col { min-width: 140px; }
+  .footer-col h2 {
+    font-family: var(--font-body);
+    font-size: 0.625rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--color-slate);
+    color: var(--color-silver);
     margin-bottom: 0.875rem;
     font-weight: 600;
   }
-  .footer-col a,
-  .footer-col span {
+  .footer-col a, .footer-col span {
     display: block;
     font-size: 0.8125rem;
     color: var(--color-silver);
@@ -142,33 +119,18 @@ const resolvedLangRoutes = langRoutes ?? localeRoutes;
     flex-wrap: wrap;
     gap: 1rem;
   }
-  .footer-bottom > span {
-    font-size: 0.75rem;
-    color: var(--color-slate);
-  }
-  .footer-right { display: flex; align-items: center; gap: 1.5rem; }
+  .footer-bottom > span { font-size: 0.75rem; color: var(--color-silver); }
 
-  .footer-lang { display: flex; gap: 0.5rem; }
+  .footer-lang { display: flex; gap: 0.25rem; }
   .flang {
-    font-size: 0.5625rem;
-    letter-spacing: 0.1em;
-    color: var(--color-slate);
-    transition: color 0.2s;
-  }
-  .flang.active,
-  .flang:hover { color: var(--color-white); }
-
-  .footer-social { display: flex; gap: 0.75rem; }
-  .footer-social a {
     font-size: 0.625rem;
     letter-spacing: 0.1em;
-    color: var(--color-slate);
-    border: 1px solid var(--color-navy-mid);
-    padding: 0.25rem 0.5rem;
-    border-radius: 3px;
-    transition: border-color 0.2s, color 0.2s;
+    color: var(--color-silver);
+    padding: 0.5rem 0.6rem;
+    border: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
   }
-  .footer-social a:hover { border-color: var(--color-silver); color: var(--color-silver); }
+  .flang.active, .flang:hover { color: var(--color-white); border-color: var(--color-navy-mid); }
 
   @media (max-width: 900px) {
     .footer-top { flex-direction: column; }
@@ -176,11 +138,6 @@ const resolvedLangRoutes = langRoutes ?? localeRoutes;
     .footer-bottom { flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 768px) {
-    .footer {
-      padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
-    }
-  }
-  @media (max-width: 400px) {
-    .footer-cols { grid-template-columns: 1fr 1fr; display: grid; gap: 1.5rem; }
+    .footer { padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px)); }
   }
 </style>

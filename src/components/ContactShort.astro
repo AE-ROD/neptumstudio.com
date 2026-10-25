@@ -1,0 +1,56 @@
+---
+// src/components/ContactShort.astro — llamado corto a contacto en la home.
+import type { Locale } from '../i18n';
+import { getT, routes, quoteHref } from '../i18n';
+import { diagnostic } from '../data/catalog';
+import { CONTACT } from '../data/contact';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+---
+
+<section id="contact" class="section section--cream">
+  <div class="container contact-short">
+    <div class="contact-short-text">
+      <p class="eyebrow">{t.contact_short.eyebrow}</p>
+      <h2 class="display-lg">{t.contact_short.h2}</h2>
+      <p class="section-lead">{t.contact_short.text}</p>
+    </div>
+    <div class="contact-short-actions">
+      <div class="contact-short-btns">
+        <a href={routes[locale].contact} class="btn btn-dark">{t.contact_short.cta}</a>
+        <a href={quoteHref(locale, diagnostic.id)} class="btn btn-outline-dark">{t.contact_short.cta_diagnostic}</a>
+      </div>
+      <ul class="contact-short-channels" role="list">
+        <li><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener">WhatsApp · {CONTACT.phoneDisplay}</a></li>
+        <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
+        <li><a href={CONTACT.instagramUrl} target="_blank" rel="noopener">Instagram · {CONTACT.instagramHandle}</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-short { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .contact-short-text .display-lg { margin: 0.75rem 0 1rem; }
+  .contact-short-actions { display: flex; flex-direction: column; gap: 2rem; }
+  .contact-short-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .contact-short-channels { display: flex; flex-direction: column; gap: 0.5rem; }
+  .contact-short-channels a {
+    font-size: 0.875rem;
+    color: var(--color-slate);
+    border-bottom: 1px solid var(--color-cream-border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .contact-short-channels a:hover { color: var(--color-navy-deep); border-color: var(--color-navy-deep); }
+
+  @media (max-width: 900px) {
+    .contact-short { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  @media (max-width: 400px) {
+    .contact-short-btns { flex-direction: column; }
+    .contact-short-btns .btn { width: 100%; }
+  }
+</style>

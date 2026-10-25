@@ -1,0 +1,154 @@
+---
+// src/components/catalog/CompareTable.astro — tabla comparativa de 3 niveles de una línea.
+import type { Locale } from '../../i18n';
+import { getT, fill } from '../../i18n';
+import type { LineId } from '../../data/catalog';
+import { offersIn, compareRows, lineInfo } from '../../data/catalog';
+import Price from './Price.astro';
+import QuoteButton from './QuoteButton.astro';
+
+interface Props {
+  line: LineId;
+  locale: Locale;
+}
+const { line, locale } = Astro.props;
+const t = getT(locale);
+const tiers = offersIn(line);
+const rows = compareRows(line);
+const lineName = lineInfo[line].name[locale];
+---
+
+<div class="cmp-wrap">
+  <p class="cmp-hint" aria-hidden="true">{t.services_page.table.swipe} →</p>
+  <div class="cmp-scroll" role="region" aria-label={fill(t.services_page.table.region_label, { line: lineName })} tabindex="0">
+    <table class="cmp">
+      <caption class="sr-only">{fill(t.services_page.table.caption, { line: lineName })}</caption>
+      <thead>
+        <tr>
+          <th scope="col" class="cmp-corner"><span class="sr-only">{t.services_page.table.feature}</span></th>
+          {tiers.map((tier) => (
+            <th scope="col" class:list={['cmp-tier', { 'cmp-tier--featured': tier.featured }]}>
+              {tier.featured && <span class="cmp-badge">{t.services_page.table.most_chosen}</span>}
+              <span class="sku cmp-sku">{tier.sku}</span>
+              <span class="cmp-name">{tier.name[locale]}</span>
+              <Price price={tier.price} locale={locale} size="sm" />
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="cmp-row cmp-row--audience">
+          <th scope="row">{t.services_page.table.ideal_for}</th>
+          {tiers.map((tier) => (
+            <td class:list={{ 'cmp-cell--featured': tier.featured }}>{tier.audience?.[locale]}</td>
+          ))}
+        </tr>
+        {rows.map((row) => (
+          <tr class="cmp-row">
+            <th scope="row">{row.label[locale]}</th>
+            {row.cells.map((cell, i) => (
+              <td class:list={['cmp-cell', `cmp-cell--${cell.kind}`, { 'cmp-cell--featured': tiers[i]?.featured }]}>
+                {cell.kind === 'text' && cell.text[locale]}
+                {cell.kind === 'yes' && <><span aria-hidden="true">✓</span><span class="sr-only">{t.services_page.table.included}</span></>}
+                {cell.kind === 'no' && <><span aria-hidden="true">—</span><span class="sr-only">{t.services_page.table.not_included}</span></>}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="cmp-corner"></td>
+          {tiers.map((tier) => (
+            <td class:list={['cmp-action', { 'cmp-cell--featured': tier.featured }]}>
+              <QuoteButton offer={tier} locale={locale} variant={tier.featured ? 'dark' : 'outline-dark'} class="cmp-btn" />
+            </td>
+          ))}
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<style>
+  .cmp-wrap { position: relative; }
+  .cmp-hint {
+    display: none;
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+    margin-bottom: 0.75rem;
+  }
+  .cmp-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .cmp-scroll:focus-visible { outline-offset: 0; }
+
+  .cmp {
+    width: 100%;
+    min-width: 760px;
+    table-layout: fixed;
+    font-size: 0.875rem;
+    color: var(--color-navy-deep);
+  }
+  .cmp th, .cmp td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-cream-border);
+    background: var(--color-cream);
+  }
+  .cmp thead th { vertical-align: bottom; border-bottom: 1px solid var(--color-navy-deep); }
+  .cmp-corner { width: 26%; }
+
+  /* Encabezado de fila fijo al desplazar horizontalmente */
+  .cmp th[scope="row"], .cmp-corner {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    color: var(--color-navy-deep);
+    box-shadow: 1px 0 0 var(--color-cream-border);
+  }
+
+  .cmp-tier { position: relative; }
+  .cmp-tier > * { display: block; }
+  .cmp-sku { color: var(--color-slate); margin-bottom: 0.5rem; }
+  .cmp-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; line-height: 1.1; margin-bottom: 0.5rem; }
+  .cmp-tier :global(.price) { display: inline-flex; }
+  .cmp-tier :global(.price-from) { color: var(--color-slate); }
+  .cmp-badge {
+    display: inline-block !important;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--color-navy-deep);
+    color: var(--color-cream);
+    padding: 0.3rem 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .cmp-tier--featured, .cmp-cell--featured { background: var(--color-white) !important; }
+  .cmp-tier--featured { border-top: 2px solid var(--color-navy-deep); }
+
+  .cmp-row--audience td { font-weight: 300; color: var(--color-slate); line-height: 1.55; }
+  .cmp-cell--yes, .cmp-cell--no { font-size: 1rem; }
+  .cmp-cell--no { color: var(--color-slate); }
+  .cmp-cell--text { font-weight: 400; }
+
+  .cmp tfoot td { border-bottom: none; padding-top: 1.25rem; }
+  .cmp tfoot .cmp-corner { box-shadow: none; }
+  .cmp-btn { width: 100%; }
+
+  @media (max-width: 900px) {
+    .cmp-hint { display: block; }
+    .cmp { min-width: 680px; }
+    .cmp-corner { width: 34%; }
+    .cmp th, .cmp td { padding: 0.75rem 0.75rem; }
+  }
+</style>

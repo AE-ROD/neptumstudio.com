@@ -1,0 +1,74 @@
+---
+// src/components/PlansSummary.astro — resumen de los planes mensuales (datos del catálogo).
+import type { Locale } from '../i18n';
+import { getT, href, quoteHref, fill } from '../i18n';
+import { offersIn, priceParts } from '../data/catalog';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+const plans = offersIn('planes');
+---
+
+<section id="plans" class="section section--navy">
+  <div class="container plans-grid">
+
+    <div class="plans-intro">
+      <p class="eyebrow eyebrow--light">{t.plans.eyebrow}</p>
+      <h2 class="display-lg">{t.plans.h2}</h2>
+      <p class="section-lead">{t.plans.description}</p>
+      <a href={href(locale, 'services', { hash: 'planes' })} class="link-label link-label--light">{t.plans.cta} →</a>
+    </div>
+
+    <ul class="plans-list" role="list">
+      {plans.map((plan) => {
+        const p = priceParts(plan.price);
+        return (
+          <li class="plan-row">
+            <div class="plan-main">
+              <span class="sku plan-sku">{plan.sku}</span>
+              <h3 class="plan-name">{plan.name[locale]}</h3>
+              <p class="plan-desc">{plan.description?.[locale]}</p>
+            </div>
+            <div class="plan-side">
+              <p class="price">
+                <span class="price-amount">{p.amount}</span>
+                <span class="price-unit">{t.common.per_month}</span>
+              </p>
+              <a href={quoteHref(locale, plan.id)} class="link-label link-label--light" aria-label={fill(t.services_page.quote_aria, { name: plan.name[locale] })}>{t.services_page.quote} →</a>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+
+  </div>
+</section>
+
+<style>
+  .plans-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; }
+  .plans-intro { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
+  .plans-intro .section-lead { margin-bottom: 0.5rem; }
+
+  .plans-list { display: flex; flex-direction: column; border-top: 1px solid var(--color-navy-mid); }
+  .plan-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-navy-mid);
+  }
+  .plan-sku { color: var(--color-silver); display: block; margin-bottom: 0.35rem; }
+  .plan-name { font-family: var(--font-display); font-size: 1.5rem; font-weight: 400; margin-bottom: 0.4rem; }
+  .plan-desc { font-size: 0.875rem; color: var(--color-silver); line-height: 1.65; font-weight: 300; max-width: 46ch; }
+  .plan-side { display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem; text-align: right; }
+  .plan-side .price-unit { color: var(--color-silver); }
+
+  @media (max-width: 900px) {
+    .plans-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  @media (max-width: 560px) {
+    .plan-row { grid-template-columns: 1fr; gap: 1rem; }
+    .plan-side { align-items: flex-start; text-align: left; }
+  }
+</style>

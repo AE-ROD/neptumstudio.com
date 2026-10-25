@@ -1,35 +1,45 @@
 ---
-// src/components/Scrollytelling.astro
+// src/components/Scrollytelling.astro — "Cómo trabajamos": 4 pasos con tarjeta fija y visuales con datos reales del catálogo.
 import type { Locale } from '../i18n';
 import { getT } from '../i18n';
+import { offersIn, featureLabels, priceParts } from '../data/catalog';
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = getT(locale);
+
+// Paso 03: características presentes en las tres landings (sin detalle variable) → verificable en el catálogo.
+const landings = offersIn('landing');
+const commonLanding = Object.keys(featureLabels.landing).filter((key) =>
+  landings.every((o) => (o.features ?? []).some((f) => f.key === key && !f.detail)),
+);
+const commonLabels = commonLanding.map((key) => featureLabels.landing[key]?.[locale] ?? key);
+
+// Paso 04: planes mensuales reales.
+const plans = offersIn('planes').map((p) => ({ name: p.name[locale], price: priceParts(p.price).amount }));
+
+const brief = t.how.brief.join('\n');
 ---
 
 <div id="how-wrapper" class="how-wrapper">
-  <section id="how" class="how-section">
+  <section id="how" class="how-section" aria-labelledby="how-title">
 
     <div class="how-eyebrow-wrap">
       <p class="eyebrow how-eyebrow">{t.how.eyebrow}</p>
+      <h2 id="how-title" class="display-md how-title">{t.how.h2}</h2>
     </div>
 
     <div class="scrolly-card" id="scrolly-card">
 
-      <div class="scrolly-panels">
+      <ol class="scrolly-panels" role="list">
         {t.how.steps.map((step, i) => (
-          <div class:list={['scrolly-panel', { active: i === 0 }]} data-panel={i}>
+          <li class:list={['scrolly-panel', { active: i === 0 }]} data-panel={i}>
 
-            <div class="panel-left">
+            <div class="panel-left" aria-hidden="true">
               {i === 0 && (
-                <div class="terminal-card" id="typewriter-card">
-                  <div class="terminal-bar">
-                    <span class="t-dot"></span>
-                    <span class="t-dot"></span>
-                    <span class="t-dot"></span>
-                  </div>
-                  <pre class="terminal-code"><span id="typewriter-output"></span><span class="t-cursor"></span></pre>
+                <div class="terminal-card">
+                  <div class="terminal-bar"><span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span></div>
+                  <pre class="terminal-code" data-brief={brief}><span id="typewriter-output"></span><span class="t-cursor"></span></pre>
                 </div>
               )}
               {i === 1 && (
@@ -38,51 +48,50 @@ const t = getT(locale);
                     <div class="design-bar"></div>
                     <div class="design-content">
                       <div class="design-block tall"></div>
-                      <div class="design-row">
-                        <div class="design-block"></div>
-                        <div class="design-block"></div>
-                      </div>
+                      <div class="design-row"><div class="design-block"></div><div class="design-block"></div></div>
                       <div class="design-block short"></div>
                     </div>
                   </div>
                 </div>
               )}
               {i === 2 && (
-                <div class="build-visual">
-                  <div class="build-line"><span class="build-label success">✓</span><span>Dependencies installed</span></div>
-                  <div class="build-line"><span class="build-label success">✓</span><span>TypeScript compiled</span></div>
-                  <div class="build-line"><span class="build-label success">✓</span><span>Assets optimized</span></div>
-                  <div class="build-line"><span class="build-label active">▶</span><span>Deploying to production...</span></div>
-                  <div class="build-progress"><div class="build-bar"></div></div>
+                <div class="facts-visual">
+                  <p class="facts-title">{t.how.step3_title}</p>
+                  <ul class="facts-list" role="list">
+                    {commonLabels.map((label) => (
+                      <li><span class="facts-check">✓</span><span>{label}</span></li>
+                    ))}
+                  </ul>
                 </div>
               )}
               {i === 3 && (
-                <div class="metrics-visual">
-                  <div class="metric-card"><span class="metric-val">98</span><span class="metric-lbl">Lighthouse</span></div>
-                  <div class="metric-card"><span class="metric-val">+120%</span><span class="metric-lbl">Conversión</span></div>
-                  <div class="metric-card"><span class="metric-val">24/7</span><span class="metric-lbl">Soporte</span></div>
+                <div class="facts-visual">
+                  <p class="facts-title">{t.how.step4_title}</p>
+                  <ul class="facts-list facts-list--plans" role="list">
+                    {plans.map((p) => (
+                      <li><span>{p.name}</span><span class="facts-price">{p.price}<small>{t.common.per_month}</small></span></li>
+                    ))}
+                  </ul>
                 </div>
               )}
-              {i < t.how.steps.length - 1 && <div class="step-connector"></div>}
             </div>
 
             <div class="panel-right">
-              <span class="step-num">{step.num} —</span>
+              <span class="step-num sku">{step.num} —</span>
               <h3 class="step-title">{step.title}</h3>
               <p class="step-desc">{step.description}</p>
             </div>
 
-          </div>
+          </li>
         ))}
-      </div>
+      </ol>
 
-      <!-- Progress bar + dots nav -->
-      <div class="scrolly-dots" aria-hidden="true">
-        <div class="scrolly-progress-track">
+      <div class="scrolly-dots" aria-label={t.how.steps_label}>
+        <div class="scrolly-progress-track" aria-hidden="true">
           <div class="scrolly-progress-fill" id="scrolly-progress"></div>
         </div>
-        {t.how.steps.map((_, i) => (
-          <button class:list={['scrolly-dot', { active: i === 0 }]} data-step={i} />
+        {t.how.steps.map((step, i) => (
+          <button class:list={['scrolly-dot', { active: i === 0 }]} data-step={i} aria-label={`${step.num} — ${step.title}`} aria-pressed={i === 0 ? 'true' : 'false'} />
         ))}
       </div>
 
@@ -91,11 +100,7 @@ const t = getT(locale);
 </div>
 
 <style>
-  .how-wrapper {
-    background: var(--color-cream);
-    height: calc(100vh * 5);
-  }
-
+  .how-wrapper { background: var(--color-cream); height: calc(100vh * 5); }
   .how-section {
     position: sticky;
     top: 0;
@@ -105,24 +110,18 @@ const t = getT(locale);
     align-items: center;
     justify-content: center;
     padding: 0 1.5rem;
-    box-sizing: border-box;
     gap: 1.25rem;
   }
-
-  .how-eyebrow-wrap {
-    width: 100%;
-    max-width: 1200px;
-  }
-  .how-eyebrow {
-    color: var(--color-slate);
-  }
+  .how-eyebrow-wrap { width: 100%; max-width: 1200px; display: flex; flex-direction: column; gap: 0.5rem; }
+  .how-eyebrow { color: var(--color-slate); }
+  .how-title { color: var(--color-navy-deep); }
 
   .scrolly-card {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     background: var(--color-navy-deep);
-    border-radius: 20px;
+    color: var(--color-white);
     min-height: 60vh;
     display: grid;
     grid-template-columns: 1fr auto;
@@ -135,44 +134,33 @@ const t = getT(locale);
     flex-direction: column;
     justify-content: center;
     gap: 0.75rem;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.25rem;
     align-items: center;
     position: relative;
   }
   .scrolly-progress-track {
     position: absolute;
-    left: 50%;
-    top: 2rem;
-    bottom: 2rem;
+    left: 50%; top: 2rem; bottom: 2rem;
     width: 1px;
     background: rgba(255,255,255,0.08);
     transform: translateX(-50%);
     pointer-events: none;
   }
-  .scrolly-progress-fill {
-    width: 100%;
-    height: 0%;
-    background: rgba(255,255,255,0.5);
-    transition: height 0.4s var(--ease-out-expo);
-    border-radius: 1px;
-  }
+  .scrolly-progress-fill { width: 100%; height: 0%; background: rgba(255,255,255,0.5); transition: height 0.4s var(--ease-out-expo); }
   .scrolly-dot {
-    width: 4px;
-    height: 4px;
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+    color: var(--color-white);
+  }
+  .scrolly-dot::before {
+    content: '';
+    width: 4px; height: 4px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.25);
     transition: all 0.4s var(--ease-out-expo);
-    cursor: pointer;
-    padding: 0;
-    position: relative;
-    z-index: 1;
   }
-  .scrolly-dot.active {
-    width: 2px;
-    height: 20px;
-    border-radius: 1px;
-    background: rgba(255,255,255,0.9);
-  }
+  .scrolly-dot.active::before { width: 2px; height: 20px; border-radius: 1px; background: rgba(255,255,255,0.9); }
 
   .scrolly-panels { flex: 1; position: relative; min-height: 60vh; }
   .scrolly-panel {
@@ -186,236 +174,151 @@ const t = getT(locale);
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
     pointer-events: none;
+    visibility: hidden;
   }
-  .scrolly-panel.active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
+  .scrolly-panel.active { opacity: 1; transform: translateY(0); pointer-events: auto; visibility: visible; }
 
-  .panel-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-  }
+  .panel-left { display: flex; flex-direction: column; justify-content: center; }
 
-  .terminal-card {
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 10px;
-    padding: 1.25rem;
-    background: rgba(255,255,255,0.03);
-  }
-  .terminal-bar {
-    display: flex; gap: 6px; margin-bottom: 0.75rem;
-  }
-  .t-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    display: block;
-  }
+  .terminal-card { border: 1px solid rgba(255,255,255,0.15); padding: 1.25rem; background: rgba(255,255,255,0.03); }
+  .terminal-bar { display: flex; gap: 6px; margin-bottom: 0.75rem; }
+  .t-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); display: block; }
   .terminal-code {
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     line-height: 1.8;
-    color: rgba(255,255,255,0.8);
+    color: rgba(255,255,255,0.85);
     white-space: pre-wrap;
-    min-height: 8em;
+    min-height: 9em;
   }
-  .t-cursor {
-    display: inline-block;
-    width: 7px; height: 0.85em;
-    background: var(--color-silver);
-    vertical-align: middle;
-    animation: blink 1s step-end infinite;
-  }
+  .t-cursor { display: inline-block; width: 7px; height: 0.85em; background: var(--color-silver); vertical-align: middle; animation: blink 1s step-end infinite; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-  .step-connector {
-    width: 1px;
-    height: 40px;
-    background: rgba(255,255,255,0.15);
-    margin: 1rem auto 0;
-  }
-
   .design-visual { padding: 1rem; }
-  .design-frame {
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .design-bar {
-    height: 28px;
-    background: rgba(255,255,255,0.04);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
+  .design-frame { border: 1px solid rgba(255,255,255,0.18); overflow: hidden; }
+  .design-bar { height: 28px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.08); }
   .design-content { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
-  .design-block { background: rgba(255,255,255,0.08); border-radius: 4px; height: 40px; }
+  .design-block { background: rgba(255,255,255,0.08); height: 40px; }
   .design-block.tall { height: 60px; }
   .design-block.short { height: 20px; width: 60%; }
   .design-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
 
-  .build-visual {
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 8px;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-  }
-  .build-line { display: flex; align-items: center; gap: 0.75rem; color: rgba(255,255,255,0.7); }
-  .build-label { width: 16px; text-align: center; }
-  .build-label.success { color: #52b788; }
-  .build-label.active { color: var(--color-silver); animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-  .build-progress {
-    height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
-  }
-  .build-bar {
-    height: 100%;
-    background: var(--color-silver);
-    width: 0;
-    border-radius: 2px;
-    animation: progress 2s ease-in-out infinite;
-  }
-  @keyframes progress { 0%{width:0} 80%{width:90%} 100%{width:90%} }
+  .facts-visual { border: 1px solid rgba(255,255,255,0.15); padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+  .facts-title { font-size: 0.625rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-silver); }
+  .facts-list { display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem; font-weight: 300; }
+  .facts-list li { display: flex; align-items: center; gap: 0.75rem; }
+  .facts-check { color: var(--color-silver); font-size: 0.8rem; }
+  .facts-list--plans li { justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem; }
+  .facts-price { font-family: var(--font-display); font-size: 1.25rem; }
+  .facts-price small { font-family: var(--font-body); font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-silver); margin-left: 0.25rem; }
 
-  .metrics-visual {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-  .metric-card {
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 8px;
-    padding: 1.25rem 1rem;
-    display: flex; flex-direction: column; gap: 0.35rem; align-items: center;
-  }
-  .metric-val {
-    font-family: var(--font-display);
-    font-size: 1.75rem;
-    font-weight: 300;
-    color: var(--color-white);
-  }
-  .metric-lbl {
-    font-size: 0.625rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-slate);
-  }
+  .panel-right { display: flex; flex-direction: column; justify-content: center; }
+  .step-num { color: var(--color-silver); margin-bottom: 0.75rem; }
+  .step-title { font-family: var(--font-display); font-size: clamp(1.5rem, 2.5vw, 2.25rem); font-weight: 400; color: var(--color-white); line-height: 1.2; margin-bottom: 1rem; }
+  .step-desc { font-size: 0.9375rem; color: var(--color-silver); line-height: 1.7; max-width: 38ch; font-weight: 300; }
 
-  .panel-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .step-num {
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    color: rgba(255,255,255,0.35);
-    margin-bottom: 0.75rem;
-  }
-  .step-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
-    font-weight: 400;
-    color: var(--color-white);
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-  .step-desc {
-    font-size: 0.9375rem;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.7;
-    max-width: 320px;
-    font-weight: 300;
-  }
-
-  /* Tablet portrait (769-900px): hide visual, single column */
-  @media (min-width: 769px) and (max-width: 900px) {
-    .how-wrapper { height: calc(100vh * 5); }
-    .scrolly-card { min-height: 55vh; }
-    .scrolly-panel { grid-template-columns: 1fr; padding: 2.5rem; gap: 0; }
-    .panel-left { display: none; }
-    .metrics-visual { grid-template-columns: repeat(3, 1fr); }
-  }
-
-  /* Mobile (≤768px) */
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .how-wrapper { height: calc(100vh * 6); }
-    .scrolly-card { min-height: 58vh; border-radius: 12px; }
+    .scrolly-card { min-height: 58vh; }
     .scrolly-panel { grid-template-columns: 1fr; padding: 1.75rem; }
     .panel-left { display: none; }
-    .metrics-visual { grid-template-columns: 1fr; }
     .step-title { font-size: clamp(1.25rem, 5vw, 1.75rem); }
   }
-
-  /* Small phones (≤400px) */
   @media (max-width: 400px) {
     .scrolly-panel { padding: 1.25rem; }
     .how-section { padding: 0 1rem; }
   }
+
+  /* Movimiento reducido: los pasos se apilan sin fijar la tarjeta */
+  @media (prefers-reduced-motion: reduce) {
+    .how-wrapper { height: auto; padding: var(--section-pad) 0; }
+    .how-section { position: static; height: auto; }
+    .scrolly-card { grid-template-columns: 1fr; }
+    .scrolly-dots { display: none; }
+    .scrolly-panels { min-height: 0; }
+    .scrolly-panel { position: static; opacity: 1; transform: none; visibility: visible; pointer-events: auto; border-top: 1px solid rgba(255,255,255,0.1); }
+    .t-cursor { animation: none; }
+  }
 </style>
 
 <script>
-  const wrapper    = document.getElementById('how-wrapper')!;
-  const panels     = Array.from(document.querySelectorAll('.scrolly-panel'));
-  const dots       = Array.from(document.querySelectorAll('.scrolly-dot'));
-  const totalSteps = panels.length;
-  let currentStep  = 0;
+  let globalBound = false;
+  let currentStep = 0;
+  let typewriterTimer: ReturnType<typeof setInterval> | undefined;
 
-  function activateStep(idx: number) {
-    const cur = panels[currentStep];
-    const curDot = dots[currentStep];
-    const next = panels[idx];
-    const nextDot = dots[idx];
-    if (!next || !nextDot) return;
-    if (idx === currentStep && next.classList.contains('active')) return;
-    cur?.classList.remove('active');
-    curDot?.classList.remove('active');
-    currentStep = idx;
-    next.classList.add('active');
-    nextDot.classList.add('active');
-    if (idx === 0) startTypewriter();
+  function els() {
+    return {
+      wrapper: document.getElementById('how-wrapper'),
+      panels: Array.from(document.querySelectorAll<HTMLElement>('.scrolly-panel')),
+      dots: Array.from(document.querySelectorAll<HTMLButtonElement>('.scrolly-dot')),
+      progress: document.getElementById('scrolly-progress'),
+    };
   }
 
-  const code = `// neptum.config.js\nclient: "tu empresa",\nstack: ["web", "mobile"],\nobjetivo: "crecer online",\ninicio: "hoy mismo"`;
-  const output = document.getElementById('typewriter-output');
-  let typewriterDone = false;
-
-  function startTypewriter() {
-    if (!output || typewriterDone) return;
-    typewriterDone = true;
+  function startTypewriter(): void {
+    const output = document.getElementById('typewriter-output');
+    const pre = output?.closest<HTMLElement>('.terminal-code');
+    if (!output || !pre || output.dataset.done === '1') return;
+    output.dataset.done = '1';
+    const text = pre.dataset.brief ?? '';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      output.textContent = text;
+      return;
+    }
     let i = 0;
-    const interval = setInterval(() => {
-      if (output) output.textContent = code.slice(0, ++i);
-      if (i >= code.length) clearInterval(interval);
+    clearInterval(typewriterTimer);
+    typewriterTimer = setInterval(() => {
+      output.textContent = text.slice(0, ++i);
+      if (i >= text.length) clearInterval(typewriterTimer);
     }, 38);
   }
 
-  const progressFill = document.getElementById('scrolly-progress');
+  function activateStep(idx: number): void {
+    const { panels, dots } = els();
+    const next = panels[idx];
+    if (!next) return;
+    if (idx === currentStep && next.classList.contains('active')) return;
+    panels.forEach((p, i) => p.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+      d.setAttribute('aria-pressed', String(i === idx));
+    });
+    currentStep = idx;
+    if (idx === 0) startTypewriter();
+  }
 
-  window.addEventListener('scroll', () => {
-    const rect   = wrapper.getBoundingClientRect();
-    const total  = wrapper.offsetHeight - window.innerHeight;
+  function onScroll(): void {
+    const { wrapper, panels, progress } = els();
+    if (!wrapper || panels.length === 0) return;
+    const rect = wrapper.getBoundingClientRect();
+    const total = wrapper.offsetHeight - window.innerHeight;
+    if (total <= 0) return;
     const scrolled = -rect.top;
     if (scrolled < 0 || scrolled > total) return;
-    const progress = scrolled / total;
-    const stepIdx  = Math.min(Math.floor(progress * totalSteps), totalSteps - 1);
-    activateStep(stepIdx);
-    if (progressFill) progressFill.style.height = `${progress * 100}%`;
-  }, { passive: true });
+    const ratio = scrolled / total;
+    activateStep(Math.min(Math.floor(ratio * panels.length), panels.length - 1));
+    if (progress) progress.style.height = `${ratio * 100}%`;
+  }
 
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      const total  = wrapper.offsetHeight - window.innerHeight;
-      const target = wrapper.offsetTop + (i / totalSteps) * total;
-      window.scrollTo({ top: target, behavior: 'smooth' });
+  function init(): void {
+    const { wrapper, dots, panels } = els();
+    if (!wrapper) return;
+    currentStep = 0;
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        const total = wrapper.offsetHeight - window.innerHeight;
+        const target = wrapper.offsetTop + (i / panels.length) * total + 1;
+        window.scrollTo({ top: target, behavior: 'smooth' });
+        activateStep(i);
+      });
     });
-  });
+    if (!globalBound) {
+      globalBound = true;
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+    startTypewriter();
+    onScroll();
+  }
 
-  startTypewriter();
+  document.addEventListener('astro:page-load', init);
 </script>

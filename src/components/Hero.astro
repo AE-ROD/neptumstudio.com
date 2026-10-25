@@ -1,48 +1,40 @@
 ---
 // src/components/Hero.astro
 import type { Locale } from '../i18n';
-import { getT } from '../i18n';
+import { getT, routes, quoteHref } from '../i18n';
+import { diagnostic } from '../data/catalog';
+import LogoMark from './LogoMark.astro';
 
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = getT(locale);
 ---
 
-<section id="hero">
-  <div class="hero-content" data-hero-reveal style="transform: translateY(50vh)">
-    <p class="eyebrow">{t.hero.eyebrow}</p>
+<section id="hero" class="hero">
+  <div class="hero-content" data-hero-reveal>
+    <p class="eyebrow eyebrow--light">{t.hero.eyebrow}</p>
     <h1 class="display-xl hero-h1">
       {t.hero.h1} <em>{t.hero.h1_em}</em>
     </h1>
     <p class="hero-sub">{t.hero.subtitle}</p>
     <div class="hero-btns">
-      <a href="#services" class="btn-primary">{t.hero.cta_primary} →</a>
-      <a href="#projects" class="btn-ghost">{t.hero.cta_secondary}</a>
+      <a href={routes[locale].services} class="btn btn-light">{t.hero.cta_services}</a>
+      <a href={quoteHref(locale, diagnostic.id)} class="btn btn-outline-light">{t.hero.cta_diagnostic}</a>
     </div>
   </div>
 
-  <div class="hero-visual" data-hero-reveal style="transform: translateY(50vh)">
+  <div class="hero-visual" data-hero-reveal aria-hidden="true">
     <div class="hero-visual-inner">
       <div class="hero-glow"></div>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class="hero-mark">
-        <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-        <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-        <polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-        <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-      </svg>
+      <LogoMark class="hero-mark" />
     </div>
   </div>
-
-
 </section>
 
 <style>
-  #hero {
+  .hero {
     min-height: 100vh;
-    min-height: 100svh; /* iOS Safari: exclude browser chrome */
+    min-height: 100svh;
     background: var(--color-navy-deep);
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -52,70 +44,23 @@ const t = getT(locale);
     position: relative;
     overflow: hidden;
   }
-
   .hero-content {
     grid-area: content;
     padding: var(--section-pad) 0 var(--section-pad) max(1.5rem, (100vw - 1200px) / 2);
-    max-width: 660px;
+    max-width: 680px;
   }
-
   .hero-content .eyebrow { margin-bottom: 1.25rem; }
-
-  .hero-h1 {
-    color: var(--color-white);
-    margin-bottom: 1.25rem;
-  }
-  .hero-h1 em {
-    color: var(--color-silver);
-    font-style: normal;
-  }
-
+  .hero-h1 { color: var(--color-white); margin-bottom: 1.25rem; }
+  .hero-h1 em { color: var(--color-silver); }
   .hero-sub {
     font-size: 1rem;
     color: var(--color-silver);
     line-height: 1.7;
-    max-width: 420px;
+    max-width: 46ch;
     margin-bottom: 2rem;
     font-weight: 300;
   }
-
-  .hero-btns {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    background: var(--color-white);
-    color: var(--color-navy-deep);
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.8rem 1.5rem;
-    border-radius: 3px;
-    transition: background 0.2s, color 0.2s;
-  }
-  .btn-primary:hover {
-    background: var(--color-silver);
-  }
-
-  .btn-ghost {
-    font-size: 0.6875rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-silver);
-    border-bottom: 1px solid var(--color-slate);
-    padding-bottom: 2px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .btn-ghost:hover {
-    color: var(--color-white);
-    border-color: var(--color-white);
-  }
+  .hero-btns { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
 
   .hero-visual {
     grid-area: visual;
@@ -144,58 +89,29 @@ const t = getT(locale);
     0%,100% { transform: scale(1); opacity: 0.8; }
     50%      { transform: scale(1.08); opacity: 1; }
   }
-  .hero-mark {
-    width: 52%;
-    height: 52%;
-    color: var(--color-silver);
-    opacity: 0.5;
-    position: relative;
-    z-index: 1;
-  }
+  .hero-mark { width: 52%; height: 52%; color: var(--color-silver); opacity: 0.5; position: relative; z-index: 1; }
 
-
-
-  /* Tablet portrait (769-900px): hide visual, single column */
-  @media (min-width: 769px) and (max-width: 900px) {
-    #hero {
-      grid-template-columns: 1fr;
-      grid-template-areas: "content";
-      align-items: start;
-    }
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; grid-template-areas: "content"; align-items: start; }
     .hero-visual { display: none; }
-    .hero-content {
-      max-width: 640px;
-      padding: calc(var(--nav-height) + 3rem) 2.5rem 2.5rem;
-    }
+    .hero-content { max-width: 640px; padding: calc(var(--nav-height) + 2.5rem) 1.5rem 2.5rem; }
   }
-
-  /* Mobile (≤768px) */
-  @media (max-width: 768px) {
-    #hero {
-      grid-template-columns: 1fr;
-      grid-template-areas: "content";
-      align-items: start;
-      min-height: 100svh;
-    }
-    .hero-visual { display: none; }
-    .hero-content {
-      padding: calc(var(--nav-height) + 2.5rem) 1.5rem 2.5rem;
-    }
-  }
-
-  /* Small phones (≤400px) */
   @media (max-width: 400px) {
-    .hero-btns { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .hero-btns { flex-direction: column; align-items: stretch; }
+    .hero-btns .btn { width: 100%; }
   }
 </style>
 
 <script>
-  // Parallax: hero visual drifts upward as user scrolls
-  const visual = document.querySelector('.hero-visual-inner') as HTMLElement | null;
-  if (visual) {
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY * 0.25;
-      visual.style.transform = `translateY(-${y}px)`;
-    }, { passive: true });
+  // Parallax suave del isotipo (se omite con movimiento reducido)
+  let bound = false;
+  function onScroll(): void {
+    const visual = document.querySelector<HTMLElement>('.hero-visual-inner');
+    if (visual) visual.style.transform = `translateY(-${window.scrollY * 0.25}px)`;
   }
+  document.addEventListener('astro:page-load', () => {
+    if (bound || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    bound = true;
+    window.addEventListener('scroll', onScroll, { passive: true });
+  });
 </script>

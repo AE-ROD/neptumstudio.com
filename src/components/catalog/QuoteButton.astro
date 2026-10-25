@@ -1,0 +1,18 @@
+---
+// src/components/catalog/QuoteButton.astro — botón "Cotizar" → /contacto?servicio=<id>
+import type { Locale } from '../../i18n';
+import { getT, quoteHref, fill } from '../../i18n';
+import type { Offer } from '../../data/catalog';
+
+interface Props {
+  offer: Offer;
+  locale: Locale;
+  variant?: 'dark' | 'outline-dark' | 'light' | 'outline-light' | 'link';
+  class?: string;
+}
+const { offer, locale, variant = 'dark', class: className } = Astro.props;
+const t = getT(locale);
+const label = fill(t.services_page.quote_aria, { name: offer.name[locale] });
+const classes = variant === 'link' ? ['link-label', 'link-label--dark'] : ['btn', `btn-${variant}`];
+---
+<a href={quoteHref(locale, offer.id)} class:list={[...classes, className]} aria-label={label}>{t.services_page.quote}{variant === 'link' ? ' →' : ''}</a>

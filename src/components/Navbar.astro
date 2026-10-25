@@ -1,76 +1,57 @@
 ---
 // src/components/Navbar.astro
-import type { Locale } from '../i18n';
-import { getT, localeRoutes, verticalRoutes, verticalNavLabels, sectorNavLabel } from '../i18n';
-import type { Vertical } from '../i18n';
+import type { Locale, PageKey } from '../i18n';
+import { getT, locales, routes, href, quoteHref } from '../i18n';
+import { diagnostic } from '../data/catalog';
+import LogoMark from './LogoMark.astro';
 
 interface Props {
   locale: Locale;
-  langRoutes?: Record<Locale, string>;
-  vertical?: Vertical;
+  page: PageKey;
 }
-const { locale, langRoutes, vertical } = Astro.props;
+const { locale, page } = Astro.props;
 const t = getT(locale);
-const resolvedLangRoutes = langRoutes ?? localeRoutes;
-const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
+
+const links = [
+  { key: 'services', label: t.nav.services, url: routes[locale].services, current: page === 'services' },
+  { key: 'how', label: t.nav.how, url: href(locale, 'home', { hash: 'how' }), current: false },
+  { key: 'contact', label: t.nav.contact, url: routes[locale].contact, current: page === 'contact' },
+];
+const diagnosticUrl = quoteHref(locale, diagnostic.id);
 ---
 
-<header id="navbar" data-hero-reveal style="transform: translateY(50vh)" data-vertical={vertical ? 'true' : undefined}>
+<header id="navbar" data-hero-reveal>
   <div class="nav-inner container">
 
-    <a href={vertical ? verticalRoutes[locale][vertical] : localeRoutes[locale]} class="nav-logo" aria-label="Neptum Studio">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 68" fill="none" class="logo-svg">
-        <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-        <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-        <polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-        <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-        {vertical ? (
-          <text x="70" y="42" font-family="'Cormorant Garamond', serif" font-size="22" font-weight="400" fill="currentColor" letter-spacing="2">neptum<tspan fill="var(--vp-accent)">{vertical}</tspan></text>
-        ) : (
-          <text x="70" y="42" font-family="'Cormorant Garamond', serif" font-size="22" font-weight="400" fill="currentColor" letter-spacing="2">neptumstudio</text>
-        )}
-      </svg>
+    <a href={routes[locale].home} class="nav-logo" aria-label={t.nav.home_label}>
+      <LogoMark class="logo-mark" />
+      <span class="logo-text">Neptum Studio</span>
     </a>
 
-    <nav class="nav-links" aria-label="Main navigation">
-      <a href={vertical ? '#services' : `${localeRoutes[locale]}#services`}>{t.nav.services}</a>
-      <a href={vertical ? '#projects' : `${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
-      <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
-      <div class="nav-dropdown">
-        <span class="nav-dropdown-trigger">{sectorNavLabel[locale]} ↓</span>
-        <div class="dropdown-menu">
-          <div class="dropdown-menu-inner">
-            {verticals.map(v => (
-              <a href={verticalRoutes[locale][v]} data-astro-reload>{verticalNavLabels[locale][v]}</a>
-            ))}
-          </div>
-        </div>
-      </div>
+    <nav class="nav-links" aria-label={t.nav.main_label}>
+      {links.map((l) => (
+        <a href={l.url} aria-current={l.current ? 'page' : undefined}>{l.label}</a>
+      ))}
     </nav>
 
     <div class="nav-right">
-      <div class="lang-switch" role="navigation" aria-label="Language selector">
-        {(['es', 'en', 'pt'] as const).map((lang) => (
+      <nav class="lang-switch" aria-label={t.nav.lang_label}>
+        {locales.map((lang) => (
           <a
-            href={resolvedLangRoutes[lang]}
+            href={routes[lang][page]}
             class:list={['lang-btn', { active: lang === locale }]}
             lang={lang}
+            hreflang={lang}
             aria-current={lang === locale ? 'true' : undefined}
-            data-astro-reload
           >
             {lang.toUpperCase()}
           </a>
         ))}
-      </div>
+      </nav>
 
-      <a href={vertical ? '#contact' : `${localeRoutes[locale]}#contact`} class="nav-cta">
-        {t.nav.contact} ↗
-      </a>
+      <a href={diagnosticUrl} class="btn btn-light nav-cta">{t.nav.diagnostic}</a>
 
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <button class="hamburger" id="hamburger" aria-label={t.nav.menu_open} aria-expanded="false" aria-controls="mobile-menu">
         <span></span><span></span>
       </button>
     </div>
@@ -78,47 +59,27 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
   </div>
 </header>
 
-<!-- Mobile menu lives OUTSIDE <header> so position:fixed isn't broken by GSAP transforms on navbar -->
+<!-- El menú móvil vive fuera de <header> para que position:fixed no dependa de transformaciones del navbar -->
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-
-  <!-- Logo identity del sector en el menú mobile -->
   <div class="mobile-menu-logo">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 68" fill="none" class="mobile-logo-mark">
-      <line x1="30" y1="4" x2="30" y2="52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-      <polyline points="25,14 30,4 35,14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <line x1="12" y1="20" x2="12" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-      <polyline points="8,28 12,20 16,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <line x1="48" y1="20" x2="48" y2="48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-      <polyline points="44,28 48,20 52,28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M8 56 Q19 50 30 56 Q41 62 52 56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-    </svg>
-    <span class="mobile-logo-text">
-      neptum{vertical
-        ? <span class="mobile-logo-sector">{vertical}</span>
-        : 'studio'
-      }
-    </span>
+    <LogoMark class="mobile-logo-mark" />
+    <span class="mobile-logo-text">Neptum Studio</span>
   </div>
 
-  <nav class="mobile-links">
-    <a href={vertical ? '#services' : `${localeRoutes[locale]}#services`}>{t.nav.services}</a>
-    <a href={vertical ? '#projects' : `${localeRoutes[locale]}#projects`}>{t.nav.projects}</a>
-    <a href={`${localeRoutes[locale]}#how`}>{t.nav.about}</a>
-    <span class="mobile-sector-label">{sectorNavLabel[locale]}</span>
-    {verticals.map(v => (
-      <a href={verticalRoutes[locale][v]} class="mobile-vertical-link" data-astro-reload>{verticalNavLabels[locale][v]}</a>
+  <nav class="mobile-links" aria-label={t.nav.main_label}>
+    {links.map((l) => (
+      <a href={l.url} aria-current={l.current ? 'page' : undefined}>{l.label}</a>
     ))}
-    <a href={vertical ? '#contact' : `${localeRoutes[locale]}#contact`} class="mobile-cta">{t.nav.contact} ↗</a>
+    <a href={diagnosticUrl} class="btn btn-light mobile-cta">{t.nav.diagnostic}</a>
   </nav>
 
-  <div class="mobile-lang">
-    {(['es', 'en', 'pt'] as const).map((lang) => (
-      <a href={resolvedLangRoutes[lang]} class:list={['lang-btn', { active: lang === locale }]} data-astro-reload>
+  <nav class="mobile-lang" aria-label={t.nav.lang_label}>
+    {locales.map((lang) => (
+      <a href={routes[lang][page]} class:list={['lang-btn', { active: lang === locale }]} lang={lang} hreflang={lang} aria-current={lang === locale ? 'true' : undefined}>
         {lang.toUpperCase()}
       </a>
     ))}
-  </div>
-
+  </nav>
 </div>
 
 <style>
@@ -127,7 +88,7 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     top: 0; left: 0; right: 0;
     z-index: 100;
     height: var(--nav-height);
-    transition: background 0.4s ease, backdrop-filter 0.4s ease, height 0.4s ease, box-shadow 0.4s ease;
+    transition: background 0.4s ease, height 0.4s ease, box-shadow 0.4s ease;
   }
   #navbar.scrolled {
     background: rgba(13, 27, 42, 0.97);
@@ -146,125 +107,59 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     gap: 2rem;
   }
 
-  .nav-logo { display: flex; align-items: center; }
-  .logo-svg { height: 32px; width: auto; color: var(--color-white); }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; color: var(--color-white); }
+  .logo-mark { height: 30px; width: auto; }
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    white-space: nowrap;
   }
+
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
   .nav-links a {
-    font-size: 0.6875rem;
-    letter-spacing: 0.12em;
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
     color: var(--color-silver);
     text-transform: uppercase;
-    transition: color 0.2s;
+    padding: 0.25rem 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
   }
   .nav-links a:hover { color: var(--color-white); }
+  .nav-links a[aria-current="page"] { color: var(--color-white); border-bottom-color: var(--color-silver); }
 
-  /* Dropdown */
-  .nav-dropdown { position: relative; }
-  .nav-dropdown-trigger {
-    font-size: 0.6875rem;
-    letter-spacing: 0.12em;
-    color: var(--color-silver);
-    text-transform: uppercase;
-    cursor: default;
-    transition: color 0.2s;
-    user-select: none;
-  }
-  .nav-dropdown:hover .nav-dropdown-trigger { color: var(--color-white); }
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    padding-top: 0.75rem;
-    min-width: 160px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s ease;
-  }
-  .nav-dropdown:hover .dropdown-menu {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .dropdown-menu-inner {
-    background: var(--color-navy-mid);
-    border: 1px solid var(--color-slate);
-    border-radius: 4px;
-    padding: 0.4rem 0;
-  }
-  .dropdown-menu-inner a {
-    display: block;
-    padding: 0.5rem 1rem;
-    font-size: 0.625rem;
-    letter-spacing: 0.12em;
-    color: var(--color-silver);
-    text-transform: uppercase;
-    transition: color 0.2s, background 0.2s;
-  }
-  .dropdown-menu-inner a:hover {
-    color: var(--color-white);
-    background: rgba(255,255,255,0.05);
-  }
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
 
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .lang-switch {
-    display: flex;
-    border: 1px solid var(--color-navy-mid);
-    border-radius: 4px;
-    overflow: hidden;
-  }
+  .lang-switch { display: flex; border: 1px solid var(--color-navy-mid); }
   .lang-btn {
     font-size: 0.625rem;
     letter-spacing: 0.08em;
-    padding: 0.3rem 0.5rem;
-    color: var(--color-slate);
-    transition: background 0.2s, color 0.2s;
-  }
-  .lang-btn.active,
-  .lang-btn:hover {
-    background: var(--color-navy-mid);
-    color: var(--color-white);
-  }
-
-  .nav-cta {
-    font-size: 0.6875rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: 1px solid var(--color-silver);
+    padding: 0.4rem 0.6rem;
     color: var(--color-silver);
-    padding: 0.4rem 0.9rem;
-    border-radius: 3px;
     transition: background 0.2s, color 0.2s;
   }
-  .nav-cta:hover {
-    background: var(--color-white);
-    color: var(--color-navy-deep);
-    border-color: var(--color-white);
-  }
+  .lang-btn.active, .lang-btn:hover { background: var(--color-navy-mid); color: var(--color-white); }
+
+  .nav-cta { padding: 0.6rem 1.1rem; min-height: 38px; }
 
   .hamburger {
     display: none;
     flex-direction: column;
-    gap: 5px;
-    padding: 0.25rem;
+    justify-content: center;
+    gap: 6px;
+    width: 44px; height: 44px;
+    align-items: center;
   }
   .hamburger span {
     display: block;
     width: 22px; height: 1.5px;
-    background: var(--color-silver);
-    transition: transform 0.3s, opacity 0.3s;
+    background: var(--color-white);
+    transition: transform 0.3s;
   }
-  .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-  .hamburger[aria-expanded="true"] span:nth-child(2) { transform: translateY(-6.5px) rotate(-45deg); }
+  .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(3.75px) rotate(45deg); }
+  .hamburger[aria-expanded="true"] span:nth-child(2) { transform: translateY(-3.75px) rotate(-45deg); }
 
   .mobile-menu {
     position: fixed;
@@ -276,197 +171,86 @@ const verticals: Vertical[] = ['salud', 'resto', 'oficio'];
     justify-content: center;
     gap: 2rem;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 200; /* higher than navbar (100) — no transform parent to break fixed */
+    transition: opacity 0.3s ease, visibility 0.3s;
+    z-index: 200;
     padding: 2rem 1.5rem;
   }
-  .mobile-menu.open { opacity: 1; pointer-events: auto; }
+  .mobile-menu.open { opacity: 1; visibility: visible; pointer-events: auto; }
 
-  /* Logo identity in mobile menu */
-  .mobile-menu-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 0.5rem;
-  }
-  .mobile-logo-mark {
-    width: 28px;
-    height: 28px;
-    color: var(--color-white);
-  }
-  .mobile-logo-text {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 300;
-    letter-spacing: 0.06em;
-    color: var(--color-white);
-  }
-  .mobile-logo-sector {
-    color: var(--vp-accent, var(--color-silver));
-  }
+  .mobile-menu-logo { display: flex; align-items: center; gap: 0.6rem; color: var(--color-white); }
+  .mobile-logo-mark { width: 28px; height: 28px; }
+  .mobile-logo-text { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 0.08em; }
 
-  .mobile-links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-  .mobile-links a {
+  .mobile-links { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+  .mobile-links a:not(.btn) {
     font-family: var(--font-display);
     font-size: 2rem;
-    font-weight: 300;
     color: var(--color-white);
     transition: color 0.2s;
   }
-  .mobile-links a:hover { color: var(--color-silver); }
+  .mobile-links a:not(.btn):hover { color: var(--color-silver); }
+  .mobile-cta { margin-top: 0.5rem; }
 
-  .mobile-sector-label {
-    font-size: 0.625rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-slate);
-    margin-top: 0.5rem;
-  }
-  .mobile-vertical-link {
-    font-family: var(--font-body) !important;
-    font-size: 0.9rem !important;
-    letter-spacing: 0.1em;
-    color: var(--color-silver) !important;
-    text-transform: uppercase;
-  }
-  .mobile-cta {
-    font-family: var(--font-body) !important;
-    font-size: 0.875rem !important;
-    color: var(--color-silver) !important;
-    border: 1px solid var(--color-silver);
-    padding: 0.5rem 1.5rem;
-    border-radius: 3px;
-  }
-  .mobile-lang { display: flex; gap: 1rem; }
-  .mobile-lang .lang-btn {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.7rem;
-    border: 1px solid var(--color-navy-mid);
-    border-radius: 3px;
-  }
+  .mobile-lang { display: flex; gap: 0.75rem; }
+  .mobile-lang .lang-btn { font-size: 0.75rem; padding: 0.5rem 0.8rem; border: 1px solid var(--color-navy-mid); min-width: 44px; text-align: center; }
 
-  /* Tablet compact (901-1200px) */
+  /* Tablet (901-1200px) */
   @media (min-width: 901px) and (max-width: 1200px) {
     .nav-links { gap: 1.25rem; }
     .nav-inner { gap: 1rem; }
     .nav-links a { font-size: 0.625rem; }
-    .nav-cta { display: none; }
   }
-
-  /* Mobile + tablet portrait (≤900px) */
+  /* Móvil y tablet vertical (≤900px) */
   @media (max-width: 900px) {
-    .nav-links { display: none; }
-    .nav-cta { display: none; }
+    .nav-links, .nav-cta, .lang-switch { display: none; }
     .hamburger { display: flex; }
-    .lang-switch { display: none; }
-  }
-
-  /* ── Light mode — solo en páginas verticales ── */
-  @media (prefers-color-scheme: light) {
-    #navbar[data-vertical].scrolled {
-      background: var(--vp-bg-nav);
-      border-bottom-color: var(--vp-bg-nav-border);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    }
-    #navbar[data-vertical] {
-      color: var(--vp-logo-color);
-    }
-    #navbar[data-vertical] .logo-svg {
-      color: var(--vp-logo-color);
-    }
-    #navbar[data-vertical] .nav-links a {
-      color: var(--vp-text-2);
-    }
-    #navbar[data-vertical] .nav-links a:hover {
-      color: var(--vp-text);
-    }
-    #navbar[data-vertical] .nav-dropdown-trigger {
-      color: var(--vp-text-2);
-    }
-    #navbar[data-vertical] .nav-dropdown:hover .nav-dropdown-trigger {
-      color: var(--vp-text);
-    }
-    #navbar[data-vertical] .dropdown-menu-inner {
-      background: var(--vp-svc-card);
-      border-color: var(--vp-border);
-    }
-    #navbar[data-vertical] .dropdown-menu-inner a {
-      color: var(--vp-text-2);
-    }
-    #navbar[data-vertical] .dropdown-menu-inner a:hover {
-      color: var(--vp-text);
-      background: rgba(0,0,0,0.04);
-    }
-    #navbar[data-vertical] .lang-switch {
-      border-color: var(--vp-border);
-    }
-    #navbar[data-vertical] .lang-btn {
-      color: var(--vp-text-3);
-    }
-    #navbar[data-vertical] .lang-btn.active,
-    #navbar[data-vertical] .lang-btn:hover {
-      background: var(--vp-bg-mid);
-      color: var(--vp-text);
-    }
-    #navbar[data-vertical] .nav-cta {
-      border-color: var(--vp-text-2);
-      color: var(--vp-text-2);
-    }
-    #navbar[data-vertical] .nav-cta:hover {
-      background: var(--vp-text);
-      color: var(--vp-bg);
-      border-color: var(--vp-text);
-    }
-    #navbar[data-vertical] .hamburger span {
-      background: var(--vp-text);
-    }
-    #navbar[data-vertical] .mobile-menu {
-      background: var(--vp-bg);
-    }
-    #navbar[data-vertical] .mobile-links a {
-      color: var(--vp-text);
-    }
-    #navbar[data-vertical] .mobile-sector-label {
-      color: var(--vp-text-3);
-    }
-    #navbar[data-vertical] .mobile-vertical-link {
-      color: var(--vp-text-2) !important;
-    }
-    #navbar[data-vertical] .mobile-cta {
-      border-color: var(--vp-text-2);
-      color: var(--vp-text-2) !important;
-    }
   }
 </style>
 
 <script>
-  const navbar = document.getElementById('navbar')!;
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 20);
-  }, { passive: true });
+  let globalBound = false;
 
-  const hamburger = document.getElementById('hamburger')!;
-  const mobileMenu = document.getElementById('mobile-menu')!;
+  function onScroll(): void {
+    const navbar = document.getElementById('navbar');
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }
 
-  hamburger.addEventListener('click', () => {
-    const isOpen = mobileMenu.classList.toggle('open');
-    hamburger.setAttribute('aria-expanded', String(isOpen));
-    mobileMenu.setAttribute('aria-hidden', String(!isOpen));
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  });
+  function setMenu(open: boolean): void {
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('mobile-menu');
+    if (!hamburger || !menu) return;
+    menu.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.setAttribute('aria-label', open ? (hamburger.dataset.labelClose ?? 'Close') : (hamburger.dataset.labelOpen ?? 'Menu'));
+    menu.setAttribute('aria-hidden', String(!open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
 
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      mobileMenu.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    });
-  });
+  function init(): void {
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('mobile-menu');
+    if (!hamburger || !menu) return;
+
+    hamburger.dataset.labelOpen = hamburger.getAttribute('aria-label') ?? '';
+    hamburger.dataset.labelClose = hamburger.dataset.labelClose ?? hamburger.dataset.labelOpen;
+
+    hamburger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+
+    if (!globalBound) {
+      globalBound = true;
+      window.addEventListener('scroll', onScroll, { passive: true });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setMenu(false);
+      });
+      document.addEventListener('astro:after-swap', () => {
+        document.body.style.overflow = '';
+      });
+    }
+    onScroll();
+  }
+
+  document.addEventListener('astro:page-load', init);
 </script>

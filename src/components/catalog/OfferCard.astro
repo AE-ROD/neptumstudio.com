@@ -1,0 +1,83 @@
+---
+// src/components/catalog/OfferCard.astro — tarjeta para Línea Crecimiento y Packs.
+import type { Locale } from '../../i18n';
+import { getT, fill } from '../../i18n';
+import type { Offer, Pack, LineId } from '../../data/catalog';
+import { featureText, getOffer, packSaving, formatCLP } from '../../data/catalog';
+import Price from './Price.astro';
+import QuoteButton from './QuoteButton.astro';
+
+interface Props {
+  offer: Offer | Pack;
+  locale: Locale;
+}
+const { offer, locale } = Astro.props;
+const t = getT(locale);
+
+const isPack = (o: Offer | Pack): o is Pack => o.category === 'packs' && 'components' in o;
+
+const checklist: string[] = isPack(offer)
+  ? offer.components.map((c) => {
+      const comp = getOffer(c.offerId);
+      return c.months ? fill(t.services_page.cards.months_of, { n: c.months, name: comp.name[locale] }) : comp.name[locale];
+    })
+  : (offer.features ?? []).map((f) => featureText(offer.category as LineId, f, locale));
+
+const saving = isPack(offer) ? formatCLP(packSaving(offer)) : null;
+const listTitle = isPack(offer) ? t.services_page.cards.components : t.services_page.cards.includes;
+---
+
+<article class="offer-card">
+  <header class="offer-head">
+    <span class="sku offer-sku">{offer.sku}</span>
+    <h3 class="offer-name">{offer.name[locale]}</h3>
+    {offer.audience && (
+      <p class="offer-audience"><span class="offer-audience-label">{t.services_page.cards.for}:</span> {offer.audience[locale]}</p>
+    )}
+  </header>
+
+  <div class="offer-price">
+    <Price price={offer.price} locale={locale} size="lg" />
+  </div>
+
+  <div class="offer-list-wrap">
+    <p class="offer-list-title">{listTitle}</p>
+    <ul class="offer-list" role="list">
+      {checklist.map((item) => (
+        <li><span class="offer-check" aria-hidden="true">✓</span><span>{item}</span></li>
+      ))}
+    </ul>
+  </div>
+
+  {saving && (
+    <p class="offer-saving sku">{fill(t.services_page.cards.you_save, { amount: saving })}</p>
+  )}
+
+  <QuoteButton offer={offer} locale={locale} variant="dark" class="offer-cta" />
+</article>
+
+<style>
+  .offer-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-cream-border);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    color: var(--color-navy-deep);
+    height: 100%;
+  }
+  .offer-head { display: flex; flex-direction: column; gap: 0.5rem; }
+  .offer-sku { color: var(--color-slate); }
+  .offer-name { font-family: var(--font-display); font-size: 1.75rem; font-weight: 400; line-height: 1.1; }
+  .offer-audience { font-size: 0.875rem; color: var(--color-slate); line-height: 1.55; font-weight: 300; }
+  .offer-audience-label { font-weight: 500; }
+  .offer-price :global(.price-from) { color: var(--color-slate); }
+  .offer-list-wrap { flex: 1; display: flex; flex-direction: column; gap: 0.6rem; border-top: 1px solid var(--color-cream-border); padding-top: 1.25rem; }
+  .offer-list-title { font-size: 0.625rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-slate); font-weight: 500; }
+  .offer-list { display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem; line-height: 1.5; }
+  .offer-list li { display: flex; gap: 0.6rem; align-items: flex-start; }
+  .offer-check { color: var(--color-slate); flex-shrink: 0; }
+  .offer-saving { color: var(--color-navy-deep); border: 1px solid var(--color-navy-deep); padding: 0.4rem 0.6rem; align-self: flex-start; }
+  .offer-cta { width: 100%; }
+</style>

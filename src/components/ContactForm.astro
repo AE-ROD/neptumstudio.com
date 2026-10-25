@@ -1,0 +1,246 @@
+---
+// src/components/ContactForm.astro — formulario Web3Forms con "Servicio de interés" como select prellenado desde ?servicio=
+import type { Locale } from '../i18n';
+import { getT, routes, SERVICE_QUERY_PARAM } from '../i18n';
+import { categories, categoryLabels, offersIn, diagnostic } from '../data/catalog';
+import { WEB3FORMS_KEY, CONTACT } from '../data/contact';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+const f = t.contact_page.form;
+
+const groups = [
+  { label: f.service_group_start, offers: [diagnostic] },
+  ...categories.map((c) => ({ label: categoryLabels[c][locale], offers: offersIn(c) })),
+];
+
+// Sin JavaScript, Web3Forms redirige aquí después de enviar.
+const site = Astro.site ?? new URL('https://neptumstudio.vercel.app');
+const redirectUrl = new URL(`${routes[locale].contact}?enviado=1`, site).href;
+---
+
+<form
+  class="contact-form"
+  id="contact-form"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  data-param={SERVICE_QUERY_PARAM}
+>
+  <fieldset class="form-fields">
+    <legend class="sr-only">{f.legend}</legend>
+
+    <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+    <input type="hidden" name="subject" id="form-subject" value={f.subject_default} data-template={f.subject} />
+    <input type="hidden" name="from_name" value="Neptum Studio Web" />
+    <input type="hidden" name="redirect" value={redirectUrl} />
+    <input type="hidden" name="idioma" value={locale} />
+    <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" aria-hidden="true" autocomplete="off" />
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="name">{f.name}</label>
+        <input type="text" id="name" name="name" placeholder={f.name_placeholder} autocomplete="name" required />
+      </div>
+      <div class="form-field">
+        <label for="email">{f.email}</label>
+        <input type="email" id="email" name="email" placeholder={f.email_placeholder} autocomplete="email" required />
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="company">{f.company}</label>
+      <input type="text" id="company" name="company" placeholder={f.company_placeholder} autocomplete="organization" />
+    </div>
+
+    <div class="form-field">
+      <label for="service">{f.service}</label>
+      <div class="select-wrap">
+        <select id="service" name="service" required>
+          <option value="" disabled selected>{f.service_placeholder}</option>
+          {groups.map((g) => (
+            <optgroup label={g.label}>
+              {g.offers.map((o) => (
+                <option value={`${o.sku} · ${o.name[locale]}`} data-id={o.id}>{o.name[locale]}</option>
+              ))}
+            </optgroup>
+          ))}
+          <option value={f.service_other} data-id="otro">{f.service_other}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="message">{f.message}</label>
+      <textarea id="message" name="message" rows="5" placeholder={f.message_placeholder} required></textarea>
+    </div>
+  </fieldset>
+
+  <div class="form-footer">
+    <button type="submit" class="btn btn-dark form-submit" id="form-submit" data-label={f.submit} data-sending={f.sending}>{f.submit}</button>
+    <p class="form-privacy">{f.privacy}</p>
+  </div>
+
+  <div class="form-status form-status--success" id="form-success" role="status" aria-live="polite" hidden>
+    <strong>{f.success_title}</strong>
+    <span>{f.success_text}</span>
+  </div>
+  <div class="form-status form-status--error" id="form-error" role="alert" hidden>
+    <strong>{f.error_title}</strong>
+    <span>{f.error_text} <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener">WhatsApp →</a></span>
+  </div>
+</form>
+
+<style>
+  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; color: var(--color-navy-deep); }
+  .form-fields { border: none; display: flex; flex-direction: column; gap: 1.1rem; min-width: 0; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field label {
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+    font-weight: 500;
+  }
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--color-navy-deep);
+    background: var(--color-white);
+    border: 1px solid var(--color-cream-border);
+    border-radius: var(--radius);
+    padding: 0.75rem 0.9rem;
+    min-height: 44px;
+    width: 100%;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .form-field input::placeholder, .form-field textarea::placeholder { color: var(--color-slate); opacity: 0.8; }
+  .form-field input:focus-visible,
+  .form-field textarea:focus-visible,
+  .form-field select:focus-visible {
+    outline: 2px solid var(--color-navy-deep);
+    outline-offset: 0;
+    border-color: var(--color-navy-deep);
+  }
+  .select-wrap { position: relative; }
+  .select-wrap select { appearance: none; -webkit-appearance: none; padding-right: 2.5rem; cursor: pointer; }
+  .select-wrap::after {
+    content: '';
+    position: absolute;
+    right: 1rem; top: 50%;
+    width: 8px; height: 8px;
+    border-right: 1px solid var(--color-navy-deep);
+    border-bottom: 1px solid var(--color-navy-deep);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+  .botcheck { position: absolute; left: -9999px; opacity: 0; }
+
+  .form-footer { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+  .form-privacy { font-size: 0.75rem; color: var(--color-slate); font-weight: 300; }
+
+  .form-status {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--color-navy-deep);
+    background: var(--color-white);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+  .form-status strong { font-weight: 600; }
+  .form-status--error { border-left-style: double; border-left-width: 6px; }
+  .form-status a { border-bottom: 1px solid currentColor; }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .form-footer { flex-direction: column; align-items: stretch; }
+    .form-submit { width: 100%; }
+  }
+</style>
+
+<script>
+  function setStatus(form: HTMLFormElement, kind: 'success' | 'error' | 'none'): void {
+    const ok = form.querySelector<HTMLElement>('#form-success');
+    const err = form.querySelector<HTMLElement>('#form-error');
+    if (ok) ok.hidden = kind !== 'success';
+    if (err) err.hidden = kind !== 'error';
+    const shown = kind === 'success' ? ok : kind === 'error' ? err : null;
+    shown?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  function updateSubject(form: HTMLFormElement): void {
+    const select = form.querySelector<HTMLSelectElement>('#service');
+    const subject = form.querySelector<HTMLInputElement>('#form-subject');
+    if (!select || !subject) return;
+    const template = subject.dataset.template ?? '';
+    const chosen = select.selectedOptions[0];
+    subject.value = chosen && chosen.value ? template.replace('{service}', chosen.value) : (subject.defaultValue || subject.value);
+  }
+
+  function init(): void {
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    if (!form || form.dataset.ready === '1') return;
+    form.dataset.ready = '1';
+
+    const select = form.querySelector<HTMLSelectElement>('#service');
+    const submit = form.querySelector<HTMLButtonElement>('#form-submit');
+    const params = new URLSearchParams(location.search);
+
+    // Prellenar "Servicio de interés" desde ?servicio=<id>
+    const wanted = params.get(form.dataset.param ?? 'servicio');
+    if (select && wanted) {
+      const option = Array.from(select.options).find((o) => o.dataset.id === wanted);
+      if (option) select.value = option.value;
+    }
+    updateSubject(form);
+    select?.addEventListener('change', () => updateSubject(form));
+
+    // Vuelta del envío sin JavaScript (Web3Forms redirige con ?enviado=1)
+    if (params.get('enviado') === '1') {
+      setStatus(form, 'success');
+      params.delete('enviado');
+      const qs = params.toString();
+      history.replaceState(null, '', `${location.pathname}${qs ? `?${qs}` : ''}${location.hash}`);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      setStatus(form, 'none');
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = submit.dataset.sending ?? '…';
+      }
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        const json = (await res.json()) as { success?: boolean };
+        if (res.ok && json.success) {
+          form.reset();
+          updateSubject(form);
+          setStatus(form, 'success');
+        } else {
+          setStatus(form, 'error');
+        }
+      } catch {
+        setStatus(form, 'error');
+      } finally {
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = submit.dataset.label ?? '';
+        }
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>

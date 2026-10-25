@@ -1,0 +1,32 @@
+---
+// src/views/HomeView.astro — home, compartida por los tres idiomas.
+import type { Locale } from '../i18n';
+import { getT } from '../i18n';
+import Layout from '../layouts/Layout.astro';
+import Loader from '../components/Loader.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import ServicesSummary from '../components/ServicesSummary.astro';
+import Scrollytelling from '../components/Scrollytelling.astro';
+import Projects from '../components/Projects.astro';
+import PlansSummary from '../components/PlansSummary.astro';
+import ContactShort from '../components/ContactShort.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+---
+<Layout title={t.meta.home_title} description={t.meta.home_description} locale={locale} page="home">
+  <Loader />
+  <Navbar locale={locale} page="home" />
+  <main id="main">
+    <Hero locale={locale} />
+    <ServicesSummary locale={locale} />
+    <Scrollytelling locale={locale} />
+    <Projects locale={locale} />
+    <PlansSummary locale={locale} />
+    <ContactShort locale={locale} />
+  </main>
+  <Footer locale={locale} page="home" />
+</Layout>

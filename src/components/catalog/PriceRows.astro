@@ -1,0 +1,64 @@
+---
+// src/components/catalog/PriceRows.astro — filas nombre / descripción / precio a la derecha (planes y complementos).
+import type { Locale } from '../../i18n';
+import type { Offer } from '../../data/catalog';
+import Price from './Price.astro';
+import QuoteButton from './QuoteButton.astro';
+
+interface Props {
+  offers: Offer[];
+  locale: Locale;
+  title?: string;
+}
+const { offers, locale, title } = Astro.props;
+---
+
+<div class="rows-group">
+  {title && <h3 class="rows-title">{title}</h3>}
+  <ul class="rows" role="list">
+    {offers.map((o) => (
+      <li class="row">
+        <div class="row-main">
+          <span class="sku row-sku">{o.sku}</span>
+          <h4 class="row-name">{o.name[locale]}</h4>
+          {o.description && <p class="row-desc">{o.description[locale]}</p>}
+        </div>
+        <div class="row-side">
+          <Price price={o.price} locale={locale} size="sm" />
+          <QuoteButton offer={o} locale={locale} variant="link" />
+        </div>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .rows-group + .rows-group { margin-top: 3rem; }
+  .rows-title {
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .rows { border-top: 1px solid var(--color-navy-deep); }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-cream-border);
+    color: var(--color-navy-deep);
+  }
+  .row-sku { color: var(--color-slate); display: block; margin-bottom: 0.3rem; }
+  .row-name { font-family: var(--font-display); font-size: 1.375rem; font-weight: 400; margin-bottom: 0.3rem; }
+  .row-desc { font-size: 0.875rem; color: var(--color-slate); line-height: 1.6; font-weight: 300; max-width: 56ch; }
+  .row-side { display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; text-align: right; }
+  .row-side :global(.price-from), .row-side :global(.price-unit) { color: var(--color-slate); }
+
+  @media (max-width: 560px) {
+    .row { grid-template-columns: 1fr; gap: 0.75rem; }
+    .row-side { flex-direction: row; align-items: center; justify-content: space-between; text-align: left; }
+  }
+</style>

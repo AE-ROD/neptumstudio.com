@@ -1,0 +1,26 @@
+---
+// src/views/ServicesView.astro — página /servicios (catálogo completo), compartida por los tres idiomas.
+import type { Locale } from '../i18n';
+import { getT } from '../i18n';
+import Layout from '../layouts/Layout.astro';
+import Loader from '../components/Loader.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import DiagnosticBlock from '../components/catalog/DiagnosticBlock.astro';
+import CatalogTabs from '../components/catalog/CatalogTabs.astro';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+---
+<Layout title={t.meta.services_title} description={t.meta.services_description} locale={locale} page="services">
+  <Loader />
+  <Navbar locale={locale} page="services" />
+  <main id="main">
+    <PageHero eyebrow={t.services_page.eyebrow} title={t.services_page.h1} lead={t.services_page.intro} />
+    <DiagnosticBlock locale={locale} />
+    <CatalogTabs locale={locale} />
+  </main>
+  <Footer locale={locale} page="services" />
+</Layout>

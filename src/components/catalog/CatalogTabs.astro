@@ -1,0 +1,232 @@
+---
+// src/components/catalog/CatalogTabs.astro — pestañas por categoría con indicador deslizante y estado en el hash.
+import type { Locale } from '../../i18n';
+import { getT } from '../../i18n';
+import type { CategoryId, LineId } from '../../data/catalog';
+import { categories, categoryLabels, offersIn, packs, complementsIn, complementGroupLabels } from '../../data/catalog';
+import CompareTable from './CompareTable.astro';
+import OfferCard from './OfferCard.astro';
+import PriceRows from './PriceRows.astro';
+
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = getT(locale);
+
+const tableLines: readonly CategoryId[] = ['landing', 'rediseno', 'reposicionamiento'];
+const tabs = categories.map((id) => ({
+  id,
+  label: categoryLabels[id][locale],
+  intro: t.services_page.intros[id],
+}));
+---
+
+<section id="catalogo" class="section section--cream catalog" data-catalog-tabs aria-labelledby="catalog-title">
+  <div class="container">
+    <h2 id="catalog-title" class="sr-only">{t.services_page.tabs_label}</h2>
+
+    <div class="tabs-bar">
+      <div class="tabs" role="tablist" aria-label={t.services_page.tabs_label}>
+        {tabs.map((tab, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${tab.id}`}
+            class="tab"
+            aria-controls={tab.id}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            data-tab={tab.id}
+          >{tab.label}</button>
+        ))}
+        <span class="tabs-indicator" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    {tabs.map((tab, i) => (
+      <section id={tab.id} role="tabpanel" aria-labelledby={`tab-${tab.id}`} class="tab-panel" hidden={i !== 0}>
+        <div class="panel-head">
+          <h3 class="display-md panel-title">{tab.label}</h3>
+          <p class="section-lead">{tab.intro}</p>
+        </div>
+
+        {tableLines.includes(tab.id) && <CompareTable line={tab.id as LineId} locale={locale} />}
+
+        {tab.id === 'crecimiento' && (
+          <div class="cards-grid">
+            {offersIn('crecimiento').map((o) => <OfferCard offer={o} locale={locale} />)}
+          </div>
+        )}
+
+        {tab.id === 'packs' && (
+          <div class="cards-grid">
+            {packs.map((p) => <OfferCard offer={p} locale={locale} />)}
+          </div>
+        )}
+
+        {tab.id === 'planes' && <PriceRows offers={offersIn('planes')} locale={locale} />}
+
+        {tab.id === 'complementos' && (
+          <>
+            <PriceRows offers={complementsIn('new')} locale={locale} title={complementGroupLabels.new[locale]} />
+            <PriceRows offers={complementsIn('redesign')} locale={locale} title={complementGroupLabels.redesign[locale]} />
+          </>
+        )}
+      </section>
+    ))}
+
+    <p class="catalog-footnote">{t.services_page.footnote}</p>
+  </div>
+</section>
+
+<noscript>
+  <style>
+    [role="tabpanel"][hidden] { display: block !important; }
+    .tabs-bar { display: none; }
+  </style>
+</noscript>
+
+<style>
+  .catalog { scroll-margin-top: var(--nav-height); }
+  .tabs-bar { border-bottom: 1px solid var(--color-cream-border); margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .tabs {
+    position: relative;
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-slate);
+    padding: 1rem 1.1rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s;
+    white-space: nowrap;
+    min-height: 44px;
+  }
+  .tab:hover { color: var(--color-navy-deep); }
+  .tab[aria-selected="true"] { color: var(--color-navy-deep); }
+  .tab:focus-visible { outline-offset: -3px; }
+  .tabs-indicator {
+    position: absolute;
+    left: 0; bottom: 0;
+    height: 2px;
+    width: 0;
+    background: var(--color-navy-deep);
+    opacity: 0;
+    transition: transform 0.35s var(--ease-out-expo), width 0.35s var(--ease-out-expo), opacity 0.2s;
+    pointer-events: none;
+  }
+  .tabs-indicator.is-ready { opacity: 1; }
+  /* Sin indicador (sin JS) la pestaña activa se subraya sola */
+  .tabs:not(:has(.tabs-indicator.is-ready)) .tab[aria-selected="true"] { border-bottom-color: var(--color-navy-deep); }
+
+  .tab-panel { scroll-margin-top: calc(var(--nav-height) + 1rem); }
+  .panel-head { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; color: var(--color-navy-deep); }
+
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+  .catalog-footnote {
+    margin-top: 3rem;
+    font-size: 0.8125rem;
+    color: var(--color-slate);
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 70ch;
+  }
+
+  @media (max-width: 900px) { .cards-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .cards-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  type Activate = (id: string, opts?: { hash?: boolean; focus?: boolean; scroll?: boolean }) => void;
+  let globalBound = false;
+  let currentActivate: Activate | null = null;
+  let currentRefresh: (() => void) | null = null;
+
+  function init(): void {
+    const root = document.querySelector<HTMLElement>('[data-catalog-tabs]');
+    if (!root) { currentActivate = null; currentRefresh = null; return; }
+
+    const tablist = root.querySelector<HTMLElement>('[role="tablist"]');
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    const indicator = root.querySelector<HTMLElement>('.tabs-indicator');
+    const ids = tabs.map((t) => t.dataset.tab ?? '');
+    if (!tablist || tabs.length === 0) return;
+    let current = ids[0] ?? '';
+
+    const moveIndicator = (tab: HTMLButtonElement): void => {
+      if (!indicator) return;
+      indicator.style.width = `${tab.offsetWidth}px`;
+      indicator.style.transform = `translateX(${tab.offsetLeft}px)`;
+      indicator.classList.add('is-ready');
+      // Mantener la pestaña activa visible en la barra desplazable (móvil)
+      const left = tab.offsetLeft - (tablist.clientWidth - tab.offsetWidth) / 2;
+      tablist.scrollTo({ left: Math.max(0, left), behavior: 'auto' });
+    };
+
+    const activate: Activate = (id, opts = {}) => {
+      const target = ids.includes(id) ? id : (ids[0] ?? '');
+      tabs.forEach((tab) => {
+        const on = tab.dataset.tab === target;
+        tab.setAttribute('aria-selected', String(on));
+        tab.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach((panel) => { panel.hidden = panel.id !== target; });
+      const tab = tabs.find((t) => t.dataset.tab === target);
+      if (tab) {
+        moveIndicator(tab);
+        if (opts.focus) tab.focus();
+      }
+      current = target;
+      if (opts.hash !== false && location.hash !== `#${target}`) history.replaceState(null, '', `#${target}`);
+      if (opts.scroll) root.scrollIntoView({ block: 'start', behavior: 'auto' });
+    };
+
+    tabs.forEach((tab) => tab.addEventListener('click', () => activate(tab.dataset.tab ?? '')));
+
+    tablist.addEventListener('keydown', (e: KeyboardEvent) => {
+      const idx = ids.indexOf(current);
+      let next = -1;
+      if (e.key === 'ArrowRight') next = (idx + 1) % ids.length;
+      else if (e.key === 'ArrowLeft') next = (idx - 1 + ids.length) % ids.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = ids.length - 1;
+      if (next >= 0) {
+        e.preventDefault();
+        activate(ids[next] ?? '', { focus: true });
+      }
+    });
+
+    currentActivate = activate;
+    currentRefresh = () => {
+      const tab = tabs.find((t) => t.dataset.tab === current);
+      if (tab) moveIndicator(tab);
+    };
+
+    const fromHash = decodeURIComponent(location.hash.slice(1));
+    const known = ids.includes(fromHash);
+    activate(known ? fromHash : (ids[0] ?? ''), { hash: false, scroll: known });
+
+    if (!globalBound) {
+      globalBound = true;
+      window.addEventListener('hashchange', () => {
+        const id = decodeURIComponent(location.hash.slice(1));
+        currentActivate?.(id, { hash: false, scroll: true });
+      });
+      window.addEventListener('resize', () => currentRefresh?.());
+      // Las fuentes cambian el ancho de las pestañas: reajustar el indicador cuando terminen de cargar
+      document.fonts?.ready.then(() => currentRefresh?.());
+    }
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>

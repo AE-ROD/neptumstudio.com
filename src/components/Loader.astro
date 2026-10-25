@@ -1,15 +1,17 @@
 ---
 // src/components/Loader.astro
+// Franja de saludos multilingües. Se muestra en la primera carga de la sesión (y al recargar);
+// en navegaciones internas con transiciones de vista se oculta de inmediato.
 ---
 
-<div class="loading-container" id="loader">
+<div class="loading-container" id="loader" aria-hidden="true">
   <div class="loading-screen" id="loader-screen">
 
     <div class="rounded-div-wrap top">
       <div class="rounded-div"></div>
     </div>
 
-    <div class="loading-words" id="loader-words" aria-hidden="true">
+    <div class="loading-words" id="loader-words">
       <span>Hello</span>
       <span>Bonjour</span>
       <span>Ciao</span>
@@ -17,7 +19,7 @@
       <span>Hola</span>
       <span>こんにちは</span>
       <span>Hallå</span>
-      <span>Guten tag</span>
+      <span>Guten Tag</span>
       <span>Hallo</span>
     </div>
 
@@ -31,28 +33,21 @@
 <style>
   .loading-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /* inset:0 + no explicit height — covers the full visual viewport on iOS Safari */
+    inset: 0;
     z-index: 800;
     overflow: hidden;
     pointer-events: none;
   }
-
   .loading-screen {
-    background-color: #141517;
+    background-color: var(--color-loader);
     width: 100%;
     height: 100%;
-    /* Stretch to fill on iOS Safari */
     min-height: -webkit-fill-available;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
   .rounded-div-wrap {
     position: absolute;
     left: 0;
@@ -60,23 +55,17 @@
     overflow: hidden;
     height: 12vh;
   }
-  .rounded-div-wrap.top {
-    top: -1px; /* cover the exact top edge */
-    transform: scaleY(-1);
-  }
-  .rounded-div-wrap.bottom {
-    bottom: -1px; /* cover the exact bottom edge */
-  }
+  .rounded-div-wrap.top { top: -1px; transform: scaleY(-1); }
+  .rounded-div-wrap.bottom { bottom: -1px; }
   .rounded-div {
     width: 150%;
     height: 750%;
-    background-color: #141517;
+    background-color: var(--color-loader);
     border-radius: 50%;
     position: absolute;
     left: 50%;
     transform: translate(-50%, -86.666%);
   }
-
   .loading-words {
     position: absolute;
     top: 50%;
@@ -86,10 +75,10 @@
     opacity: 0;
   }
   .loading-words span {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-body);
     font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 300;
-    color: #ffffff;
+    color: var(--color-white);
     letter-spacing: 0.04em;
     white-space: nowrap;
     opacity: 0;
@@ -98,83 +87,106 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  /* Sin JavaScript o con movimiento reducido, la franja no bloquea nada */
+  @media (prefers-reduced-motion: reduce) {
+    .loading-container { display: none; }
+  }
 </style>
+<noscript><style>.loading-container { display: none; }</style></noscript>
 
 <script>
   import { gsap } from 'gsap';
 
-  const container = document.getElementById('loader')!;
-  const screen    = document.getElementById('loader-screen')!;
-  const wordsEl   = document.getElementById('loader-words')!;
-  const words     = Array.from(wordsEl.querySelectorAll('span')) as HTMLElement[];
+  const SEEN_KEY = 'introSeen';
+  let playedThisVisit = false;
 
-  function clearLoader() {
-    container.style.display = 'none';
-    document.body.style.overflow = '';
-    document.body.style.cursor   = 'auto';
+  function hasSeenIntro(): boolean {
+    try { return sessionStorage.getItem(SEEN_KEY) === '1'; } catch { return false; }
+  }
+  function markSeen(): void {
+    try { sessionStorage.setItem(SEEN_KEY, '1'); } catch { /* almacenamiento no disponible */ }
   }
 
-  // Show loader on first visit AND on hard reload (Cmd+Shift+R / F5).
-  // Skip only on in-session navigations (data-astro-reload links between pages).
-  const navType = (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined)?.type;
-  const isHardLoad = !sessionStorage.getItem('introSeen') || navType === 'reload';
+  function hideLoader(): void {
+    const container = document.getElementById('loader');
+    if (container) container.style.display = 'none';
+    document.body.style.overflow = '';
+    document.body.style.cursor = '';
+  }
 
-  if (!isHardLoad) {
-    clearLoader();
-    gsap.set('[data-hero-reveal]', { y: 0 });
-  } else {
+  function run(): void {
+    const container = document.getElementById('loader');
+    if (!container) return;
 
-  document.body.style.overflow = 'hidden';
-  document.body.style.cursor   = 'wait';
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const navType = (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined)?.type;
+    const isHardLoad = !playedThisVisit && !reduceMotion && (!hasSeenIntro() || navType === 'reload');
 
-  // Safety: always clear if GSAP is interrupted (hot reload, slow tab, etc.)
-  const safetyTimer = setTimeout(clearLoader, 5000);
-
-  const tl = gsap.timeline({
-    onComplete() {
-      clearTimeout(safetyTimer);
-      sessionStorage.setItem('introSeen', '1');
-      clearLoader();
+    if (!isHardLoad) {
+      hideLoader();
+      gsap.set('[data-hero-reveal]', { clearProps: 'transform' });
+      return;
     }
-  });
 
-  gsap.set(screen,  { top: 0 });
-  gsap.set(wordsEl, { opacity: 0, y: -50 });
-  gsap.set(words,   { opacity: 0 });
-  if (words[0]) gsap.set(words[0], { opacity: 1 });
+    playedThisVisit = true;
+    const screen = document.getElementById('loader-screen')!;
+    const wordsEl = document.getElementById('loader-words')!;
+    const words = Array.from(wordsEl.querySelectorAll('span')) as HTMLElement[];
+    const reveal = gsap.utils.toArray<HTMLElement>('[data-hero-reveal]');
 
-  tl.to(wordsEl, {
-    duration: 0.8,
-    opacity: 1,
-    y: 0,
-    ease: 'power4.out',
-    delay: 0.5
-  });
+    document.body.style.overflow = 'hidden';
+    document.body.style.cursor = 'wait';
 
-  const wordsTl = gsap.timeline();
-  words.forEach((word, i) => {
-    const prev = words[i > 0 ? i - 1 : 0];
-    wordsTl
-      .to(word, { duration: 0.01, opacity: 1 })
-      .to(prev as gsap.TweenTarget, { duration: 0.01, opacity: i === 0 ? 1 : 0 }, '<')
-      .to(word as gsap.TweenTarget, { duration: 0.13 });
-  });
-  wordsTl.to(wordsEl as gsap.TweenTarget, { duration: 0.35 });
-  tl.add(wordsTl);
+    // Seguridad: si la animación se interrumpe, nunca dejamos la pantalla tapada.
+    const safetyTimer = setTimeout(() => {
+      hideLoader();
+      gsap.set(reveal, { clearProps: 'transform' });
+    }, 5000);
 
-  tl.to(screen, {
-    duration: 0.8,
-    top: '-100%',
-    ease: 'power4.out',
-    onStart() {
-      gsap.to('[data-hero-reveal]', {
-        y: 0,
-        duration: 0.8,
-        ease: 'power4.out',
-        stagger: 0.08
-      });
-    }
-  });
+    const tl = gsap.timeline({
+      onComplete() {
+        clearTimeout(safetyTimer);
+        markSeen();
+        hideLoader();
+      },
+    });
 
-  } // end else (sessionStorage check)
+    gsap.set(reveal, { y: '50vh' });
+    gsap.set(screen, { top: 0 });
+    gsap.set(wordsEl, { opacity: 0, y: -50 });
+    gsap.set(words, { opacity: 0 });
+    if (words[0]) gsap.set(words[0], { opacity: 1 });
+
+    tl.to(wordsEl, { duration: 0.8, opacity: 1, y: 0, ease: 'power4.out', delay: 0.5 });
+
+    const wordsTl = gsap.timeline();
+    words.forEach((word, i) => {
+      const prev = words[i > 0 ? i - 1 : 0];
+      wordsTl
+        .to(word, { duration: 0.01, opacity: 1 })
+        .to(prev as gsap.TweenTarget, { duration: 0.01, opacity: i === 0 ? 1 : 0 }, '<')
+        .to(word as gsap.TweenTarget, { duration: 0.13 });
+    });
+    wordsTl.to(wordsEl as gsap.TweenTarget, { duration: 0.35 });
+    tl.add(wordsTl);
+
+    tl.to(screen, {
+      duration: 0.8,
+      top: '-100%',
+      ease: 'power4.out',
+      onStart() {
+        gsap.to(reveal, {
+          y: 0,
+          duration: 0.8,
+          ease: 'power4.out',
+          stagger: 0.08,
+          onComplete() { gsap.set(reveal, { clearProps: 'transform' }); },
+        });
+      },
+    });
+  }
+
+  // En navegaciones internas, ocultar antes de pintar la nueva página.
+  document.addEventListener('astro:after-swap', hideLoader);
+  document.addEventListener('astro:page-load', run);
 </script>

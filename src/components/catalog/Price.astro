@@ -1,0 +1,26 @@
+---
+// src/components/catalog/Price.astro — precio en CLP con "desde" y "/mes" según corresponda.
+import type { Locale } from '../../i18n';
+import { getT } from '../../i18n';
+import type { Price as PriceType } from '../../data/catalog';
+import { priceParts } from '../../data/catalog';
+
+interface Props {
+  price: PriceType;
+  locale: Locale;
+  size?: 'sm' | 'md' | 'lg';
+}
+const { price, locale, size = 'md' } = Astro.props;
+const t = getT(locale);
+const p = priceParts(price);
+---
+<span class:list={['price', `price--${size}`]}>
+  {p.from && <span class="price-from">{t.common.from}</span>}
+  <span class="price-amount">{p.amount}</span>
+  {p.monthly && <span class="price-unit">{t.common.per_month}</span>}
+</span>
+
+<style>
+  .price--sm .price-amount { font-size: 1.25rem; }
+  .price--lg .price-amount { font-size: 2.25rem; }
+</style>
