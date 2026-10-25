@@ -9,3 +9,4 @@ dist/
 
 # Plantilla de variables de entorno (sí se versiona)
 !.env.example
+scripts/e2e/shots/
